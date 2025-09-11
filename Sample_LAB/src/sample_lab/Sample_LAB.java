@@ -1,0 +1,59 @@
+package sample_lab;
+
+import java.util.Scanner;
+
+/**
+ * Sample Lab
+ * @author CE200360 - Vo Luu Tuong Anh
+ * @since 2025-09-11
+ */
+public class Sample_LAB {
+    ArrClass arr;
+    Scanner sc;
+    
+    /**
+     * Initialize global variables 
+     * In this constructor, sc (Scanner for short) is initialized as System.in (which is taken input from user PnP devices) 
+     */
+    public Sample_LAB() {
+        sc = new Scanner(System.in);
+    }
+    
+    /**
+     * Display the user interface
+     */
+    public void DisplayUserInterface() {
+        
+        System.out.print("Enter number of array: ");
+        
+        /**
+         * Why try-catch? since the user input **MAY** contain trash input, handling in try-catch block is 
+         * 
+         */
+        try {
+            int size = Integer.parseInt(sc.next());
+            arr = new ArrClass(size);
+            
+            System.out.println("\nUnsorted Array: ");
+            arr.DisplayArr();
+
+            arr.SortArray();
+
+            System.out.println("\nSorted Array: ");
+            arr.DisplayArr();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.toString());
+        }
+        
+    }
+    
+    /**
+     * The "entry" of the program.
+     * Since the program is object-oriented, it only should run within the object.
+     * @param args - take arguments but no action performed
+     */
+    public static void main(String[] args) {
+        Sample_LAB so = new Sample_LAB();
+        so.DisplayUserInterface();
+    }
+}
