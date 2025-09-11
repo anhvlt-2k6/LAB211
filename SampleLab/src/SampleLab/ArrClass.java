@@ -37,7 +37,7 @@ public class ArrClass {
     /**
      * Display the contents of array
      */
-    public void DisplayArr() {
+    public void displayArr() {
         for (int i : arr) {
             System.out.print(i + " ");
         }
@@ -46,7 +46,7 @@ public class ArrClass {
     /**
      * Sorting array
      */
-    public void SortArray() {
+    public void sortArray() {
         
         // Get the length of the array
         int n = arr.length;
