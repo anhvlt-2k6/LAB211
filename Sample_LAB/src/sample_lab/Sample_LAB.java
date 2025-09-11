@@ -44,7 +44,6 @@ public class Sample_LAB {
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
         }
-        
     }
     
     /**
