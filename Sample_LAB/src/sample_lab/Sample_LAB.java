@@ -27,8 +27,8 @@ public class Sample_LAB {
         System.out.print("Enter number of array: ");
         
         /**
-         * Why try-catch? since the user input **MAY** contain trash input, handling in try-catch block is 
-         * 
+         * Why try-catch? Since the user input **MAY** contain trash input.
+         * Also, user can enter negative number (invalid, see in the constructor of ArrClass.java)
          */
         try {
             int size = Integer.parseInt(sc.next());
