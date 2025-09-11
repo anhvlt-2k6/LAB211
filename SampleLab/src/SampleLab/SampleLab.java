@@ -1,4 +1,4 @@
-package sample_lab;
+package SampleLab;
 
 import java.util.Scanner;
 
@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-11
  */
-public class Sample_LAB {
+public class SampleLab {
     ArrClass arr;
     Scanner sc;
     
@@ -15,7 +15,7 @@ public class Sample_LAB {
      * Initialize global variables 
      * In this constructor, sc (Scanner for short) is initialized as System.in (which is taken input from user PnP devices) 
      */
-    public Sample_LAB() {
+    public SampleLab() {
         sc = new Scanner(System.in);
     }
     
@@ -52,7 +52,7 @@ public class Sample_LAB {
      * @param args - take arguments but no action performed
      */
     public static void main(String[] args) {
-        Sample_LAB so = new Sample_LAB();
+        SampleLab so = new SampleLab();
         so.DisplayUserInterface();
     }
 }

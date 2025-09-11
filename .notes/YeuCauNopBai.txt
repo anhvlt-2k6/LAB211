@@ -1,0 +1,34 @@
+Sáng mai 13h00/15h30 các em đăng ký nộp bài đến 13h05/15h35.
+Đăng ký nộp bài bằng cách nhắn tin lên group chat Zalo của lớp theo cú pháp:
+<MSSV> <Họ tên> <Danh sách bài muốn chấm>, ví dụ: SE2009 Cao Hồng Nga S01, S02
+
+Lưu ý: 
+#1. Cần comment đầy đủ và đúng cú pháp tất cả các phương thức (comment phương thức, param, return, throw) kể cả set/get
+#2. Cần comment giải thuật cho phương thức chứa giải thuật chính yếu của bài
+#3. Cần comment tất cả các lớp đúng cú pháp: 
+	<Bài gì> - <Nội dung thực hiện là gì> Ví dụ: S02-String Array Manipulations.
+	@author <MSSV> <Họ tên>
+	@since 2025-05-15
+
+#4. Cần format code trước khi chấm, không format code bị trừ 1 điểm short
+#5. English only, không được viết sai
+#6. Tên lớp là danh từ, đặt theo quy tắc Camel, viết hoa chữ đầu và không được dùng dấu 
+#7. Tên thuộc tính là danh từ hoặc tính từ, đặt theo quy tắc Camel, viết thường chữ đầu và không được dùng dấu _
+#8. Tên phương thức là động từ, đặt theo quy tắc Camel, viết thường chữ đầu và không được dùng dấu _
+#9. Nếu xảy ra Exception khi chạy thì reject 100%
+#10. Chú ý sinh viên làm đúng hoàn toàn theo yêu cầu đề bài thì chỉ hoàn thành 70%, giảng viên có thể yêu cầu chỉnh sửa đề 30%. Các bạn cần tập trung vào input, output và validation. Các bạn bắt lỗi dữ liệu đầu vào tốt, các câu thông báo rõ ràng đầy đủ thì dễ dàng được accept hơn.
+
+Khi chấm bài các bạn cần thực hiện như sau:
+#1. Mở tất cả các tập tin (lớp)
+#2. Phóng to mã lệnh để có thể nhìn thấy được
+#3. Cuộn từ trên xuống tất lần lượt tất cả các lớp, tôi check format, comment và cách đặt tên lớp, thuộc tính, phương thức trước
+#4. Khi các thứ cơ bản đúng tôi mới yêu cầu chạy, check giải thuật
+#5. Các bạn cần giải thích được code khi có yêu cầu
+#6. Giảng viên có thể yêu cầu chỉnh sửa code 30% so với yêu cầu đề
+
+Chỉ gõ họ tên và danh sách bài muốn nộp lên group chat, không gửi source code lên group chat này
+
+
+Các em đăng ký nộp bài lưu ý:
+1. Nếu các em hiểu code, giải thích được code (ý nghĩa các hàm, cách dùng cách hàm, biểu thức chính quy, giải thuật...) TUY NHIÊN code chạy sai => các bạn sẽ mang về sửa và BUỔI SAU nộp lại, có thể sửa và nộp lại NHIỀU LẦN
+2. Nếu các em code hoàn chỉnh bài nhưng không hiểu gì, không giải thích code được thì bài sẽ bị ĐÁNH DẤU MÀU ĐEN và sẽ mang bài về xem lại, buổi sau chấm lại 1 lần, nếu lần thứ 2 vẫn không hiểu code, giải thích không được, sửa bài không được thì bài đó sẽ bị BỎ BÀI (phải giải bài khác)
