@@ -14,7 +14,7 @@ public class ArrClass {
     
     /**
      * The constructor of the class
-     * @param size - Must be non-negative number
+     * @param size Must be non-negative number
      * @throws Exception when the size is not valid of initialize new array
      */
     public ArrClass(int size) throws Exception {

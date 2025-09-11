@@ -22,7 +22,7 @@ public class SampleLab {
     /**
      * Display the user interface
      */
-    public void DisplayUserInterface() {
+    public void displayUserInterface() {
         
         System.out.print("Enter number of array: ");
         
@@ -35,12 +35,12 @@ public class SampleLab {
             arr = new ArrClass(size);
             
             System.out.println("\nUnsorted Array: ");
-            arr.DisplayArr();
+            arr.displayArr();
 
-            arr.SortArray();
+            arr.sortArray();
 
             System.out.println("\nSorted Array: ");
-            arr.DisplayArr();
+            arr.displayArr();
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
         }
@@ -53,6 +53,6 @@ public class SampleLab {
      */
     public static void main(String[] args) {
         SampleLab so = new SampleLab();
-        so.DisplayUserInterface();
+        so.displayUserInterface();
     }
 }
