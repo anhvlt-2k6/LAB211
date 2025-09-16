@@ -13,7 +13,11 @@ public class Short04 {
         userList = new UserList();
     }
     
-    public void DisplayUserInterface() {
+    public void readDatabase() {
+        userList.readFromDb();
+    }   
+    
+    public void displayUserInterface() {
         System.out.print(
                 "============ Login Program =========\n" +
                 "1. Add User\n" +
@@ -73,7 +77,7 @@ public class Short04 {
                         
                         String isChangePassword = sc.nextLine();
                         
-                        if (isChangePassword.toLowerCase().equals("Y")) {
+                        if (isChangePassword.toLowerCase().equals("y")) {
                             System.out.print("Old password:");
                             String oldRawPassword = sc.nextLine();
                             
@@ -86,8 +90,6 @@ public class Short04 {
                             if (newRawPassword.equals(newRawPassword2)) {
                                 userList.changePassword(userName2, oldRawPassword, newRawPassword);
                             }
-                        } else {
-                            
                         }
                     } else {
                         System.out.print("Login failed.");
@@ -108,6 +110,7 @@ public class Short04 {
     public static void main(String[] args) {
         Short04 o4 = new Short04();
         
-        o4.DisplayUserInterface();
+        o4.readDatabase();
+        o4.displayUserInterface();
     }
 }

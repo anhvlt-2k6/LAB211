@@ -53,7 +53,7 @@ public class StudentList extends ArrayList<Student> {
             File fw = new File(fileName);
             
             // Check if the file can be read/write. If unable, report to user.
-            if (!fw.exists() && !fw.canRead()) {
+            if (!fw.exists() || !fw.canRead()) {
                 throw new FileNotFoundException(""); // Stop right here
             }
             
@@ -62,7 +62,7 @@ public class StudentList extends ArrayList<Student> {
             
             // Loop for lines in file.
             while (studentDbReader.hasNext()) {
-                String student = studentDbReader.next();
+                String student = studentDbReader.nextLine();
                 
                 // If the line has a "#" at the start, ignore (Comment in Py3)
                 if (!student.startsWith("#")) {

@@ -61,14 +61,14 @@ public class UserList extends ArrayList<Users> {
         try {
             File fw = new File(fileName);
             
-            if (!fw.exists() && !fw.canRead()) {
+            if (!fw.exists() || !fw.canRead()) {
                 throw new FileNotFoundException(""); // Stop right here
             }
             
             userDbReader = new Scanner(fw);
             
             while(userDbReader.hasNext()) {
-                String user = userDbReader.next();
+                String user = userDbReader.nextLine();
                 
                 if (!user.startsWith("#")) {
                     
@@ -83,15 +83,14 @@ public class UserList extends ArrayList<Users> {
                      */
                     String[] userData = user.split(",");
                     
-                    this.addNewUser(
-                            true,
+                    this.add(new Users(
                             userData[0],
                             userData[1],
                             userData[2],
                             userData[3],
                             userData[4],
                             userData[5],
-                            userData[6]
+                            userData[6])
                     );
                 }
             }
@@ -159,12 +158,15 @@ public class UserList extends ArrayList<Users> {
     }
     
     public String login(String userName, String rawPassword) {
+        
         String actualName = "";
         
         String password = this.rawToMD5(rawPassword);
         
         for (Users u : this) {
-            if (u.getUserName().equals(userName) && u.getPassword().equals(password)) {
+            String uName = u.getUserName();
+            String uPass = u.getPassword();
+            if (uName.equals(userName) && uPass.equals(password)) {
                 actualName = u.getName();
                 break;
             }
