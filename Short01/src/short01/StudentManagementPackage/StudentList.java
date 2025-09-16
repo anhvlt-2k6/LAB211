@@ -88,10 +88,11 @@ public class StudentList extends ArrayList<Student> {
             }
         }
         catch (FileNotFoundException file_ex) {
+            // Exception on file not found
             System.out.println("Unable to read file. No data.");
         }
         catch (ArrayIndexOutOfBoundsException arr_ex) {
-            //
+            // Exception on out of bound of the array.
         }
     }
     
@@ -178,7 +179,8 @@ public class StudentList extends ArrayList<Student> {
             ));
         }
         catch (NumberFormatException num_ex) {
-            //
+            // happen when unable to parse (?) a string to the number
+            // Locale may not apply. Switch to en-US or en-GB. ja-JP can cause errors
         }
         finally {
             // Write to file after adding new variable
