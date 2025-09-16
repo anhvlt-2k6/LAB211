@@ -1,0 +1,2 @@
+#Account,Password,Name,Phone,Email,Address,DOB
+NghiaNV,9e87373408a6cd425ae9b19bf870d893,SkyLine,0988666888,nghianv@t.com,26/06/2016
