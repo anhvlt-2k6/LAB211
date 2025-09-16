@@ -36,12 +36,13 @@ public class UserList extends ArrayList<Users> {
 
             for (Users u : this) {
                 outStr += String.format(
-                        "\n%s,%s,%s,%s,%s,%s",
+                        "\n%s,%s,%s,%s,%s,%s,%s",
                         u.getUserName(),
                         u.getPassword(),
                         u.getName(),
                         u.getPhoneNumber(),
                         u.getEmailAddress(),
+                        u.getAddress(),
                         u.getDateOfBirth());
             }
             
@@ -175,12 +176,17 @@ public class UserList extends ArrayList<Users> {
     public void changePassword(
             String userName, 
             String oldRawPassword,
-            String newRawPassword,
-            String newRepeatPassword) {
-        String password = this.rawToMD5(newRawPassword);
+            String newRawPassword) {
+        
+        String oldPassword = this.rawToMD5(oldRawPassword);
+        String newPassword = this.rawToMD5(newRawPassword);
+        
         for (Users s : this) {
-            if (s.getUserName().equals(userName)) {
-                s.setPassword(password);
+            if (s.getUserName().equals(userName) && s.getPassword().equals(oldPassword)) {
+                s.setPassword(newPassword);
+                
+                this.writeToDb();
+                
                 break;
             }
         }

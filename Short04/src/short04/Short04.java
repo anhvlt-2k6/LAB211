@@ -74,7 +74,18 @@ public class Short04 {
                         String isChangePassword = sc.nextLine();
                         
                         if (isChangePassword.toLowerCase().equals("Y")) {
+                            System.out.print("Old password:");
+                            String oldRawPassword = sc.nextLine();
                             
+                            System.out.print("new password:");
+                            String newRawPassword = sc.nextLine();
+                            
+                            System.out.print("renew password:");
+                            String newRawPassword2 = sc.nextLine();
+                            
+                            if (newRawPassword.equals(newRawPassword2)) {
+                                userList.changePassword(userName2, oldRawPassword, newRawPassword);
+                            }
                         } else {
                             
                         }
