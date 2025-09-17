@@ -49,5 +49,4 @@ public class Short06 {
         
         o6.displayUserInterface();
     }
-    
 }

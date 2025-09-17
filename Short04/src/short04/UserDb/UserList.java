@@ -13,8 +13,6 @@ import java.util.Scanner;
 
 public class UserList extends ArrayList<Users> {
     
-    private static final long serialVersionUID = 1L;
-    
     private final String emailValidator = "([A-Za-z0-9._-]{1,})@(([A-Za-z0-9]{1,}).[A-Za-z0-9]{2,})";
     private final String phoneValidator = "[0-9]{10,11}";
     private final String dobValidator = "([0-9]{2})\\/([0-9]{2})\\/([0-9]{4})";
