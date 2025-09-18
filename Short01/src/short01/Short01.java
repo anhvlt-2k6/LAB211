@@ -64,6 +64,10 @@ public class Short01 {
                     System.out.print("Learning point: ");
                     double stuLearnP = Double.parseDouble(sc.next());
                     
+                    if (stuCode.isEmpty() || stuName1.isEmpty() || stuDoB.isEmpty()) {
+                        System.out.print("Please validate your input");
+                    }
+                    
                     studentList.addStudent(stuCode, stuName1, stuDoB, stuLearnP);
                     
                     break;
@@ -86,8 +90,7 @@ public class Short01 {
                     break;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input: " + e.hashCode());
-            System.exit(e.hashCode());
+            // Exception will handle when unable to parse int from str of user io
         }
         
         System.exit(0);
