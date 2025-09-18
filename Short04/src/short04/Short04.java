@@ -130,7 +130,7 @@ public class Short04 {
     
     /**
      * Entry of the program
-     * @param args
+     * @param args Useless
      */
     public static void main(String[] args) {
         Short04 o4 = new Short04();
