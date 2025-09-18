@@ -3,20 +3,35 @@ package short04;
 import java.util.Scanner;
 import short04.UserDb.UserList;
 
+/**
+ * Short 04
+ * @author CE200360 - Vo Luu Tuong Anh
+ * @since 2025-09-18
+ */
 public class Short04 {
     
+    // User input and user list
     Scanner sc;
     UserList userList;
     
+    /**
+     * Constructor of the program
+     */
     public Short04() {
         sc = new Scanner(System.in);
         userList = new UserList();
     }
     
+    /**
+     * Read from database
+     */
     public void readDatabase() {
         userList.readFromDb();
     }   
     
+    /**
+     * Display user interface
+     */
     public void displayUserInterface() {
         System.out.print(
                 "============ Login Program =========\n" +
@@ -27,6 +42,7 @@ public class Short04 {
         );
         
         try {
+            // Parse user input as the integer
             int choice = Integer.parseInt(sc.nextLine());
             
             switch (choice) {
@@ -54,6 +70,7 @@ public class Short04 {
                     System.out.print("DOB:");
                     String dateOfBirth = sc.nextLine();
                     
+                    // add new user into userList. See function help of addNewUser
                     if (userList.addNewUser(true, userName, rawPassword, name, phoneNumber, emailAddress, address, dateOfBirth)) {
                         System.out.print("Please validate your input.");
                     }                    
@@ -68,6 +85,8 @@ public class Short04 {
                     String password2 = sc.nextLine();
                     
                     String actualName = userList.login(userName2, password2);
+                    
+                    // If the string is empty, login is failed
                     if (actualName.length() != 0) {
                         System.out.print(
                                 String.format(
@@ -87,6 +106,7 @@ public class Short04 {
                             System.out.print("renew password:");
                             String newRawPassword2 = sc.nextLine();
                             
+                            // Check if new password and repeat password are the same
                             if (newRawPassword.equals(newRawPassword2)) {
                                 userList.changePassword(userName2, oldRawPassword, newRawPassword);
                             }
@@ -96,17 +116,22 @@ public class Short04 {
                     }
                     break;
                 case 3:
+                    System.exit(0);
                     break;
                 default:
                     break;
             }
         } catch (NumberFormatException num_ex) {
-            //
+            // Exception will be handled if unable to parse
         }
         
         System.exit(0);
     }
     
+    /**
+     * Entry of the program
+     * @param args
+     */
     public static void main(String[] args) {
         Short04 o4 = new Short04();
         
