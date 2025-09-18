@@ -233,7 +233,6 @@ public class StudentList extends ArrayList<Student> {
         });
     }
 
-    
     /**
      * Java Recommendation for clone()
      * @return Object (Java Recommendation)

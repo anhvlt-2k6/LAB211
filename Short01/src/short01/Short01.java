@@ -49,7 +49,7 @@ public class Short01 {
             );
 
             try {
-                // Try asking user s for selection. Default is 4 as exit
+                // Try asking user s for selection. Default is 5 as faillback
                 int selection = 5;
                 String selecStr = sc.nextLine();
 
