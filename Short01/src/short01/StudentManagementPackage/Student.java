@@ -1,7 +1,7 @@
 package short01.StudentManagementPackage;
 
 /**
- * Short 01
+ * Short 01 - Student base class
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-14
  */
@@ -34,7 +34,7 @@ public class Student {
     }
 
     /**
-     * 
+     * Get Student Code
      * @return a String of student code
      */
     public String getStudentCode() {
@@ -42,7 +42,7 @@ public class Student {
     }
 
     /**
-     *
+     * Get Student Name
      * @return a String of student name
      */
     public String getStudentName() {
@@ -50,7 +50,7 @@ public class Student {
     }
 
     /**
-     *
+     * Get Date of Birth
      * @return a String of Date of Birth
      */
     public String getDateOfBirth() {
@@ -58,7 +58,7 @@ public class Student {
     }
 
     /**
-     *
+     * Get Learning Point
      * @return a Double of Learning Point
      */
     public double getLearningPoint() {

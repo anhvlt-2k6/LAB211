@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 /**
- * Short 01
+ * Short 01 - Student Db Handler
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-14 (1:00 AM)
  */
@@ -17,16 +17,7 @@ public class StudentList extends ArrayList<Student> {
     
     /**
      * Note:
-     * 1. For Exception handling: Should not use 'Throwable' or 'Exception'
-        * Dangerous operation may not be catchable/handling.
-        * Should leave it exceptional and let the program leaves
-        * 
-        * "These should normally be propagated to the outermost level because 
-        * they generally indicate a program state from which normal  
-        * operation cannot be recovered"
-        *
-        * See further in JPL Java Coding Standard P.73
-     * 2. Global variables
+     * Global variables
         * fileName - the basic "database" for storing list of students
         * studentDbReader - File Reader, see in readFromFile()
         * studentDbWriter - File Writer, see in writeToFile()
@@ -195,15 +186,20 @@ public class StudentList extends ArrayList<Student> {
      * @param stuName - Name of student
      */
     public void lookForStudent(String stuName) {
+        
+        // Just a loop through the ArrayList
         for (Student st : this) {
             if (st.getStudentName().contains(stuName)) {
+                
+                // Print out the information
                 System.out.println(
                     String.format("Student code: %s\n", st.getStudentCode()) +
                     String.format("Student name: %s\n", st.getStudentName()) +
                     String.format("Date of birth: %s\n", st.getDateOfBirth()) +
                     String.format("Learning point: %.1f", st.getLearningPoint())
                 );
-                break;
+                
+                break; // Break once found, prevent dead trying
             }
         }
     }
@@ -219,14 +215,15 @@ public class StudentList extends ArrayList<Student> {
                 "---------------------------"
         );
         
-        for (Student st : this) {
+        // Just a loop through the ArrayList
+        this.forEach((st) -> {
             System.out.println(
                     String.format("Student code: %s\n", st.getStudentCode()) +
-                    String.format("Student name: %s\n", st.getStudentName()) +
-                    String.format("Date of birth: %s\n", st.getDateOfBirth()) +
-                    String.format("Learning point: %.1f\n", st.getLearningPoint()) +
-                    "------------------"
+                            String.format("Student name: %s\n", st.getStudentName()) +
+                            String.format("Date of birth: %s\n", st.getDateOfBirth()) +
+                            String.format("Learning point: %.1f\n", st.getLearningPoint()) +
+                            "------------------"
             );
-        }
+        });
     }
 }
