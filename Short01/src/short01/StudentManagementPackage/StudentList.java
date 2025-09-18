@@ -14,6 +14,10 @@ import java.util.Scanner;
  * @since 2025-09-14 (1:00 AM)
  */
 public class StudentList extends ArrayList<Student> {
+
+    // serial version UID
+    // https://www.baeldung.com/java-serial-version-uid
+    private static final long serialVersionUID = 1L;
     
     /**
      * Note:
@@ -39,8 +43,7 @@ public class StudentList extends ArrayList<Student> {
      */
     public void readFromFile() {
         try {
-            // Since fw only be created once in this case, no need to put 
-            // in the global
+            // Since fw only be created once in this case, no need to put in the global
             File fw = new File(fileName);
             
             // Check if the file can be read/write. If unable, report to user.
@@ -67,6 +70,7 @@ public class StudentList extends ArrayList<Student> {
                      * 
                      * Each are separated by a "," (Standard CSV)
                      */
+                    
                     String[] studentData = student.split(",");
 
                     this.addStudent(
@@ -104,6 +108,7 @@ public class StudentList extends ArrayList<Student> {
              * The comparator takes if two element and get the property of int
              * You can multiply by -1 to reverse the order
              */
+            
             Collections.sort(this, (o1, o2) -> (o1.getStudentName().compareTo(o2.getStudentName())));
             
             // Just a loop through the ArrayList
@@ -120,10 +125,11 @@ public class StudentList extends ArrayList<Student> {
             studentDbWriter.close();
         }
         catch (FileNotFoundException ex_fnf) {
-            //
+            // Exception will handle when file not found
+            // The program will ignore and create new file if there is new input anyways
         }
         catch (IOException io_e) {
-            //
+            // Exception will handle when IO Error with file
         }
     }
     
@@ -170,7 +176,7 @@ public class StudentList extends ArrayList<Student> {
             ));
         }
         catch (NumberFormatException num_ex) {
-            // happen when unable to parse (?) a string to the number
+            // Happen when unable to parse (?) a string to the number
             // Locale may not apply. Switch to en-US or en-GB. ja-JP can cause errors
         }
         finally {
@@ -225,5 +231,15 @@ public class StudentList extends ArrayList<Student> {
                             "------------------"
             );
         });
+    }
+
+    
+    /**
+     * Java Recommendation for clone()
+     * @return Object (Java Recommendation)
+     */
+    @Override
+    public Object clone() {
+        return super.clone();
     }
 }
