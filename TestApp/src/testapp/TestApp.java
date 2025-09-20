@@ -3,6 +3,9 @@ package testapp;
 public class TestApp {
     
     public static void main(String[] args) {
-        System.out.print(((int)'z'));
+        while(true) {
+            System.out.print("Still in while");
+            break;
+        }
     }
 }
