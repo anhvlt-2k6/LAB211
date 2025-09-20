@@ -2,11 +2,12 @@ package short05;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Short 05
+ * Short 05 - String Array Handler
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-18
  */
@@ -21,16 +22,16 @@ public class AnalysisString {
      *         - "odd" (ArrayList) an array list contains odd numbers
      *         - "even" (ArrayList) an array list contains even numbers
      */
-    public HashMap<String, ArrayList<Integer>> getNumber(String input) {
+    public HashMap<String, List<Integer>> getNumber(String input) {
         // Return param (always initialize the return param)
         // See in 19950022400 - Section 5.5 for statement paragraphing
-        HashMap<String, ArrayList<Integer>> result = new HashMap<>();
+        HashMap<String, List<Integer>> result = new HashMap<>();
         
         // Anaysis values, prefix as shown above
-        ArrayList<Integer> allNumbers = new ArrayList<>();
-        ArrayList<Integer> squareNumbers = new ArrayList<>();
-        ArrayList<Integer> oddNumbers = new ArrayList<>();
-        ArrayList<Integer> evenNumbers = new ArrayList<>();
+        List<Integer> allNumbers = new ArrayList<>();
+        List<Integer> squareNumbers = new ArrayList<>();
+        List<Integer> oddNumbers = new ArrayList<>();
+        List<Integer> evenNumbers = new ArrayList<>();
         
         // Add all integer into a list (further analysis)
         Pattern pattern = Pattern.compile("[0-9]{1,}");

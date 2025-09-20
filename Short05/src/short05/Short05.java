@@ -2,10 +2,11 @@ package short05;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /**
- * Short 05
+ * Short 05 - Main Program
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-18
  */
@@ -16,7 +17,7 @@ public class Short05 {
     private final AnalysisString ansysStr;
     
     // Internal variables for getting result
-    private HashMap<String, ArrayList<Integer>> getNumber;
+    private HashMap<String, List<Integer>> getNumber;
     private HashMap<String, StringBuilder> getCharacter;
     
     /**
@@ -35,9 +36,13 @@ public class Short05 {
                 "===== Analysis String program ====\n" +
                 "Input String: ");
         
+        // Take user input
         String input = sc.nextLine();
         
+        // get number analysis result
         getNumber = ansysStr.getNumber(input);
+        
+        // get character analysis result
         getCharacter = ansysStr.getCharacter(input);
 
         System.out.print(
