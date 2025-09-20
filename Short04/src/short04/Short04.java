@@ -4,8 +4,8 @@ import java.util.Scanner;
 import short04.UserDb.UserList;
 
 /**
- * Short 04
- * @author CE200360 - Vo Luu Tuong Anh
+ * Short 04 - User Interface
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-18
  */
 public class Short04 {
@@ -13,6 +13,13 @@ public class Short04 {
     // User input and user list
     Scanner sc;
     UserList userList;
+    
+    // Regex strings to validate email, phone number, and dob
+    private final String accountValidator = "[A-Za-z0-9]{1,254}";
+    private final String nameValidator = "[a-zA-Z0-9 ]{1,}";
+    private final String emailValidator = "([A-Za-z0-9._-]{1,})@(([A-Za-z0-9]{1,}).[A-Za-z0-9]{2,})";
+    private final String phoneValidator = "[0-9]{10,11}";
+    private final String dobValidator = "([0-9]{2})/(([0-1]{1})([0-9]{1}))/([0-9]{4})";
     
     /**
      * Constructor of the program
@@ -23,109 +30,150 @@ public class Short04 {
     }
     
     /**
-     * Read from database
-     */
-    public void readDatabase() {
-        userList.readFromDb();
-    }   
-    
-    /**
      * Display user interface
      */
     public void displayUserInterface() {
-        System.out.print(
-                "============ Login Program =========\n" +
-                "1. Add User\n" +
-                "2. Login\n" +
-                "3) Exit\n" +
-                "Please choice one option:"
-        );
         
-        try {
-            // Parse user input as the integer
-            int choice = Integer.parseInt(sc.nextLine());
-            
-            switch (choice) {
-                case 1:
-                    System.out.println("---------- Add User --------");
-                    
-                    System.out.print("Account:");
-                    String userName = sc.nextLine();
-                    
-                    System.out.print("Password:");
-                    String rawPassword  = sc.nextLine();
-                    
-                    System.out.print("Name:");
-                    String name = sc.nextLine();
-                    
-                    System.out.print("Phone:");
-                    String phoneNumber = sc.nextLine();
-                    
-                    System.out.print("Email:");
-                    String emailAddress = sc.nextLine();
-                    
-                    System.out.print("Address:");
-                    String address = sc.nextLine();
-                    
-                    System.out.print("DOB:");
-                    String dateOfBirth = sc.nextLine();
-                    
-                    // add new user into userList. See function help of addNewUser
-                    if (userList.addNewUser(true, userName, rawPassword, name, phoneNumber, emailAddress, address, dateOfBirth)) {
-                        System.out.print("Please validate your input.");
-                    }                    
-                    break;
-                case 2:
-                    System.out.println("------------- Login ----------------");
-                    
-                    System.out.print("Account: ");
-                    String userName2 = sc.nextLine();
-                    
-                    System.out.print("Password: ");
-                    String password2 = sc.nextLine();
-                    
-                    String actualName = userList.login(userName2, password2);
-                    
-                    // If the string is empty, login is failed
-                    if (actualName.length() != 0) {
-                        System.out.print(
-                                String.format(
-                                    "------------ Wellcome -----------\n" +
-                                    "Hi %s, do you want change\n" +
-                                    "password now? Y/N:", actualName));
+        while (true) {
+            try {
+                System.out.print(
+                        "============ Login Program =========\n" +
+                        "1. Add User\n" +
+                        "2. Login\n" +
+                        "3) Exit\n" +
+                        "Please choice one option:"
+                );
+
+                // Parse user input as the integer
+                int choice = Integer.parseInt(sc.nextLine());
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("---------- Add User --------");
+
+                        System.out.print("Account:");
+                        String userName = sc.nextLine().trim();
                         
-                        String isChangePassword = sc.nextLine();
-                        
-                        if (isChangePassword.toLowerCase().equals("y")) {
-                            System.out.print("Old password:");
-                            String oldRawPassword = sc.nextLine();
-                            
-                            System.out.print("new password:");
-                            String newRawPassword = sc.nextLine();
-                            
-                            System.out.print("renew password:");
-                            String newRawPassword2 = sc.nextLine();
-                            
-                            // Check if new password and repeat password are the same
-                            if (newRawPassword.equals(newRawPassword2)) {
-                                userList.changePassword(userName2, oldRawPassword, newRawPassword);
-                            }
+                        if (!userName.matches(accountValidator)) {
+                            System.out.println("Account name should only contain letters and digits (up to 254 chars).");
+                            break;
                         }
-                    } else {
-                        System.out.print("Login failed.");
-                    }
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
-                default:
-                    break;
+                        
+                        System.out.print("Password:");
+                        String rawPassword  = sc.nextLine(); // Should not trim password
+                        
+                        if (rawPassword == null || rawPassword.length() == 0) {
+                            System.out.println("Password should not be empty!");
+                            break;
+                        }
+                        
+                        System.out.print("Name:");
+                        String name = sc.nextLine().trim();
+                        
+                        if (!name.matches(nameValidator)) {
+                            System.out.println("Name should only contains letters and spaces.");
+                            break;
+                        }
+                        
+                        System.out.print("Phone:");
+                        String phoneNumber = sc.nextLine().trim();
+
+                        if (!phoneNumber.matches(phoneValidator)) {
+                            System.out.println("Invalid phone number input.");
+                            break;
+                        }
+                        
+                        System.out.print("Email:");
+                        String emailAddress = sc.nextLine().trim();
+
+                        if (!emailAddress.matches(emailValidator)) {
+                            System.out.println("Invalid email address input.");
+                            break;
+                        }
+                         
+                        System.out.print("Address:");
+                        String address = sc.nextLine();
+                        
+                        if (address.contains(",")) {
+                            System.out.println("Address should not contain a ','");
+                            break;
+                        }
+                        
+                        System.out.print("DOB:");
+                        String dateOfBirth = sc.nextLine();
+                        
+                        if (!dateOfBirth.matches(dobValidator)) {
+                            System.out.println("Invalid DOB input.");
+                            break;
+                        }
+                        
+                        // add new user into userList.
+                        // If it returns -1, the user existed. See function help of addNewUser
+                        if (userList.addAccount(userName, rawPassword, name, phoneNumber, emailAddress, address, dateOfBirth) == -1) {
+                            System.out.println("Unable to add user. The user existed.");
+                        } else {
+                            System.out.println("Successfully added user: " + userName);
+                        }
+                        
+                        break;
+                    case 2:
+                        System.out.println("------------- Login ----------------");
+
+                        System.out.print("Account: ");
+                        String userName2 = sc.nextLine().trim();
+
+                        if (!userName2.matches(accountValidator)) {
+                            System.out.println("Account name should only contain letters and digits (up to 254 chars).");
+                            break;
+                        }
+                        
+                        System.out.print("Password: ");
+                        String password2 = sc.nextLine(); // Should not trim password
+                        
+                        // If the string is empty, login is failed
+                        if (userList.login(userName2, password2)) {
+                            System.out.print(
+                                    String.format(
+                                        "------------ Wellcome -----------\n" +
+                                        "Hi %s, do you want change\n" +
+                                        "password now? Y/N:", userName2));
+
+                            String isChangePassword = sc.nextLine();
+
+                            if (isChangePassword.toLowerCase().equals("y")) {
+                                System.out.print("Old password:");
+                                String oldRawPassword = sc.nextLine();
+
+                                System.out.print("new password:");
+                                String newRawPassword = sc.nextLine();
+
+                                System.out.print("renew password:");
+                                String newRawPassword2 = sc.nextLine();
+
+                                // Check if new password and repeat password are the same
+                                if (newRawPassword.equals(newRawPassword2) &&
+                                        userList.changePassword(userName2, oldRawPassword, newRawPassword)) {
+                                    System.out.println("Changed password successfully!");
+                                } else {
+                                    System.out.println("Failed changing password.");
+                                }
+                            }
+                        } else {
+                            System.out.println("Login failed.");
+                        }
+                        break;
+                    case 3:
+                        System.exit(0);
+                        break;
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException num_ex) {
+                // Exception will be handled if unable to parse
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
             }
-        } catch (NumberFormatException num_ex) {
-            // Exception will be handled if unable to parse
         }
-        
-        System.exit(0);
     }
     
     /**
@@ -134,8 +182,6 @@ public class Short04 {
      */
     public static void main(String[] args) {
         Short04 o4 = new Short04();
-        
-        o4.readDatabase();
         o4.displayUserInterface();
     }
 }

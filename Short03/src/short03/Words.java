@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * Short 03 - Word Database Handler
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14
  */
 public class Words {
@@ -43,17 +43,20 @@ public class Words {
      * @return If the word is created AND write to the database
      */
     public boolean createWord(String word, String meaning) {
-        boolean isSuccess = false;
+        boolean isSuccess = false; // if writing new file is success
         
         /**
          * What-if: a word (the one adding) that already exist? I don't care.
          */
         
         try {
+            // Append the word database
             fwEdit = new FileWriter(getFileName(word), true);
             
+            // Write the new word
             fwEdit.write(String.format("%s,%s", word, meaning));
             
+            // Close the file
             fwEdit.close();
             
             isSuccess = true;
@@ -61,7 +64,7 @@ public class Words {
             isSuccess = false;
         }
         
-        return isSuccess;
+        return (isSuccess); // return if success
     }
     
     /**
@@ -135,22 +138,25 @@ public class Words {
         }
         
         
-        return isSuccess;
+        return (isSuccess);
     }
     
     /**
      * Look for a word in the indexed file
      * @param word as input word for searching
      */
-    public void lookUpMeaing(String word) {
+    public void lookUpMeaning(String word) {
         // Read from file
         try {
             fwRead = new Scanner(new File(getFileName(word)));
-        
+            
+            // Loop through the file
             while (fwRead.hasNext()) {
                 
+                // Split the file using a comma
                 String[] fwReadStr = fwRead.nextLine().split(",");
                 
+                // If the word is found, print it out.
                 if (fwReadStr[0].equals(word)) {
                     System.out.println("Meaning: " + fwReadStr[1]);
                     break; // Once found, exit the loop.
@@ -158,7 +164,7 @@ public class Words {
             }
         }
         catch (FileNotFoundException file_io_excep) {
-            //
+            // File Exception Io (R/W issue)
         }
     }
 }

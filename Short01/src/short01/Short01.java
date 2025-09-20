@@ -6,7 +6,7 @@ import short01.StudentManagementPackage.StudentList;
 
 /**
  * Short 01 - Main entry
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14
  */
 public class Short01 {

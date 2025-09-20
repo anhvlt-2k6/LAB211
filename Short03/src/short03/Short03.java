@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * Short 03 - Main Program
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14
  */
 public class Short03 {
@@ -66,11 +66,12 @@ public class Short03 {
                         // Validate meaning
                         if (!meaning1.matches(meaningValidation)) {
                             System.out.println(
-                                "A meaning should only contains lettes, digits, and specials ('spaces', ':', ',', '?', '!'). "
+                                "A meaning should only contains letters, digits, and specials ('spaces', ':', ',', '?', '!'). "
                                 + "Please re-validate!");
                             break;
                         }
-
+                        
+                        // Conditinal the word creation
                         if (words.createWord(word1, meaning1)) {
                             System.out.println(String.format("New word (%s) has been created", word1));
                         } else {
@@ -100,6 +101,7 @@ public class Short03 {
                             break;
                         }
 
+                        // Contional editing word
                         if (words.editWord(word2, meaning2)) {
                             System.out.println(String.format("The word (%s) has been modified", word2));
                         } else {
@@ -116,7 +118,7 @@ public class Short03 {
                             break;
                         }
 
-                        words.lookUpMeaing(word3);
+                        words.lookUpMeaning(word3);
                         break;
                     case 4:
                         System.exit(0);

@@ -12,17 +12,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 /**
- * Short 04
- * @author CE200360 - Vo Luu Tuong Anh
+ * Short 04 - UserList
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-18
  */
 @SuppressWarnings("serial")
-public class UserList extends ArrayList<Users> {
-    
-    // Regex strings to validate email, phone number, and dob
-    private final String emailValidator = "([A-Za-z0-9._-]{1,})@(([A-Za-z0-9]{1,}).[A-Za-z0-9]{2,})";
-    private final String phoneValidator = "[0-9]{10,11}";
-    private final String dobValidator = "([0-9]{2})\\/([0-9]{2})\\/([0-9]{4})";
+public class UserList extends ArrayList<User> {
     
     // Database file name
     private final String fileName = "userdb.txt";
@@ -30,6 +25,13 @@ public class UserList extends ArrayList<Users> {
     // File reader and writer
     private Scanner userDbReader;
     private FileWriter userDbWriter;
+    
+    /**
+     * Constructor of the list
+     */
+    public UserList() {
+        this.readFromDb();
+    }
     
     ///////////////////////////////////////////////////////
     ////// Non-selection-based methods
@@ -39,9 +41,9 @@ public class UserList extends ArrayList<Users> {
      * Write content from the ArrayList into the database (see the variable fileName)
      */
     
-    public void writeToDb() {
+    private void writeToDb() {
         // Pseudo line (First Line) as the header
-        String outStr = "#Account,Password,Name,Phone,Email,Address,DOB";
+        String outStr = "#ID,Account,Password,Name,Phone,Email,Address,DOB";
 
         try {
             // Initialize new database writer
@@ -49,7 +51,8 @@ public class UserList extends ArrayList<Users> {
             
             // Write into structure. See the Pseudo line above.
             outStr = this.stream().map((u) -> String.format(
-                    "\n%s,%s,%s,%s,%s,%s,%s",
+                    "\n%d,%s,%s,%s,%s,%s,%s,%s",
+                    u.getId(),
                     u.getUserName(),
                     u.getPassword(),
                     u.getName(),
@@ -75,7 +78,7 @@ public class UserList extends ArrayList<Users> {
     /**
      * Read from the database (see the variable fileName)
      */
-    public void readFromDb() {
+    private void readFromDb() {
         try {
             // Initialize new database file
             File fw = new File(fileName);
@@ -97,40 +100,43 @@ public class UserList extends ArrayList<Users> {
                     
                     /**
                      * Each line of the database, follows this structure (separated by CSV comma)
-                     * 0 - username
-                     * 1 - password in MD5
-                     * 2 - name
-                     * 3 - phoneNumber
-                     * 4 - emailAddress
-                     * 5 - address
-                     * 6 - dateOfBirth
+                     * 0 - Id
+                     * 1 - username
+                     * 2 - password in MD5
+                     * 3 - name
+                     * 4 - phoneNumber
+                     * 5 - emailAddress
+                     * 6 - address
+                     * 7 - dateOfBirth
                      */
                     String[] userData = user.split(",");
                     
-                    // Add new user into
-                    this.add(new Users(
-                            userData[0],
+                    // Add new user into the list
+                    // Note: Index 0 is the ID. No need to add
+                    this.add(new User(
+                            Integer.parseInt(userData[0]),
                             userData[1],
                             userData[2],
                             userData[3],
                             userData[4],
                             userData[5],
-                            userData[6])
+                            userData[6],
+                            userData[7])
                     );
                 }
             }
         }
-        catch (FileNotFoundException | ArrayIndexOutOfBoundsException ex) {
-            // Handle exception on FileNotFound or Array out of bound
+        catch (FileNotFoundException | ArrayIndexOutOfBoundsException | NumberFormatException ex) {
+            // Handle exception on FileNotFound or Array out of bound or unable to parse integer
         }
     }
     
     /**
-     * Hashing raw password into MD5
-     * @param rawPassword as raw String password
-     * @return String as password in MD5
+     * Hashing raw string into MD5
+     * @param rawPassword as raw String
+     * @return String in MD5
      */
-    private String rawToMD5(String rawPassword) {
+    private String rawToMD5(String rawString) {
         String md5Str = "";
         
         try {
@@ -138,7 +144,7 @@ public class UserList extends ArrayList<Users> {
             MessageDigest md = MessageDigest.getInstance("MD5");
             
             // Update the digest with the raw password
-            md.update(rawPassword.getBytes());
+            md.update(rawString.getBytes());
             
             // Always lower case the MD5
             md5Str = DatatypeConverter.printHexBinary(md.digest()).toLowerCase();
@@ -155,80 +161,86 @@ public class UserList extends ArrayList<Users> {
 
     /**
      * Add new User
-     * @param isPasswordRaw whether the password is raw or hashed
      * @param userName userName (or Account)
-     * @param inputPassword Password of the userName (not name)
+     * @param password Password of the userName (not name)
      * @param name Actual name of the user (Real name)
-     * @param phoneNumber Phone number of the user
+     * @param phone Phone number of the user
      * @param emailAddress Email address of the user
      * @param address Home address of the user
      * @param dateofBirth Date of Birth, follows as DD/MM/YYYY format
-     * @return whether or not the input is valid
+     * @return whether the add is valid. If returns -1, that mean user exists.
      */
     
-    public boolean addNewUser(
-            boolean isPasswordRaw,
+    public int addAccount(
             String userName, 
-            String inputPassword, 
+            String password, 
             String name, 
-            String phoneNumber, 
+            String phone, 
             String emailAddress,
             String address,
-            String dateofBirth) {
+            String dateofBirth) throws Exception {
         
-       // Validate if the input is actually valid
-        boolean isAddValidationFailed =
-            userName == null || userName.isEmpty() ||
-            emailAddress == null || !emailAddress.matches(emailValidator) ||
-            phoneNumber == null || !phoneNumber.matches(phoneValidator) ||
-            dateofBirth == null || !dateofBirth.matches(dobValidator);
+        // the id
+        int id = 0; 
         
-        // If the input is valid, add user
-        if (!isAddValidationFailed) {
+        // Loop through the current database
+        for (User u : this) {
+            id += 1; // Add 1 for each id. The id starts with 0
+            
+            // If there is any account that equals to 
+            if (userName.equals(u.getUserName())) {
+                throw new Exception("User existed.");
+            }
+        }
+        
+        // If the id is equals to 1. that means, 
+        if (id != -1) {
             this.add(
-                    new Users(
-                        userName, 
-                        (isPasswordRaw) ? rawToMD5(inputPassword) : inputPassword, 
-                        name, 
-                        phoneNumber, 
-                        emailAddress,
-                        address,
-                        dateofBirth)
+                new User(
+                    id,
+                    userName, 
+                    rawToMD5(password), 
+                    name, 
+                    phone, 
+                    emailAddress,
+                    address,
+                    dateofBirth)
             );
             
             this.writeToDb(); // Apply changes into the database
         }
         
-        // See in 19950022400 - Section 5.6 for return statement
-        return (isAddValidationFailed); // return value if adding is failed or not
+        return (id);
     }
     
     /**
      * Let user login into the system
-     * @param userName userName (or Account) Password of the userName (not name).
-     * @param rawPassword String of a raw password
+     * @param username userName (or Account) Password of the userName (not name).
+     * @param password String of a raw password
      * @return a String of actual user name. If the string is empty, login failed
      */
-    public String login(String userName, String rawPassword) {
+    public boolean login(String username, String password) {
         // Return param (always initialize the return param)
         // See in 19950022400 - Section 5.5 for statement paragraphing
-        String actualName = "";
+        boolean isLoginSuccess = false;
         
         // Hashing the password
-        String password = this.rawToMD5(rawPassword);
+        String hashPass = this.rawToMD5(password);
         
         // Loop through the array list to find the user
-        for (Users u : this) {
+        for (User u : this) {
             String uName = u.getUserName();
             String uPass = u.getPassword();
-            if (uName.equals(userName) && uPass.equals(password)) {
-                actualName = u.getName();
+            
+            // Compare data
+            if (uName.equals(username) && uPass.equals(hashPass)) {
+                isLoginSuccess = true;
                 break;
             }
         }
         
         // See in 19950022400 - Section 5.6 for return statement
-        return (actualName);
+        return (isLoginSuccess);
     }
     
     /**
@@ -236,18 +248,20 @@ public class UserList extends ArrayList<Users> {
      * @param userName userName (or Account)
      * @param oldRawPassword a String as old raw password
      * @param newRawPassword a String as new raw password
+     * @return boolean as if change password success
      */
-    public void changePassword(
+    public boolean changePassword(
             String userName, 
             String oldRawPassword,
             String newRawPassword) {
         
+        boolean isChangeSuccess = false;
         // Hashing passwords into MD5
         String oldPassword = this.rawToMD5(oldRawPassword);
         String newPassword = this.rawToMD5(newRawPassword);
         
         // Loop through the array list to find the user. If matches, change its password 
-        for (Users s : this) {
+        for (User s : this) {
             if (s.getUserName().equals(userName) && s.getPassword().equals(oldPassword)) {
                 // Set password (in MD5)
                 s.setPassword(newPassword);
@@ -255,8 +269,12 @@ public class UserList extends ArrayList<Users> {
                 // Update back to the database file
                 this.writeToDb();
                 
+                isChangeSuccess = true;
+                
                 break; // Stop when found
             }
         }
+        
+        return (isChangeSuccess);
     }
 }

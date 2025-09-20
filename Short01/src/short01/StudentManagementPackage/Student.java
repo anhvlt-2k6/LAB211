@@ -2,7 +2,7 @@ package short01.StudentManagementPackage;
 
 /**
  * Short 01 - Student base class
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14
  */
 public class Student {

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 /**
  * Short 01 - Student Db Handler
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14 (1:00 AM)
  */
 public class StudentList extends ArrayList<Student> {

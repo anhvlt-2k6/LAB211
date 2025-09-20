@@ -1,11 +1,12 @@
 package short04.UserDb;
 
 /**
- * Short 04
- * @author CE200360 - Vo Luu Tuong Anh
+ * Short 04 - User class as blueprint
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-18
  */
-public class Users {
+public class User {
+    private final int id;
     private final String userName;
     private String password;
     private final String name;
@@ -16,6 +17,7 @@ public class Users {
     
     /**
      * Constructor of Users class
+     * @param id as unique id
      * @param userName userName (or Account)
      * @param password Password of the userName (not name). Always in MD5
      * @param name Actual name of the user (Real name)
@@ -24,7 +26,8 @@ public class Users {
      * @param address Home address of the user
      * @param dateofBirth Date of Birth, follows as DD/MM/YYYY format
      */
-    public Users(
+    public User(
+            int id,
             String userName, 
             String password, 
             String name, 
@@ -32,6 +35,7 @@ public class Users {
             String emailAddress,
             String address,
             String dateofBirth) {
+        this.id = id;
         this.userName = userName;
         this.password = password;
         this.name = name;
@@ -95,6 +99,14 @@ public class Users {
      */
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    /**
+     * Return id of the user
+     * @return id in integer
+     */
+    public int getId() {
+        return id;
     }
 
     /**

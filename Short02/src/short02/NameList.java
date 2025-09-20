@@ -2,7 +2,7 @@ package short02;
 
 /**
  * Short 02 - Name Handler
- * @author CE200360 - Vo Luu Tuong Anh
+ * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-14
  */
 public class NameList {
