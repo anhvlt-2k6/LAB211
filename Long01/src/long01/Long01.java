@@ -1,9 +1,11 @@
 package long01;
 
-public class Long01 {
+import FrontEnd.UserInterface;
 
-    public static void main(String[] args) {
-        
-    }
+public class Long01 {
     
+    public static void main(String[] args) {
+        UserInterface ui = new UserInterface();
+        ui.displayUI();
+    }
 }
