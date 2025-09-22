@@ -37,7 +37,7 @@ public final class StudentDb extends ArrayList<Student> {
     ///////////////////////////////////////////////////
     /////// Non-selection-based methods
     ///////////////////////////////////////////////////
-
+    
     /**
      *
      */
@@ -95,7 +95,7 @@ public final class StudentDb extends ArrayList<Student> {
     }
     
     /**
-     *
+     * Write from local database to file
      */
     private void writeToFile() {
         // First line is the header (also the pseudo line)
