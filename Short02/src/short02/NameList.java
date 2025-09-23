@@ -27,14 +27,14 @@ public class NameList {
      * @param index Index of array
      * @param value Value of that index
      */
-    public void AddElement(int index, String value) {
+    public void addElement(int index, String value) {
         studentList[index] = value;
     }
     
     /**
      * Display contents of array. In this case, these are the names
      */
-    public void DisplayNameArray() {
+    public void displayNameArray() {
         // Loop through the studentList
         for (int i = 0; i < studentList.length; i++) {
             System.out.println(String.format("%d. %s", (i + 1), studentList[i]));
@@ -44,7 +44,7 @@ public class NameList {
     /**
      * Sort the array alphabetical (A-Z)
      */
-    public void SortNameArray() {
+    public void sortNameArray() {
         // Loop with pointer 1
         for (int c = 0; c < (studentList.length - 1); c++) {
             
@@ -55,7 +55,7 @@ public class NameList {
                 int comp = studentList[i].compareTo(studentList[i + 1]);
                 
                 // If comparator is larger than 0, swap
-                if (comp > 0) {
+                if (comp < 0) {
                     String temp = studentList[i];
                     studentList[i] = studentList[i + 1];
                     studentList[i + 1] = temp;
