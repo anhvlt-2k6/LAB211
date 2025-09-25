@@ -50,12 +50,12 @@ public class Short02 {
                             String userInput = sc.nextLine();
                             
                             // Validate if user input is really a name
-                            if (userInput.matches("[A-Za-z0-9 ]{1,}")) {
+                            if (userInput.matches("[A-Za-z ]{1,}")) {
                                 value = userInput;
                                 nameList.addElement(i, value);
                                 break;
                             } else {
-                                System.out.println("Invalid name");
+                                System.out.println("Please validate your input (Only letters and spaces)\n");
                             }
                         }
                     }

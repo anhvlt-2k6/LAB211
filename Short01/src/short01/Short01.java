@@ -71,13 +71,13 @@ public class Short01 {
                          * Date of Birth: {2}-{(Months in 3 letters)}-{4}
                          * Learning Point: Numbers only
                          */
-
+                        
                         System.out.print("Student code: ");
                         String stuCode = sc.nextLine();
                         
                         // If detect any informal, reject to call backend
                         if (stuCode.isEmpty() || !stuCode.matches("(SV)([0-9]{3,6})")) {
-                            System.out.println("Please validate your input\n");
+                            System.out.println("Please validate your input (SV with 3 to 6 numbers only)\n");
                             break;
                         }
                         
@@ -86,7 +86,7 @@ public class Short01 {
                         
                         // If detect any informal, reject to call backend
                         if (stuName1 == null || !stuName1.matches("[A-Za-z ]{1,255}")) {
-                            System.out.println("Please validate your input\n");
+                            System.out.println("Please validate your input (Only letters and spaces)\n");
                             break;
                         }
                         
@@ -95,7 +95,7 @@ public class Short01 {
                         
                         // If detect any informal, reject to call backend
                         if (stuDoB == null || !stuDoB.matches("(([0-3]{1})([0-9]{1}))-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-([0-9]{4})")) {
-                            System.out.println("Please validate your input\n");
+                            System.out.println("Please validate your input (in format DD-MMM-YYYY)\n");
                             break;
                         }
 
@@ -104,7 +104,7 @@ public class Short01 {
                         
                         // If detect any informal, reject to call backend
                         if (stuLearnP == null || !stuLearnP.matches("([0-4]{1})\\.([0-9]{1})")) {
-                            System.out.println("Please validate your input\n");
+                            System.out.println("Please validate your input (D.D)\n");
                             break;
                         }
                         
@@ -114,11 +114,11 @@ public class Short01 {
                         break;
                     case 2:
                         System.out.print("Please enter student name: ");
-                        String stuName2 = sc.next();
+                        String stuName2 = sc.nextLine();
                         
                         // Validate user input
                         if (stuName2 == null || !stuName2.matches("[A-Za-z ]{1,}")) {
-                            System.out.println("Please validate your input\n");
+                            System.out.println("Please validate your input (Only letters and spaces)\n");
                         } else {
                             // Call student List backend for student
                             studentList.lookForStudent(stuName2);

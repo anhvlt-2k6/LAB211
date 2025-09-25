@@ -1,4 +1,2 @@
 #Code,Name,Date-of-birth,Learning-point
-SV010,Hai,23-Jan-2010,3.4
-SV001,Nguyen Van A,29-Jan-2001,3.8
-SV001,Vo Van B,31-Jan-2001,2.1
+SV001,Nguyen Van A,31-Jan-2024,3.8

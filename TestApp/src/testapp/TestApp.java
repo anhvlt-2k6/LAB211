@@ -1,23 +1,20 @@
 package testapp;
 
+import java.util.PriorityQueue;
+
 public class TestApp {
     
     public static void main(String[] args) {
-        String data = "1, Nguyen    van a, anv@gmail.com, 098889999, Cau Giay - Ha Noi - Viet Nam";
-        
-        String[] nameSegment = data.split(",")[1].split(" ");
-        
-        String properName = "";
-        
-        for (String s : nameSegment) {
-            if (!s.isEmpty()) {
-                String firstLetter = s.substring(0, 1).toUpperCase();
-                String remainingLetter = s.substring(1);
-                
-                properName += firstLetter + remainingLetter + " ";
-            }
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        minHeap.add(10);
+        minHeap.add(5);
+        minHeap.add(20);
+        minHeap.add(3);
+
+        System.out.println("Min-Heap elements (smallest first):");
+        while (!minHeap.isEmpty()) {
+            System.out.println(minHeap.poll());
         }
-        
-        System.out.println(properName);
     }
 }
