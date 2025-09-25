@@ -1,2 +1,1 @@
 #Code,Name,Date-of-birth,Learning-point
-SV001,Nguyen Van A,31-Jan-2024,3.8

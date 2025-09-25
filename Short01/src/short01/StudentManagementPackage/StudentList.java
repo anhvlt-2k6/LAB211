@@ -232,7 +232,18 @@ public class StudentList extends ArrayList<Student> {
             );
         });
     }
-
+    
+    /**
+     * Delete all student
+     */
+    public void deleteAllStudent() {
+        // Delete all objects
+        this.removeAll(this);
+        
+        // Write back to file
+        this.writeToFile();
+    } 
+   
     /**
      * Java Recommendation for clone()
      * @return Object (Java Recommendation)

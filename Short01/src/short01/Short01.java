@@ -45,21 +45,22 @@ public class Short01 {
                 " 2. Look up student\n" +
                 " 3. Display student list\n" +
                 " 4. Exit\n" + 
-                "Please choose menu (1–4): "
+                " 5. Delete all student\n" +
+                "Please choose menu (1–5): "
             );
 
             try {
-                // Try asking user s for selection. Default is 5 as faillback
-                int selection = 5;
+                // Try asking user s for selection. Default is 6 as faillback
+                int selection = 6;
                 String selecStr = sc.nextLine();
 
                 // Validate that input
-                if (selecStr == null || !selecStr.matches("[1-4]{1}")) {
+                if (selecStr == null || !selecStr.matches("[1-5]{1}")) {
                     System.out.println("Please validate your input\n");
                 } else {
                     selection = Integer.parseInt(selecStr);
                 }
-
+                
                 switch (selection) {
                     case 1:
 
@@ -131,6 +132,10 @@ public class Short01 {
                         break;
                     case 4:
                         System.exit(0);
+                        break;
+                    case 5:
+                        studentList.deleteAllStudent();
+                        System.out.println("Deleted all students");
                         break;
                     default:
                         // Fall-back if the input not-get
