@@ -35,11 +35,10 @@ public final class ATMBackend {
         this.readInfo("card");
         this.readInfo("transfer");
         this.readInfo("withdrawal");
-        
     }
     
     /////////////////////////////////////////////////////////////////////
-    //  Read functions
+    //  Non-user-interface functions
     /////////////////////////////////////////////////////////////////////
     
     public void readInfo(String arrayListCase) {

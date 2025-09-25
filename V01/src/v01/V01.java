@@ -22,7 +22,9 @@ public class V01 {
         String account = "";
         String pin = "";
         
-        while (!atmbackend.isLoginSuccess(account, pin)) {
+        boolean isLoggingSuccess = false;
+        
+        while (!isLoggingSuccess) {
             
             String accountUserInput = "";
             while (!accountUserInput.matches(accountValidation)) {
@@ -50,8 +52,29 @@ public class V01 {
                 }
             }
             
+            isLoggingSuccess = atmbackend.isLoginSuccess(account, pin);
+            if (!isLoggingSuccess) {
+                System.out.println("Unable to login. Re-check your credential.");
+            }
+        }
+        
+        
+        try {
+            int choice = Integer.parseInt(sc.nextLine());
             
-            
+            switch (choice) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        } catch (NumberFormatException numex) {
+            System.out.println("Invalid choice");
         }
     }
     
