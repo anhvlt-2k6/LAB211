@@ -8,15 +8,21 @@ public final class Card {
     private double balances;
     private final String moneyType;
     
-    public Card(String[] data) throws ArrayIndexOutOfBoundsException {
+    public Card(String[] data) throws Exception {
         if (data.length == 4) {
             this.account = data[0];
             this.id = data[1];
             this.accountName = data[2];
-            this.balances = 0;
-            this.moneyType = data[3];
+            
+            try {
+                this.balances = Double.parseDouble(data[3]);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Unable to parse for amount");
+            }
+            
+            this.moneyType = data[4];
         } else {
-            throw new ArrayIndexOutOfBoundsException("Card database requires 4 parameters!");
+            throw new ArrayIndexOutOfBoundsException("Card database requires 5 parameters!");
         }
     }
 

@@ -13,6 +13,7 @@ public class Transfer {
             this.fromId = data[1];
             this.toId = data[2];
             this.dateTime = data[3];
+            
             try {
                 this.amount = Double.parseDouble(data[4]);
             } catch (NumberFormatException e) {
