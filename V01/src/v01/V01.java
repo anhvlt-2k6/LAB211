@@ -21,8 +21,112 @@ public class V01 {
         atmbackend = new ATMBackend();
     }
     
+    private void transferMoney() {
+        try {
+            boolean isTransferMoneySuccess = false;
+            
+            while (!isTransferMoneySuccess) {
+                
+                String sourceId = "";
+                while (!sourceId.matches(idCardValidation)) {
+                    System.out.print("Please enter an Source ID: ");
+                    String idUserInput = sc.nextLine().trim();
+                    
+                    if (idUserInput.matches(idCardValidation)) {
+                        sourceId = idUserInput;
+                    } else {
+                        System.out.println("An ID card must contain 7 digits.");
+                    }
+                }
+                
+                String targetId = "";
+                while (!targetId.matches(idCardValidation)) {
+                    System.out.print("Please enter an Target ID: ");
+                    String idUserInput = sc.nextLine().trim();
+                    
+                    if (idUserInput.matches(idCardValidation)) {
+                        targetId = idUserInput;
+                    } else {
+                        System.out.println("An ID card must contain 7 digits.");
+                    }
+                }
+                
+                String amountStr = "";
+                while (!amountStr.matches(balancesValidation)) {
+                    System.out.print("Please enter amount you want to transfer: ");
+                    String balancesUserInput = sc.nextLine().trim();
+                    
+                    if (balancesUserInput.matches(balancesValidation)) {
+                            amountStr = balancesUserInput;
+                    } else {
+                        System.out.println("An amount should be a float number.");
+                    }
+                }
+                
+                try {
+                    double amount = Double.parseDouble(amountStr);
+                    isTransferMoneySuccess = atmbackend.isTransferMoneySuccess(sourceId, targetId, amount);
+                } catch (NumberFormatException numex) {
+                    System.out.println("Amount should be a number!");
+                }
+                
+                if (!isTransferMoneySuccess) {
+                    System.out.println("Unable to transfer. Please check parameters");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getLocalizedMessage());
+        }
+    }
+    
+    private void withdrawalMoney() {
+        try {
+            
+            boolean iswithdrawalMoneySuccess = false;
+            
+            while (!iswithdrawalMoneySuccess) {
+                
+                String id = "";
+                while (!id.matches(idCardValidation)) {
+                    System.out.print("Please enter an ID: ");
+                    String idUserInput = sc.nextLine().trim();
+                    
+                    if (idUserInput.matches(idCardValidation)) {
+                        id = idUserInput;
+                    } else {
+                        System.out.println("An ID card must contain 7 digits.");
+                    }
+                }
+                
+                String amountStr = "";
+                while (!amountStr.matches(balancesValidation)) {
+                    System.out.print("Please enter amount you want to withdrawal: ");
+                    String balancesUserInput = sc.nextLine().trim();
+                    
+                    if (balancesUserInput.matches(balancesValidation)) {
+                            amountStr = balancesUserInput;
+                    } else {
+                        System.out.println("An amount should be a float number.");
+                    }
+                }
+                
+                try {
+                    double amount = Double.parseDouble(amountStr);
+                    iswithdrawalMoneySuccess = atmbackend.iswithdrawalMoneySuccess(id, amount);
+                } catch (NumberFormatException numex) {
+                    System.out.println("Amount should be a number!");
+                }
+                
+                if (!iswithdrawalMoneySuccess) {
+                    System.out.println("Unable to withdrawal. Please check parameters");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getLocalizedMessage());
+        }
+    }
+    
     private void registerAccount() {
-        
         try {
             boolean isRegisterSuccess = false;
             
@@ -88,7 +192,6 @@ public class V01 {
         }
     }
     
-    
     private void loginUserInterface() {
         
         String account = "";
@@ -147,8 +250,10 @@ public class V01 {
                     registerAccount();
                     break;
                 case 2:
+                    withdrawalMoney();
                     break;
                 case 3:
+                    transferMoney();
                     break;
                 default:
                     System.out.println("Invalid choice");

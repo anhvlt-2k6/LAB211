@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Scanner;
 import v01.DataTypes.Account;
@@ -209,9 +210,132 @@ public final class ATMBackend {
         }
     }
     
+    private boolean isCardIdExisted(String cardId) {
+        boolean isCardExisted = false;
+        
+        for (Card c : cards) {
+            if (c.getId().equals(cardId)) {
+                isCardExisted = true;
+                break;
+            }
+        }
+        
+        return (isCardExisted);
+    }
+    
     /////////////////////////////////////////////////////////////////////
     //  User-interface-based functions
     /////////////////////////////////////////////////////////////////////
+    
+    public boolean isTransferMoneySuccess(String sourceCardId, String targetCardId, double amount) throws Exception {
+        boolean isTransferMoneySuccess = false;
+        
+        if (sourceCardId.equals(targetCardId)) {
+            throw new Exception("Cannot trasfer to the same card.");
+        }
+        
+        if (!(currentAccount == null)) {
+            
+            if (!isCardIdExisted(sourceCardId)) {
+                throw new Exception("Source Card ID is not available");
+            }
+            
+            if (!isCardIdExisted(targetCardId)) {
+                throw new Exception("Target Card ID is not available");
+            }
+            
+            Card source = null, destination = null;
+            
+            for (Card c : cards) {
+                if (c.getId().equals(sourceCardId)) {
+                    source = c;
+                }
+                
+                if (c.getId().equals(targetCardId)) {
+                    destination = c;
+                }
+            }
+            
+            if (source == null || destination == null) {
+                throw new Exception("Either source or destination is not on the application database.");
+            }
+            
+            if (source.getBalances() < amount) {
+                throw new Exception("Current balance of source card id is not enough.");
+            }
+            
+            source.setBalances(source.getBalances() - amount);
+            destination.setBalances(destination.getBalances() + amount);
+            
+            for (Card c : cards) {
+                if (c.getId().equals(sourceCardId)) {
+                    c = source;
+                }
+                
+                if (c.getId().equals(targetCardId)) {
+                    c = destination;
+                }
+            }
+            
+            isTransferMoneySuccess = true;
+        } else {
+            throw new Exception("User is either not logged in or does not exist in the database.");
+        }
+        
+        String[] data = {
+            sourceCardId,
+            targetCardId,
+            Instant.now().toString(),
+            String.format("%f", amount),
+            (isTransferMoneySuccess) ? "true" : "false"
+        };
+        
+        transfers.add(new Transfer(data));
+        this.writeInfo("transfer");
+        
+        return (isTransferMoneySuccess);
+    }
+    
+    public boolean iswithdrawalMoneySuccess(String cardId, double amount) throws Exception {
+        boolean iswithdrawalMoneySuccess = false;
+        
+        if (!(currentAccount == null)) {
+            
+            if (!isCardIdExisted(cardId)) {
+                throw new Exception("Target card id does not exist!");
+            }
+            
+            for (Card c : cards) {
+                if (c.getId().equals(cardId)) {
+                    double currentBalance = c.getBalances();
+                    
+                    if (currentBalance < amount) {
+                        c.setBalances(currentBalance - amount);
+                    } else {
+                       throw new Exception("Current balance is lower than the amount you want to withdrawal!"); 
+                    }
+                    
+                    iswithdrawalMoneySuccess = true;
+                    
+                    break;
+                }
+            }
+        } else {
+            throw new Exception("User is either not logged in or does not exist in the database.");
+        }
+        
+        String[] data = {
+            cardId,
+            Instant.now().toString(),
+            String.format("%f", amount),
+            (iswithdrawalMoneySuccess) ? "true" : "false"
+        };
+        
+        withdrawals.add(new Withdrawal(data));
+        this.writeInfo("withdrawal");
+        
+        return (iswithdrawalMoneySuccess);
+    }
     
     public boolean isLoginSuccess(String account, String pin) {
         boolean isLogged = false;
@@ -231,6 +355,10 @@ public final class ATMBackend {
         boolean isRegisterSuccessed = false;
         
         if (!(currentAccount == null)) {
+            if (isCardIdExisted(id)) {
+                throw new Exception("This card is already existed");
+            }
+            
             String[] data = {currentAccount.getAccount(), id, accountName, balances, moneyType};
             cards.add(new Card(data));
             this.writeInfo("card");
