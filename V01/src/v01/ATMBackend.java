@@ -78,7 +78,12 @@ public final class ATMBackend {
             fileReader = new Scanner(fw);
             
             while (fileReader.hasNext()) {
+                
                 String[] data = fileReader.nextLine().split(",");
+                
+                if (data.length < 2) {
+                    continue;
+                }
                 
                 switch (arrayListCase) {
                     case "account":
@@ -113,12 +118,11 @@ public final class ATMBackend {
                 }
             }
         }
-        catch (FileNotFoundException file_ex) {
-            // Exception on file not found
-            System.out.println("Unable to read file. No data.");
+        catch (FileNotFoundException | ArrayIndexOutOfBoundsException | NullPointerException file_ex) {
+            // Exception on file not found, out of bound (array), or null on object
         }
-        catch (ArrayIndexOutOfBoundsException | NullPointerException arr_ex) {
-            // Exception on out of bound of the array.
+        finally {
+            fileReader.close();
         }
     }
     
@@ -127,9 +131,6 @@ public final class ATMBackend {
             String fileName = "", outStr = "";
             
             switch (arrayListCase) {
-                    case "account":
-                        fileName = accountFn;
-                        break;
                     case "card":
                         fileName = cardFn;
                         break;
@@ -149,15 +150,6 @@ public final class ATMBackend {
             // Just a loop through the ArrayList
             
             switch (arrayListCase) {
-                    case "account":
-                        for (Account a : accounts) {
-                            outStr += String.format(
-                                    "\n%s,%s",
-                                    a.getAccount().trim(),
-                                    a.getPin().trim()
-                            );
-                        }
-                        break;
                     case "card":
                         for (Card c : cards) {
                             outStr += String.format(
@@ -223,6 +215,12 @@ public final class ATMBackend {
         return (isCardExisted);
     }
     
+    private void writeInformation() {
+        this.writeInfo("card");
+        this.writeInfo("transfer");
+        this.writeInfo("withdrawal");
+    }
+    
     /////////////////////////////////////////////////////////////////////
     //  User-interface-based functions
     /////////////////////////////////////////////////////////////////////
@@ -256,8 +254,13 @@ public final class ATMBackend {
                 }
             }
             
+            
             if (source == null || destination == null) {
                 throw new Exception("Either source or destination is not on the application database.");
+            }
+            
+            if (!currentAccount.getAccount().equals(source.getAccount())) {
+                throw new Exception("The source card Id is not own by user.");
             }
             
             if (source.getBalances() < amount) {
@@ -266,16 +269,6 @@ public final class ATMBackend {
             
             source.setBalances(source.getBalances() - amount);
             destination.setBalances(destination.getBalances() + amount);
-            
-            for (Card c : cards) {
-                if (c.getId().equals(sourceCardId)) {
-                    c = source;
-                }
-                
-                if (c.getId().equals(targetCardId)) {
-                    c = destination;
-                }
-            }
             
             isTransferMoneySuccess = true;
         } else {
@@ -291,7 +284,8 @@ public final class ATMBackend {
         };
         
         transfers.add(new Transfer(data));
-        this.writeInfo("transfer");
+        
+        this.writeInformation();
         
         return (isTransferMoneySuccess);
     }
@@ -307,9 +301,14 @@ public final class ATMBackend {
             
             for (Card c : cards) {
                 if (c.getId().equals(cardId)) {
+                    
+                    if (!currentAccount.getAccount().equals(c.getAccount())) {
+                        throw new Exception("The source card Id is not own by user.");
+                    }
+                    
                     double currentBalance = c.getBalances();
                     
-                    if (currentBalance < amount) {
+                    if (currentBalance >= amount) {
                         c.setBalances(currentBalance - amount);
                     } else {
                        throw new Exception("Current balance is lower than the amount you want to withdrawal!"); 
@@ -332,9 +331,31 @@ public final class ATMBackend {
         };
         
         withdrawals.add(new Withdrawal(data));
-        this.writeInfo("withdrawal");
+        
+        this.writeInformation();
         
         return (iswithdrawalMoneySuccess);
+    }
+    
+    public boolean isRegisterSuccess(String id, String accountName, String balances, String moneyType) throws Exception {
+        boolean isRegisterSuccessed = false;
+        
+        if (!(currentAccount == null)) {
+            if (isCardIdExisted(id)) {
+                throw new Exception("This card is already existed");
+            }
+            
+            String[] data = {currentAccount.getAccount(), id, accountName, balances, moneyType};
+            cards.add(new Card(data));
+
+            this.writeInformation();
+            
+            isRegisterSuccessed = true;
+        } else {
+            throw new Exception("User is either not logged in or does not exist in the database.");
+        }
+        
+        return (isRegisterSuccessed);
     }
     
     public boolean isLoginSuccess(String account, String pin) {
@@ -349,24 +370,5 @@ public final class ATMBackend {
         }
         
         return (isLogged);
-    }
-    
-    public boolean isRegisterSuccess(String id, String accountName, String balances, String moneyType) throws Exception {
-        boolean isRegisterSuccessed = false;
-        
-        if (!(currentAccount == null)) {
-            if (isCardIdExisted(id)) {
-                throw new Exception("This card is already existed");
-            }
-            
-            String[] data = {currentAccount.getAccount(), id, accountName, balances, moneyType};
-            cards.add(new Card(data));
-            this.writeInfo("card");
-            isRegisterSuccessed = true;
-        } else {
-            throw new Exception("User is either not logged in or does not exist in the database.");
-        }
-        
-        return (isRegisterSuccessed);
     }
 }

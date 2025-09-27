@@ -9,7 +9,7 @@ public final class Card {
     private final String moneyType;
     
     public Card(String[] data) throws Exception {
-        if (data.length == 4) {
+        if (data.length == 5) {
             this.account = data[0];
             this.id = data[1];
             this.accountName = data[2];

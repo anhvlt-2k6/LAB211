@@ -10,17 +10,17 @@ public class Transfer {
     
     public Transfer(String[] data) throws Exception {
         if (data.length == 5) {
-            this.fromId = data[1];
-            this.toId = data[2];
-            this.dateTime = data[3];
+            this.fromId = data[0];
+            this.toId = data[1];
+            this.dateTime = data[2];
             
             try {
-                this.amount = Double.parseDouble(data[4]);
+                this.amount = Double.parseDouble(data[3]);
             } catch (NumberFormatException e) {
                 throw new Exception("Unable to parse for amount");
             }
             
-            this.isSuccess = Boolean.parseBoolean(data[5]);
+            this.isSuccess = Boolean.parseBoolean(data[4]);
         } else {
             throw new ArrayIndexOutOfBoundsException("Transfer database requires 5 parameters!");
         }

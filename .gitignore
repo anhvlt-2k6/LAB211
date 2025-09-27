@@ -53,3 +53,5 @@ replay_pid*
 /V02/build/
 /V02/dist/
 /V01/nbproject/private/
+/V01/build/
+/V01/dist/

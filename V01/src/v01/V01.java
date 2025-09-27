@@ -8,8 +8,8 @@ public class V01 {
     private final String pinValidation = "[0-9]{6}";
     
     private final String idCardValidation = "[0-9]{7}";
-    private final String accountNameValidation = "[A-Za-z ]{1,}";
-    private final String balancesValidation = "([0-9]{1,32})\\.([0-9]{1,32})";
+    private final String accountNameValidation = "[A-Za-z0-9 ]{1,}";
+    private final String balancesValidation = "([0-9]{1,32})(\\.[0-9]{1,32})?";
     private final String moneyTypeValidation = "[A-Z]{3}";
     
     private final Scanner sc;
@@ -152,7 +152,7 @@ public class V01 {
                     if (accountNameUserInput.matches(accountNameValidation)) {
                         accountName = accountNameUserInput;
                     } else {
-                        System.out.print("A name should only contain a letters and spaces.");
+                        System.out.println("A name should only contain a letters and spaces.");
                     }
                 }
                 
@@ -169,8 +169,8 @@ public class V01 {
                 }
                 
                 String moneyType = "";
-                while (moneyType.matches(moneyTypeValidation)) {
-                    System.out.println("Please enter your money type (e.g USD, VND): ");
+                while (!moneyType.matches(moneyTypeValidation)) {
+                    System.out.print("Please enter your money type (e.g USD, VND): ");
                     String moneyTypeUserInput = sc.nextLine().trim();
                     
                     if (moneyTypeUserInput.matches(moneyTypeValidation)) {
@@ -179,6 +179,7 @@ public class V01 {
                         System.out.println("Money type should be 3 uppercase letters.");
                     }
                 }
+
                 
                 isRegisterSuccess = atmbackend.isRegisterSuccess(id, accountName, balances, moneyType);
                 
