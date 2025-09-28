@@ -1,5 +1,10 @@
 package v01.DataTypes;
 
+/**
+ * V01 - Card class as blueprint for data of accounts
+ * @author CE200360 Vo Luu Tuong Anh
+ * @since 2025-09-28
+ */
 public final class Card {
     
     private final String account;
@@ -8,6 +13,11 @@ public final class Card {
     private double balances;
     private final String moneyType;
     
+    /**
+     *
+     * @param data
+     * @throws Exception
+     */
     public Card(String[] data) throws Exception {
         if (data.length == 5) {
             this.account = data[0];
@@ -26,26 +36,50 @@ public final class Card {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public double getBalances() {
         return balances;
     }
 
+    /**
+     *
+     * @param balances
+     */
     public void setBalances(double balances) {
         this.balances = balances;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAccountName() {
         return accountName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMoneyType() {
         return moneyType;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAccount() {
         return account;
     }
