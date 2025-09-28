@@ -1,7 +1,7 @@
 package v01.DataTypes;
 
 /**
- * V01 - Card class as blueprint for data of accounts
+ * V01 - Card class as blueprint for data of cards
  * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-28
  */
@@ -14,9 +14,14 @@ public final class Card {
     private final String moneyType;
     
     /**
-     *
-     * @param data
-     * @throws Exception
+     * Constructor of Card
+     * @param data as array of String. It should contain infor as follow this index
+     *      0 - account
+     *      1 - id
+     *      2 - account Name
+     *      3 - balances
+     *      4 - moneyType
+     * @throws Exception in case the array does not have exact 5 params or unable to parse number from string
      */
     public Card(String[] data) throws Exception {
         if (data.length == 5) {
@@ -37,48 +42,48 @@ public final class Card {
     }
 
     /**
-     *
-     * @return
+     * Get the current balance of card
+     * @return double as balance
      */
     public double getBalances() {
         return balances;
     }
 
     /**
-     *
-     * @param balances
+     * Set the balance
+     * @param balances as the wanted balance
      */
     public void setBalances(double balances) {
         this.balances = balances;
     }
 
     /**
-     *
-     * @return
+     * Get the card id
+     * @return String as card id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @return
+     * Get the account name
+     * @return String as account name
      */
     public String getAccountName() {
         return accountName;
     }
 
     /**
-     *
-     * @return
+     * Get the card money type
+     * @return String as money type
      */
     public String getMoneyType() {
         return moneyType;
     }
 
     /**
-     *
-     * @return
+     * Get account that owned this card
+     * @return String as owner id (or account)
      */
     public String getAccount() {
         return account;
