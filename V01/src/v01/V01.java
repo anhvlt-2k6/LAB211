@@ -2,7 +2,23 @@ package v01;
 
 import java.util.Scanner;
 
+/**
+ * V01 - Entry class as User interface handler
+ * @author CE200360 Vo Luu Tuong Anh
+ * @since 2025-09-28
+ */
 public class V01 {
+    
+    /**
+     * Default properties for V01
+     * 
+     * accountValidation and pinValidation - for validating accounts
+     * 
+     * idCardValidation, accountNameValidation, balancesValidation, moneyTypeValidation - for validating cards
+     *
+     * sc as user input
+     * atmbackend as ATM Backend - handle data and files
+     */
     
     private final String accountValidation = "[0-9]{14}";
     private final String pinValidation = "[0-9]{6}";
@@ -16,10 +32,15 @@ public class V01 {
     
     private final ATMBackend atmbackend;
     
+    /**
+     * Constructor of V01
+     * Initialize the user input and ATM Backend
+     */
     public V01() {
         sc = new Scanner(System.in);
         atmbackend = new ATMBackend();
     }
+    
     
     private void transferMoney() {
         try {
@@ -265,6 +286,10 @@ public class V01 {
         }
     }
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         V01 v01 = new V01();
         v01.loginUserInterface();
