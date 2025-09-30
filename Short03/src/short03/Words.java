@@ -122,10 +122,13 @@ public class Words {
             }
 
             try {
+                // Initialize the file writer
                 fwEdit = new FileWriter(getFileName(word));
 
+                // write the content
                 fwEdit.write(writeBack);
 
+                // close the pointer
                 fwEdit.close();
 
                 isSuccess = true; // Only set once the file is written
@@ -136,7 +139,6 @@ public class Words {
         } else {
             isSuccess = false;
         }
-        
         
         return (isSuccess);
     }

@@ -138,8 +138,10 @@ public class Short03 {
      * @param args Useless
      */
     public static void main(String[] args) {
+        // New creation for short 03 program
         Short03 o3 = new Short03();
         
+        // Display User interface
         o3.displayUserInterface();
     }
 }

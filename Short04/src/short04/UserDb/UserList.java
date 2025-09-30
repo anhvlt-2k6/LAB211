@@ -169,6 +169,7 @@ public class UserList extends ArrayList<User> {
      * @param address Home address of the user
      * @param dateofBirth Date of Birth, follows as DD/MM/YYYY format
      * @return whether the add is valid. If returns -1, that mean user exists.
+     * @throws java.lang.Exception in case of user is already existed 
      */
     
     public int addAccount(

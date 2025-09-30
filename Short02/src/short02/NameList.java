@@ -55,7 +55,7 @@ public class NameList {
                 int comp = studentList[i].compareTo(studentList[i + 1]);
                 
                 // If comparator is larger than 0, swap
-                if (comp < 0) {
+                if (comp > 0) {
                     String temp = studentList[i];
                     studentList[i] = studentList[i + 1];
                     studentList[i + 1] = temp;
