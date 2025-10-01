@@ -73,5 +73,4 @@ public class Short09 {
         Short09 s09 = new Short09();
         s09.displayUserInterface();
     }
-    
 }
