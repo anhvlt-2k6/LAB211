@@ -83,7 +83,7 @@ public class Short04 {
                         String phoneNumber = sc.nextLine().trim();
                         if (!phoneNumber.matches(phoneValidator)) {
                             // Validate, and notify user if the user does not match the criteria
-                            System.out.println("Invalid phone number input.");
+                            System.out.println("Invalid phone number input. Should be 10-11 digits");
                             break; // exit the loop and return back to user interfaces
                         }
                         
@@ -99,9 +99,9 @@ public class Short04 {
                         // Ask for address 
                         System.out.print("Address:");
                         String address = sc.nextLine().trim();
-                        if (address.contains(",")) {
+                        if (!address.matches(nameValidator)) {
                             // Validate, and notify user if the user does not match the criteria
-                            System.out.println("Address should not contain a ','");
+                            System.out.println("Address should not contain a pure name (only letters, digits and spaces are allowed)");
                             break; // exit the loop and return back to user interface
                         }
                         
