@@ -50,61 +50,68 @@ public class Short04 {
                 switch (choice) {
                     case 1:
                         System.out.println("---------- Add User --------");
-
-                        System.out.print("Account:");
-                        String userName = sc.nextLine().trim();
                         
+                        // Ask user to enter user name
+                        System.out.print("Account:");
+                        String userName = sc.nextLine().trim(); // trim to repalce spaces
                         if (!userName.matches(accountValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Account name should only contain letters and digits (up to 254 chars).");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
+                        // Ask user to enter password
                         System.out.print("Password:");
                         String rawPassword  = sc.nextLine(); // Should not trim password
-                        
                         if (rawPassword == null || rawPassword.length() == 0) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Password should not be empty!");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
+                        // Ask user to enter name
                         System.out.print("Name:");
                         String name = sc.nextLine().trim();
-                        
                         if (!name.matches(nameValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Name should only contains letters and spaces.");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
+                        // Ask user to enter phone
                         System.out.print("Phone:");
                         String phoneNumber = sc.nextLine().trim();
-
                         if (!phoneNumber.matches(phoneValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Invalid phone number input.");
-                            break;
+                            break; // exit the loop and return back to user interfaces
                         }
                         
+                        // Ask user to enter email
                         System.out.print("Email:");
-                        String emailAddress = sc.nextLine().trim();
-
+                        String emailAddress = sc.nextLine().trim(); 
                         if (!emailAddress.matches(emailValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Invalid email address input.");
-                            break;
+                            break; // exit the loop and return back to user interfaces
                         }
                          
+                        // Ask for address 
                         System.out.print("Address:");
-                        String address = sc.nextLine();
-                        
+                        String address = sc.nextLine().trim();
                         if (address.contains(",")) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Address should not contain a ','");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
+                        // ask for date of birth
                         System.out.print("DOB:");
-                        String dateOfBirth = sc.nextLine();
-                        
+                        String dateOfBirth = sc.nextLine().trim();
                         if (!dateOfBirth.matches(dobValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Invalid DOB input.");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
                         // add new user into userList.
@@ -118,18 +125,18 @@ public class Short04 {
                         break;
                     case 2:
                         System.out.println("------------- Login ----------------");
-
+                        
+                        // Ask user to enter for account
                         System.out.print("Account: ");
                         String userName2 = sc.nextLine().trim();
-
                         if (!userName2.matches(accountValidator)) {
+                            // Validate, and notify user if the user does not match the criteria
                             System.out.println("Account name should only contain letters and digits (up to 254 chars).");
-                            break;
+                            break; // exit the loop and return back to user interface
                         }
                         
                         System.out.print("Password: ");
                         String password2 = sc.nextLine(); // Should not trim password
-                        
                         // If the string is empty, login is failed
                         if (userList.login(userName2, password2)) {
                             System.out.print(
@@ -137,10 +144,11 @@ public class Short04 {
                                         "------------ Wellcome -----------\n" +
                                         "Hi %s, do you want change\n" +
                                         "password now? Y/N:", userName2));
-
+                            
+                            // ask user if they want to change password
                             String isChangePassword = sc.nextLine();
-
                             if (isChangePassword.toLowerCase().equals("y")) {
+                                // Enter old, new and reenter new password
                                 System.out.print("Old password:");
                                 String oldRawPassword = sc.nextLine();
 
@@ -149,7 +157,7 @@ public class Short04 {
 
                                 System.out.print("renew password:");
                                 String newRawPassword2 = sc.nextLine();
-
+                                
                                 // Check if new password and repeat password are the same
                                 if (newRawPassword.equals(newRawPassword2) &&
                                         userList.changePassword(userName2, oldRawPassword, newRawPassword)) {
@@ -159,10 +167,12 @@ public class Short04 {
                                 }
                             }
                         } else {
+                            // Notify for failed login
                             System.out.println("Login failed.");
                         }
                         break;
                     case 3:
+                        // Exit the program
                         System.exit(0);
                         break;
                     default:
@@ -181,7 +191,10 @@ public class Short04 {
      * @param args Useless
      */
     public static void main(String[] args) {
+        // New creation for short 03 program
         Short04 o4 = new Short04();
+        
+        // Display User interface
         o4.displayUserInterface();
     }
 }
