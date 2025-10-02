@@ -2,14 +2,25 @@ package short09;
 
 import java.util.Scanner;
 
+/**
+ * Short 09 - User Interface and Entry program
+ * @author CE200360 Vo Luu Tuong Anh
+ * @since 2025-10-02
+ */
 public class Short09 {
 
+    // Initialize user input and array object
     private final Scanner sc;
     private final Array arr;
     
+    // String to validate if it is the integer validation
     private final String intValidation = "(-)?([0-9]{1,12})";
     
+    /**
+     * Constructor of program
+     */
     public Short09() {
+        // Initialize the scanner and array object
         sc = new Scanner(System.in);
         arr = new Array();
     }
@@ -47,30 +58,47 @@ public class Short09 {
         return (value);
     }
     
+    /**
+     * Display the user interface
+     */
     public void displayUserInterface() {
         try {
+            // Enter size of array
             String inputStr = this.enterAValue("Please enter size of array: ");    
             int input = Integer.parseInt(inputStr);
             
+            // for each index, ask user for input
             for (int i = 0; i < input; i++) {
+                // Enter value for that input
                 String valueStr = this.enterAValue("Enter element [" + i + "]: ");
-                arr.addElement(Integer.parseInt(valueStr));
+                arr.addInorder(Integer.parseInt(valueStr));
             }
             
+            // Display the array after sorting
             System.out.println("The array after sorting:\n" + arr.getArr());
             
+            // Ask user to enter new value
             String newValueStr = this.enterAValue("Please enter new value: ");
             int newValue = Integer.parseInt(newValueStr);
-            arr.addElement(newValue);
+            arr.addInorder(newValue);
             
+            // Display the new array
             System.out.println("New array:\n" + arr.getArr());
         } catch (NumberFormatException e) {
+            // In case user enter invalid number and unable to parse
             System.out.println(e.getLocalizedMessage());
         }
     }
     
+    /**
+     * Entry of program
+     * @param args Useless
+     */
     public static void main(String[] args) {
+        // Initialize the object
         Short09 s09 = new Short09();
+        
+        // Display user interface
         s09.displayUserInterface();
     }
 }
