@@ -55,36 +55,26 @@ public class StringProcessing {
     };
     
     public String binToDec(String input) {
-        double output = 0;
-        String[] reverseArr = this.reverseString(input).split("");
-        
-        for (int i = 0; i < reverseArr.length; i++) {
-            output += binary.get(reverseArr[i]) * Math.pow(2, i);
-        }
-        
-        return (String.format("%.0f", output));
+        return (String.format("%.0f", convertOperation(input, binary, 2)));
     }
     
     public String hexToDec(String input) {
-        double output = 0;
-        String[] reverseArr = this.reverseString(input).split("");
-        
-        for (int i = 0; i < reverseArr.length; i++) {
-            output += hex.get(reverseArr[i]) * Math.pow(16, i);
-        }
-        
-        return (String.format("%.0f", output));
+        return (String.format("%.0f", convertOperation(input, hex, 16)));
     }
     
     public String octToDec(String input) {
+        return (String.format("%.0f", convertOperation(input, octal, 8)));
+    }
+    
+    private double convertOperation(String input, HashMap<String, Double> map, int base) {
         double output = 0;
         String[] reverseArr = this.reverseString(input).split("");
         
         for (int i = 0; i < reverseArr.length; i++) {
-            output += octal.get(reverseArr[i]) * Math.pow(8, i);
+            output += map.get(reverseArr[i]) * Math.pow(base, i);
         }
         
-        return (String.format("%.0f", output));
+        return (output);
     }
     
     /**
