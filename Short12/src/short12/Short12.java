@@ -7,10 +7,6 @@ package short12;
 
 import java.util.Scanner;
 
-/**
- *
- * @author ShiroiNeko
- */
 public class Short12 {
 
     private final Scanner sc;

@@ -11,8 +11,8 @@ import short04.UserDb.UserList;
 public class Short04 {
     
     // User input and user list
-    private Scanner sc;
-    private UserList userList;
+    private final Scanner sc;
+    private final UserList userList;
     
     // Regex strings to validate email, phone number, and dob
     private final String accountValidator = "[A-Za-z0-9]{1,254}";
