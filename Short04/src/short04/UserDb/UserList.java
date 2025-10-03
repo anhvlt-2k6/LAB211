@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 /**
- * Short 04 - UserList
+ * Short 04 - UserList as database handler
  * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-18
  */

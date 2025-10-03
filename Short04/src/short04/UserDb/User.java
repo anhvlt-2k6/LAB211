@@ -1,7 +1,7 @@
 package short04.UserDb;
 
 /**
- * Short 04 - User class as blueprint
+ * Short 04 - User class as blueprint for data in the database (UserList)
  * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-18
  */

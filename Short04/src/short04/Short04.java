@@ -110,7 +110,7 @@ public class Short04 {
                         String dateOfBirth = sc.nextLine().trim();
                         if (!dateOfBirth.matches(dobValidator)) {
                             // Validate, and notify user if the user does not match the criteria
-                            System.out.println("Invalid DOB input.");
+                            System.out.println("Invalid DOB input. Should be in DD-MM-YYYY format");
                             break; // exit the loop and return back to user interface
                         }
                         
