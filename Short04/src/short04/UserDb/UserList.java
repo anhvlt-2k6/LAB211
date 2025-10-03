@@ -36,11 +36,10 @@ public class UserList extends ArrayList<User> {
     ///////////////////////////////////////////////////////
     ////// Non-selection-based methods
     ///////////////////////////////////////////////////////
-
+    
     /**
      * Write content from the ArrayList into the database (see the variable fileName)
      */
-    
     private void writeToDb() {
         // Pseudo line (First Line) as the header
         String outStr = "#ID,Account,Password,Name,Phone,Email,Address,DOB";
@@ -158,7 +157,26 @@ public class UserList extends ArrayList<User> {
     ///////////////////////////////////////////////////////
     ////// Selection-based methods
     ///////////////////////////////////////////////////////
-
+    
+    /**
+     * Check if the user existed or not
+     * @param account as login
+     * @return if the user existed
+     */
+    public boolean isUserExisted(String account) {
+        // return type
+        boolean isUserExisted = false;
+        
+        for (User u : this) {
+            if (u.getUserName().equals(account)) {
+                isUserExisted = true;
+                break;
+            }
+        }
+        
+        return (isUserExisted);
+    }
+    
     /**
      * Add new User
      * @param userName userName (or Account)
@@ -184,14 +202,8 @@ public class UserList extends ArrayList<User> {
         // the id
         int id = 0; 
         
-        // Loop through the current database
-        for (User u : this) {
-            id += 1; // Add 1 for each id. The id starts with 0
-            
-            // If there is any account that equals to 
-            if (userName.equals(u.getUserName())) {
-                throw new Exception("User existed.");
-            }
+        if (this.isUserExisted(userName)) {
+            throw new Exception("User existed.");
         }
         
         // If the id is equals to 1. that means, 

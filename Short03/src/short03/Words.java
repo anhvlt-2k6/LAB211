@@ -36,6 +36,33 @@ public class Words {
     ///////////// Selection-based methods
     /////////////////////////////////////////////////////////////////////
     
+    public boolean isWordDuplicated(String word) {
+        // Find duplication
+        boolean isDuplicated = false;
+        
+        // Read from file, to find duplicate
+        try {
+            // Get the reading
+            fwRead = new Scanner(new File(getFileName(word)));
+        
+            // loop to find the word if duplicated
+            while (fwRead.hasNext()) {
+                // Seperate by CSV
+                String[] str = fwRead.nextLine().split(",");
+                
+                // Get the first segment as word
+                if (str[0].equals(word)) {
+                    isDuplicated = true;
+                }
+            }
+        }
+        catch (FileNotFoundException file_io_excep) {
+            // Handle if the database hasn't been created yet.
+        }
+        
+        return (isDuplicated);
+    }
+    
     /**
      * Create a new word, and add it into the index file (follows the char_index.txt
      * @param word The word
@@ -45,23 +72,46 @@ public class Words {
     public boolean createWord(String word, String meaning) {
         boolean isSuccess = false; // if writing new file is success
         
-        /**
-         * What-if: a word (the one adding) that already exist? I don't care.
-         */
+        // Find duplication
+        boolean isDuplicated = false;
         
+        // Read from file, to find duplicate
         try {
-            // Append the word database
-            fwEdit = new FileWriter(getFileName(word), true);
-            
-            // Write the new word
-            fwEdit.write(String.format("%s,%s", word, meaning));
-            
-            // Close the file
-            fwEdit.close();
-            
-            isSuccess = true;
-        } catch (IOException io_e) {
-            isSuccess = false;
+            // Get the reading
+            fwRead = new Scanner(new File(getFileName(word)));
+        
+            // loop to find the word if duplicated
+            while (fwRead.hasNext()) {
+                // Seperate by CSV
+                String[] str = fwRead.nextLine().split(",");
+                
+                // Get the first segment as word
+                if (str[0].equals(word)) {
+                    isDuplicated = true;
+                }
+            }
+        }
+        catch (FileNotFoundException file_io_excep) {
+            // Handle if the database hasn't been created yet.
+        }
+        
+        if (!isDuplicated) {
+            try {
+                // Append the word database
+                fwEdit = new FileWriter(getFileName(word), true);
+
+                // Write the new word
+                fwEdit.write(String.format("%s,%s", word, meaning));
+
+                // Close the file
+                fwEdit.close();
+
+                isSuccess = true;
+            } catch (IOException io_e) {
+                isSuccess = false;
+            }
+        } else {
+            System.out.println("A duplicated word is found");
         }
         
         return (isSuccess); // return if success
