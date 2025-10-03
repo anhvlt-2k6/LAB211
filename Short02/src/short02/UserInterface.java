@@ -41,7 +41,7 @@ public class UserInterface {
                 int arr_length = Integer.parseInt(sc.nextLine().trim());
                 
                 // Check if the user enter wrong value
-                if (arr_length > 0) {
+                if (arr_length > 0 && arr_length <= 50) {
                     nameList = new NameList(arr_length);
                     
                     // Ask user to enter values.
@@ -55,7 +55,7 @@ public class UserInterface {
                             String userInput = sc.nextLine();
                             
                             // Validate if user input is really a name
-                            if (userInput.matches("[A-Za-z ]{1,}")) {
+                            if (userInput.matches("([A-Z]{1})([a-z ]){0,}")) {
                                 value = userInput;
                                 nameList.addElement(i, value);
                                 break;
@@ -76,10 +76,10 @@ public class UserInterface {
                     System.out.println("List sort name:");
                     nameList.displayNameArray();
                 } else {
-                    System.out.println("Invalid input. Length of an array should be a positive number.");
+                    System.out.println("Invalid input. Length of an array should be a positive number and less than 50.");
                 }
             } catch (NumberFormatException number_exception) {
-                System.out.println("Not a number");
+                System.out.println(number_exception.getLocalizedMessage());
             }
         }
     }

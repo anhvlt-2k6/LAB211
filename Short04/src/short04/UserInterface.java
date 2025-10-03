@@ -1,5 +1,6 @@
 package short04;
 
+import java.time.Year;
 import java.util.Scanner;
 import short04.UserDb.UserList;
 
@@ -22,12 +23,15 @@ public class UserInterface {
     private final String dobValidator = "([0-9]{2})/(([0-1]{1})([0-9]{1}))/([0-9]{4})";
     private final String passValidator = ".+";
     
+    private int currentYear = 0;
+    
     /**
      * Constructor of the program
      */
     public UserInterface() {
         sc = new Scanner(System.in);
         userList = new UserList();
+        currentYear = Year.now().getValue();
     }
     
     /**
@@ -109,6 +113,13 @@ public class UserInterface {
 
                         // ask for date of birth
                         String dateOfBirth = this.enterAValue("DOB: ", dobValidator, "Invalid DOB input. Should be in DD/MM/YYYY format", true);
+                        
+                        String[] dob = dateOfBirth.split("/");
+                        while (Integer.parseInt(dob[2]) <= 1950 || Integer.parseInt(dob[2]) >= (currentYear)) {
+                            System.out.println("Invalid year. User should not be that old");
+                            dateOfBirth = this.enterAValue("DOB: ", dobValidator, "Invalid DOB input. Should be in DD/MM/YYYY format", true);
+                            dob = dateOfBirth.split("/");
+                        }
                         
                         // add new user into userList.
                         // If it returns -1, the user existed. See function help of addNewUser

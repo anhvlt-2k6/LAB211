@@ -11,15 +11,14 @@ public class NameList {
      * The property of the class.
      * @variable studentList
      */
-    
-    private final String[] studentList;
+    private final String[] nameList;
     
     /**
      * Constructor of NameList. Take the arr_length as the length of the array itself
      * @param arr_length Length of the array
      */
     public NameList(int arr_length) {
-        studentList = new String[arr_length];
+        nameList = new String[arr_length];
     }
     
     /**
@@ -28,16 +27,16 @@ public class NameList {
      * @param value Value of that index
      */
     public void addElement(int index, String value) {
-        studentList[index] = value;
+        nameList[index] = value;
     }
     
     /**
      * Display contents of array. In this case, these are the names
      */
     public void displayNameArray() {
-        // Loop through the studentList
-        for (int i = 0; i < studentList.length; i++) {
-            System.out.println(String.format("%d. %s", (i + 1), studentList[i]));
+        // Loop through the nameList
+        for (int i = 0; i < nameList.length; i++) {
+            System.out.println(String.format("%d. %s", (i + 1), nameList[i]));
         }
     }
     
@@ -46,19 +45,19 @@ public class NameList {
      */
     public void sortNameArray() {
         // Loop with pointer 1
-        for (int c = 0; c < (studentList.length - 1); c++) {
+        for (int c = 0; c < (nameList.length - 1); c++) {
             
             // Loop with pointer 2 inner pointer 1
-            for (int i = 0; i < (studentList.length - 1); i++) {
+            for (int i = 0; i < (nameList.length - 1); i++) {
                 
                 // Comparator using compareTo
-                int comp = studentList[i].compareTo(studentList[i + 1]);
+                int comp = nameList[i].compareTo(nameList[i + 1]);
                 
                 // If comparator is larger than 0, swap
                 if (comp > 0) {
-                    String temp = studentList[i];
-                    studentList[i] = studentList[i + 1];
-                    studentList[i + 1] = temp;
+                    String temp = nameList[i];
+                    nameList[i] = nameList[i + 1];
+                    nameList[i + 1] = temp;
                 }
             }
         }
