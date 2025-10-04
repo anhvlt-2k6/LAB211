@@ -88,7 +88,7 @@ public class AnalysisString {
      *         - "special" All special characters
      */
     public HashMap<String, StringBuilder> getCharacter(String input) {
-         // Return param (always initialize the return param)
+        // Return param (always initialize the return param)
         // See in 19950022400 - Section 5.5 for statement paragraphing
         HashMap<String, StringBuilder> result = new HashMap<>();
         
@@ -101,7 +101,7 @@ public class AnalysisString {
         // Loop from the start 'til end of the input string
         for (int idx = 0; idx < input.length(); idx++) {
             char c = input.charAt(idx);
-        
+            
             // Check whether the character meet any above condition
             // Note: The "allChars" should not include digits, don't move it outside
             if (Character.isUpperCase(c)) {

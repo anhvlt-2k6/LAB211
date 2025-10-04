@@ -23,6 +23,28 @@ public final class StudentDb {
     }
     
     /**
+     * Check if the student is already exist
+     * @param studentName String as student name
+     * @return boolean if the student exist
+     */
+    public boolean isDuplicatedNameFound(String studentName) {
+        // Default value if there is any duplicate in student name
+        boolean isDuplicatedNameFound = false;
+        
+        // Loop for students in database
+        for (Student st : studentDb) {
+            // If found, set the isDuplicatedNameFound to true and exit the loop
+            if (st.getStudentName().equals(studentName)) {
+                isDuplicatedNameFound = true;
+                break;
+            }
+        }
+        
+        // Return the value
+        return (isDuplicatedNameFound);
+    }
+    
+    /**
      * Add new student into the database
      * @param studentName as String for student name
      * @param studentClass as String for student class
@@ -32,16 +54,7 @@ public final class StudentDb {
      */
     public void createStudent(String studentName, String studentClass, double chemistry, double math, double physics) {
         // Default value if there is any duplicate in student name
-        boolean isDuplicate = false;
-        
-        // Loop for current database, to find if there is any name as same as the student name
-        for (Student st : studentDb) {
-            // if found, set the isDuplicate to true and stop the loop
-            if (st.getStudentName().equals(studentName)) {
-                isDuplicate = true;
-                break;
-            }
-        }
+        boolean isDuplicate = isDuplicatedNameFound(studentName);
         
         // Only add new Student if no duplicate in student name
         if (!isDuplicate) {

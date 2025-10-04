@@ -1,16 +1,17 @@
 package short06;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Short 06 - Array as Integer
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-18
  */
-public class IntArr {
+public final class IntArr {
     private final ArrayList<Integer> duplicatedArr;
-    private final HashSet<Integer> nonDuplicatedArr;
+    private final Set<Integer> nonDuplicatedArr;
     
     /**
      * Constructor of IntArr
@@ -18,7 +19,7 @@ public class IntArr {
      */
     public IntArr() {
         duplicatedArr = new ArrayList<>();
-        nonDuplicatedArr = new HashSet<>();
+        nonDuplicatedArr = new LinkedHashSet<>();
     }
     
     /**
@@ -42,7 +43,7 @@ public class IntArr {
      * Get the non-duplicated array
      * @return an array as non-duplicated (processed)
      */
-    public HashSet<Integer> getNonDuplicatedArr() {
+    public Set<Integer> getNonDuplicatedArr() {
         return nonDuplicatedArr;
     }
 }

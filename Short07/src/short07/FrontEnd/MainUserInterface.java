@@ -22,12 +22,13 @@ public class MainUserInterface {
     private final Scanner sc;
     private final StudentDb studentDb;
     
-    private final String nameValidation = "[A-Za-z0-9 ]{1,}";
+    private final String nameValidation = "[A-Za-z ]{1,}";
     private final String classValidation = "FU([0-9]{1,2})";
     private final String markValidation = "([0-9]{1,32})(\\.[0-9]{1,32})?";
+    private final String yesnoValidation = "y|Y|n|N";
     
     /**
-     *
+     * Constructor of User Interface
      */
     public MainUserInterface() {
         
@@ -36,8 +37,41 @@ public class MainUserInterface {
         studentDb = new StudentDb();
         
         // add student into student database as sample
-        studentDb.createStudent("Nghia", "FU1", 10, 10, 10);
-        studentDb.createStudent("Nghia 2", "FU1", 10, 10, 10);
+        studentDb.createStudent("Nghia", "FU1", 7.5, 8.3, 6.5);
+        studentDb.createStudent("Hieu", "FU2", 7.2, 9.6, 7.5);
+    }
+    
+    /**
+     * Enter a value that correspond the value that it called from
+     * @param message as customized input message
+     * @return String as validated user input
+     */
+    private String enterAValue(String message, String validation, String error, boolean isTrim) {
+        // If message is empty, assign with default message
+        if (message.length() == 0) {
+            message = "Enter a value: ";
+        }
+        
+        // Assume the value is empty string
+        String value = "";
+        // Loop for correct format
+        while (!value.matches(validation)) {
+            System.out.print(message);
+            String valueUI = (isTrim) ? (sc.nextLine().trim()) : (sc.nextLine());
+            
+            // Validate user input, if match with the criteria, assign with the 
+            // return value, if not, asking user again
+            if (!valueUI.matches(validation)) {
+                // Notify user
+                System.out.println(error);
+            } else {
+                // assign value
+                value = valueUI;
+            }
+        }
+        
+        // return value
+        return (value);
     }
     
     /**
@@ -92,59 +126,26 @@ public class MainUserInterface {
      */
     private void addNewStudent() {
         try {
-            
             System.out.println("====== Management Student Program ======");
             
             // Try to get the student name. Set the empty string, then loop 
             // for user enter correct format of name
-            String studentName = "";
-            while (!studentName.matches(nameValidation)) {
-                System.out.print("Name: ");
-                String stuNameUI = sc.nextLine().trim(); // ask user for input
-                
-                // re-validate for user input
-                if (stuNameUI.matches(nameValidation)) {
-                    studentName = stuNameUI; // if matches, assign into above
-                } else {
-                    // Notify user for incorrect format
-                    System.out.println("That is not a name. Please revalidate.");
-                }
+            String studentName = this.enterAValue("Name: ", nameValidation, "Name must only be letters.", true);
+            while (studentDb.isDuplicatedNameFound(studentName)) {
+                System.out.println("A student with a same name is detected.");
+                studentName = this.enterAValue("Name: ", nameValidation, "Name must only be letters.", true);
             }
             
             // Try to get the student class. Set the empty string, then loop 
             // for user enter correct format of class
-            String studentClass = "";
-            while (!studentClass.matches(classValidation)) {
-                System.out.print("Class: ");
-                String classUI = sc.nextLine().trim();  // ask user for input
-                
-                // re-validate for user input
-                if (classUI.matches(classValidation)) {
-                    studentClass = classUI; // if matches, assign into above
-                } else {
-                    // Notify user for incorrect format
-                    System.out.println("Invalid class type. Must be in format \"FU\" and 1 to 2 digits");
-                }
-            }
+            String studentClass = this.enterAValue("Class: ", classValidation, "Invalid class type. Must be in format \"FU\" and 1 to 2 digits", true);
             
             // Try to get the mark. Set the negative double, then loop 
             // for user enter correct format of double
             double chemistry = -1.0;
             while (chemistry == -1.0) {
                 // assign for string
-                String chemistryStr = "";
-                while (!chemistryStr.matches(markValidation)) {
-                    System.out.print("Chemistry: "); 
-                    String chemistryStrInput = sc.nextLine().trim(); // ask user for input
-                    
-                    // Validate for mark String
-                    if (chemistryStrInput.matches(markValidation)) {
-                        chemistryStr = chemistryStrInput;
-                    } else {
-                        // Notify user for incorrect format
-                        System.out.println("Must be a number from 0 to 10");
-                    }
-                }
+                String chemistryStr = this.enterAValue("Chemistry: ", markValidation, "Must be a number from 0 to 10", true);
                 
                 // try parse string, and validate that double later
                 double chemistryPr = Double.parseDouble(chemistryStr);
@@ -165,19 +166,7 @@ public class MainUserInterface {
             double math = -1.0;
             while (math == -1.0) {
                 // assign for string
-                String mathStr = "";
-                while (!mathStr.matches(markValidation)) {
-                    System.out.print("Math: ");
-                    String mathStrInput = sc.nextLine().trim();
-                    
-                    // Validate for mark String
-                    if (mathStrInput.matches(markValidation)) {
-                        mathStr = mathStrInput;
-                    } else {
-                        // Notify user for incorrect format
-                        System.out.println("Must be a number from 0 to 10");
-                    }
-                }
+                String mathStr = this.enterAValue("Math: ", markValidation, "Must be a number from 0 to 10", true);
                 
                 // try parse string, and validate that double later
                 double mathPr = Double.parseDouble(mathStr);
@@ -198,20 +187,7 @@ public class MainUserInterface {
             double physics = -1.0;
             while (physics == -1.0) {
                 // assign for string
-                String physicsStr = "";
-                
-                while (!physicsStr.matches(markValidation)) {
-                    System.out.print("Physics: ");
-                    String physicsStrInput = sc.nextLine().trim();
-                    
-                    // Validate for mark String
-                    if (physicsStrInput.matches(markValidation)) {
-                        physicsStr = physicsStrInput;
-                    } else {
-                        // Notify user for incorrect format
-                        System.out.println("Must be a number from 0 to 10");
-                    }
-                }
+                String physicsStr = this.enterAValue("Physics: ", markValidation, "Must be a number from 0 to 10", true);
                 
                 // try parse string, and validate that double later
                 double physicsPr = Double.parseDouble(physicsStr);
@@ -235,25 +211,12 @@ public class MainUserInterface {
             }
             
             // Asking for whether user want to enter other students
-            String enterAnother = "";
-            // if the string input is not Y or N, loop for correct answer
-            while (!(enterAnother.equals("Y") || enterAnother.equals("N"))) {
-                System.out.print("Do you want to enter more student information? (Y/N): ");
-                String enterAnotherStr = sc.nextLine().trim();  // ask user for input
-                
-                // compare for correct answer
-                if (enterAnotherStr.equals("Y") || enterAnotherStr.equals("N")) {
-                    enterAnother = enterAnotherStr;
-                } else {
-                    System.out.println("Either \"Y\" or \"N\"");
-                }
-            }
+            String enterAnother = this.enterAValue("Do you want to enter more student information? (Y/N): ", yesnoValidation, "Either \"Y\" or \"N\"", true);
             
             // If user wants, call this function again to add another student
             if (enterAnother.equals("Y")) {
                 this.addNewStudent();
-            }
-            
+            }  
         } catch (NumberFormatException e) {
             // Notify user for incorrect format
             System.out.println("Error: " + e.getLocalizedMessage());   

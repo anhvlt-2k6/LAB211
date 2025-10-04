@@ -3,7 +3,7 @@ package short07;
 import short07.FrontEnd.MainUserInterface;
 
 /**
- * Short 07 - Act as the program start point
+ * Short 07 - Student Data Format
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-10-01
  */
