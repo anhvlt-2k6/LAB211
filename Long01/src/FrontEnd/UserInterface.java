@@ -25,7 +25,7 @@ public class UserInterface {
      */
     
     private final String studentIdValidation = "[0-9]{1,9}";
-    private final String nameValidation = "[a-zA-z0-9 \\.]{1,254}";
+    private final String nameValidation = "[a-zA-Z0-9 \\.]{1,254}";
     private final String semesterValidation = "[0-9]{1,2}";
     private final String courseValidation = "(Java|.Net|C/C\\+\\+)";
     
