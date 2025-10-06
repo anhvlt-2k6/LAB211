@@ -2,8 +2,19 @@ package short12;
 
 import java.util.HashMap;
 
+/**
+ * Short 12 - String Processing Class
+ * @author CE200360 Vo Luu Tuong Anh
+ * @since 2025-10-02
+ */
 public class StringProcessing {
     
+    /**
+     * All hash maps must be in String -> Double to parse and calculate the 
+     * power easier
+     */
+    
+    // Hash Map for converting binary into decimal
     private final HashMap<String, Double> binary = new HashMap<String, Double>() {
         private static final long serialVersionUID = 1L;
         {
@@ -12,6 +23,7 @@ public class StringProcessing {
         }
     };
  
+    // Hash Map for converting hexadecimal into decimal
     private final HashMap<String, Double> hex = new HashMap<String, Double>() {
         private static final long serialVersionUID = 1L;
         {
@@ -40,6 +52,7 @@ public class StringProcessing {
         }
     };
     
+    // Hash Map for converting octal into decimal
     private final HashMap<String, Double> octal = new HashMap<String, Double>() {
         private static final long serialVersionUID = 1L;
         {
@@ -54,26 +67,54 @@ public class StringProcessing {
         }
     };
     
+    /**
+     * Converting binary into Decimal
+     * @param input string as input in binary
+     * @return String as the result of converting bin into dec
+     */
     public String binToDec(String input) {
         return (String.format("%.0f", convertOperation(input, binary, 2)));
     }
     
+    /**
+     * Converting hex into Decimal
+     * @param input string as input in hex
+     * @return String as the result of converting hex into dec
+     */
     public String hexToDec(String input) {
         return (String.format("%.0f", convertOperation(input, hex, 16)));
     }
     
+    /**
+     * Converting octal into Decimal
+     * @param input string as input in octal
+     * @return String as the result of converting octal into dec
+     */
     public String octToDec(String input) {
         return (String.format("%.0f", convertOperation(input, octal, 8)));
     }
     
+    /**
+     * Converting a X-ary to decimal result in double
+     * @param input as String of the X-ary
+     * @param map as map for convert that string into result
+     * @param base as the base of X-ary
+     * @return double of the result
+     */
     private double convertOperation(String input, HashMap<String, Double> map, int base) {
+        // Assume that result is 0
         double output = 0;
+        
+        // reverse the string array for little endian operation (easier to work with array)
         String[] reverseArr = this.reverseString(input).split("");
         
+        // Loop for value and calculate the result
+        // Result = result + (value of the array) * base ^ i (little endian)
         for (int i = 0; i < reverseArr.length; i++) {
             output += map.get(reverseArr[i]) * Math.pow(base, i);
         }
         
+        // result the double
         return (output);
     }
     
@@ -85,6 +126,7 @@ public class StringProcessing {
     private String reverseString(String str) {
         String strRet = "";
         
+        // Loop for reverse the string
         for (String s : str.split("")) {
             strRet = s + strRet;
         }
