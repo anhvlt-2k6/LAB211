@@ -21,13 +21,13 @@ public class UserInterface {
         * studentIdValidation - it validates the student id, and only true when it is an integer
         * nameValidation - it validates name, only when it contains digits, letters, dot, and spaces
         * semesterValidation - it validates semester, only from 00-99
-        * courseValidation - Only when ...
+        * courseValidation - Only when "Java", or ".Net", or 'C/C++"
      */
     
-    private final String studentIdValidation = "[0-9]{1,9}";
-    private final String nameValidation = "[a-zA-Z0-9 .]{1,254}";
+    private final String studentIdValidation = "[0-9]{1,10}";
+    private final String nameValidation = "[a-zA-Z ]{1,254}";
     private final String semesterValidation = "[0-9]{1,2}";
-    private final String courseValidation = "(Java|.Net|C/C\\+\\+)";
+    private final String courseValidation = "(Java|\\.Net|C/C\\+\\+)";
     
     // The minimum number of students user must enter in a row
     private final int minUserInput = 10;
@@ -48,6 +48,39 @@ public class UserInterface {
     }
     
     /**
+     * Enter a value that correspond the value that it called from
+     * @param message as customized input message
+     * @return String as validated user input
+     */
+    private String enterAValue(String message, String validation, String error, boolean isTrim) {
+        // If message is empty, assign with default message
+        if (message.length() == 0) {
+            message = "Enter a value: ";
+        }
+        
+        // Assume the value is empty string
+        String value = "";
+        // Loop for correct format
+        while (!value.matches(validation)) {
+            System.out.print(message);
+            String valueUI = (isTrim) ? (sc.nextLine().trim()) : (sc.nextLine());
+            
+            // Validate user input, if match with the criteria, assign with the 
+            // return value, if not, asking user again
+            if (!valueUI.matches(validation)) {
+                // Notify user
+                System.out.println(error);
+            } else {
+                // assign value
+                value = valueUI;
+            }
+        }
+        
+        // return value
+        return (value);
+    }
+    
+    /**
      * Selection One
      */
     private void selectionOne() {
@@ -57,21 +90,17 @@ public class UserInterface {
         
         // Get the number of students input.
         while (numberofStudents < minUserInput) {
-            System.out.print("Please enter number of student you want to add: ");
-            
             try {
                 // Let user input. Parse to integer and store in the 'numberofStudents'
-                numberofStudents = Integer.parseInt(sc.nextLine());
+                numberofStudents = Integer.parseInt(this.enterAValue("Please enter number of student you want to add: ", "[0-9]{1,}", "Must be a number (>= 10)", true));
                 
                 // If user enters a number of student lower than the required number
-                //  notify and "gently" ask them to reenter the value
                 if (numberofStudents < minUserInput) {
-                    System.out.println("Invalid input, please try again.");
+                    System.out.println("Must be a number (>= 10)");
                 }
-                
             } catch (NumberFormatException ex) {
                 // If user enters non-digit value, notify and "gently" ask them to reenter the value
-                System.out.println("Invalid input, please try again.");
+                System.out.println("Must be a number (>= 10)");
             }
         }
         
@@ -83,50 +112,25 @@ public class UserInterface {
             while (!isAddingSuccess)  {
                 System.out.println("Information for student: " + (i + 1));
                 
-                // Ask user to enter id. If they enter invalid data, 
-                //  notify and "gently" ask them to reenter the value
-                System.out.print("Enter student Id: ");
-                String studentId = sc.nextLine();
-                while (!studentId.matches(studentIdValidation)) {
-                    System.out.print("Invalid student Id.\n Re-enter student Id: ");
-                    studentId = sc.nextLine();
+                // Ask user to enter id
+                String studentId = this.enterAValue("Enter student Id: ", studentIdValidation, "Must be a number (1 to 10 digits)", true);
+                while (studentDb.isIdExisted(studentId)) {
+                    System.out.println("That id is already claimed. Please re-enter");
+                    studentId = this.enterAValue("Enter student Id: ", studentIdValidation, "Must be a number (1 to 10 digits)", true);
                 }
                 
-                // Ask user to enter name. If they enter invalid data, 
-                //  notify and "gently" ask them to reenter the value
-                System.out.print("Enter student name: ");
-                String studentName = sc.nextLine();
-                while (!studentName.matches(nameValidation)) {
-                    System.out.print("Invalid student name.\nEnter student name: ");
-                    studentName = sc.nextLine();
-                }
+                // Ask user to enter name
+                String studentName = this.enterAValue("Enter student name: ", nameValidation, "Must be letters (Max 254 chars)", true);
                 
-                // Ask user to enter semester. If they enter invalid data, 
-                //  notify and "gently" ask them to reenter the value
-                System.out.print("Enter semester: ");
-                String semester = sc.nextLine();
-                while (!semester.matches(semesterValidation)) {
-                    System.out.print("Invalid semester.\nEnter semester: ");
-                    semester = sc.nextLine();
-                }
+                // Ask user to enter semester.
+                String semester = this.enterAValue("Enter semester: ", semesterValidation, "Must be a number (1 to 2 digits)", true);
                 
-                // Ask user to enter course name. If they enter invalid data, 
-                //  notify and "gently" ask them to reenter the value
-                System.out.print("Enter course name: ");
-                String courseName = sc.nextLine();
-                while (!courseName.matches(courseValidation)) {
-                    System.out.print("Wrong course name (Only 'Java', '.Net', or 'C/C++' are accepted).\nEnter course name: ");
-                    courseName = sc.nextLine();
-                }
+                // Ask user to enter course name.
+                String courseName = this.enterAValue("Enter course name: ", courseValidation, "Either \"Java\" or \".Net\" or \"C/C++\" (case sensitive)", true);
                 
                 // If unsuccess
                 if (!studentDb.addStudent(studentId, studentName, semester, courseName)) {
-                    isAddingSuccess = false;
-                    System.out.println(
-                            "Unable to add the student " + 
-                            studentName + 
-                            "\nPlease re-enter the student information"
-                    );
+                    System.out.println("Unable to add the student " + studentName + ". Please re-enter the student information");
                 } else {
                     // Break the inner while loop and continue with the next student
                     isAddingSuccess = true; 
@@ -134,20 +138,11 @@ public class UserInterface {
             }
         }
         
-        // Ask user if they want to sort the data by student name
-        
         // Default value as an empty string.
-        String orderSelection = "";
+        String orderSelection = this.enterAValue("Do you want to order now (Y/N): ", "Y|N|y|n", "Only Y or N (case insensitive)", true);
         
-        // Ask user to choose if they want to sort data. 
-        // If they enter invalid data,  notify and "gently" ask them to reenter the value
-        while (!orderSelection.toLowerCase().equals("y") && !orderSelection.toLowerCase().equals("n")) {
-            System.out.print("Do you want to order now (Y/N): ");
-            orderSelection = sc.nextLine();
-        }
-        
-        // Sort the data by student name
-        if (orderSelection.toLowerCase().equals("y")) {
+        // If yes, Sort the data by student name
+        if (orderSelection.matches("Y|y")) {
             studentDb.sortStudent();
             System.out.println("Order is completed.");
         }
@@ -160,14 +155,8 @@ public class UserInterface {
         // Sort the student first
         studentDb.sortStudent();
         
-        // Ask user to enter name. If they enter invalid data, 
-        //  notify and "gently" ask them to reenter the value
-        System.out.print("Enter student name: ");
-        String studentName = sc.nextLine();
-        while (!studentName.matches(nameValidation)) {
-            System.out.print("Invalid student name.\nEnter student name: ");
-            studentName = sc.nextLine();
-        }
+        // Ask user to enter name.
+        String studentName = this.enterAValue("Enter student name: ", nameValidation, "Must be letters (Max 254 chars)", true);
         
         // Get the student info from the database backend
         ArrayList<Student> foundStudents = studentDb.findStudent(studentName);
@@ -200,35 +189,23 @@ public class UserInterface {
     
     private void selectionThree() {
         
-        // Ask user to enter id. If they enter invalid data, 
-        //  notify and "gently" ask them to reenter the value
-        System.out.print("Enter student Id: ");
-        String studentId = sc.nextLine();
-        while (!studentId.matches(studentIdValidation)) {
-            System.out.print("Invalid student Id.\n Re-enter student Id: ");
-            studentId = sc.nextLine();
+        // Ask user to enter id.
+        String studentId = this.enterAValue("Enter student Id: ", studentIdValidation, "Must be a number (1 to 10 digits)", true);
+        while (!studentDb.isIdExisted(studentId)) {
+            System.out.println("That id is not found. Please re-enter");
+            studentId = this.enterAValue("Enter student Id: ", studentIdValidation, "Must be a number (1 to 10 digits)", true);
         }
         
         // Ask user to choose if they want to delete, or update the existing data
-        // If they enter invalid data, notify and "gently" ask them to reenter the value
-        String dataSelection = "";
-        while (!dataSelection.toLowerCase().equals("u") && !dataSelection.toLowerCase().equals("d")) {
-            System.out.print("Do you want to update (U) or delete (D) student: ");
-            dataSelection = sc.nextLine();
-        }
+        String dataSelection = this.enterAValue("Do you want to update (U) or delete (D) student: ", "U|D|u|d", "Must be U or D only (case insensitive).", true);
         
-        if (dataSelection.toLowerCase().equals("u")) {
+        if (dataSelection.matches("u|U")) {
             // Update user, call the student database backend
-            System.out.print("Enter student name: ");
-            String studentName = sc.nextLine();
-            while (!studentName.matches(nameValidation)) {
-                System.out.print("Invalid student name.\nEnter student name: ");
-                studentName = sc.nextLine();
-            }
+            String studentName = this.enterAValue("Enter student name: ", nameValidation, "Must be letters (Max 254 chars)", true);
             
             // Perform the update
             studentDb.updateStudentDb(studentId, studentName);
-        } else {
+        } else if (dataSelection.matches("d|D")) {
             // Delete user, call the student database backend 
             studentDb.updateStudentDb(studentId);
         }
@@ -259,8 +236,8 @@ public class UserInterface {
             System.out.println(String.format(
                 "| %3d | %12.12s | %6.6s | %15d |", 
                 iterationCount,
+                studentKey[0],
                 studentKey[1],
-                studentKey[2],
                 totalCourse)
             );
             

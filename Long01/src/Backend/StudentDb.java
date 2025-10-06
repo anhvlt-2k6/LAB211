@@ -41,9 +41,9 @@ public final class StudentDb extends ArrayList<Student> {
     /**
      *
      */
-    
     public void sortStudent() {
         Collections.sort(this, (o1, o2) -> (o1.getStudentName().compareTo(o2.getStudentName())));
+        this.writeToFile();
     }
     
     /**
@@ -133,8 +133,31 @@ public final class StudentDb extends ArrayList<Student> {
     /////// Selection-based methods
     ///////////////////////////////////////////////////
     
+    /**
+     * Check if the id is being used by another student
+     * @param id as String (will be parsed) as student id
+     * @return boolean whether the id is being used by another student
+     */
+    public boolean isIdExisted(String id) {
+        boolean isIdExisted = false;
+        
+        // Loop to find student. If one found, set the return value to true
+        for (Student st : this) {
+            try {
+                if (st.getId() == Integer.parseInt(id)) {
+                    isIdExisted = true;
+                    break;
+                }
+            } catch (NumberFormatException ex) {
+                System.out.print("Invalid ID. See in the helper for regular id format.");
+            }
+        }
+        
+        // Return value
+        return (isIdExisted);
+    }
+    
     // Option 1
-
     /**
      * Add student into database
      * @param id as the id of student
@@ -174,7 +197,6 @@ public final class StudentDb extends ArrayList<Student> {
     }
     
     // Option 2
-
     /**
      * Find a student by its name
      * @param studentName as name or a part of a name
@@ -266,7 +288,7 @@ public final class StudentDb extends ArrayList<Student> {
         for (Student st : this) {
             // database as unique, defined by id, student name, and course name
             // if any of them changes, that is not what we count
-            String dataName = st.getId() + "," + st.getStudentName() + "," + st.getCourseName();
+            String dataName = st.getStudentName() + "," + st.getCourseName();
             
             // put back the data to the resultReport
             // if it does not exist, generate inner value as 0 and +1 as count

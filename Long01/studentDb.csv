@@ -1,15 +1,10 @@
 #Id,Name,Semester,CourseName
-4,Hai Vai Chuong,1,Java
-10,Hia,10,.Net
-8,Jo,10,Java
-6,Lay Van Chuong,7,.Net
-1,Nguyen The Anh,1,Java
-15,Nguyen Van A,3,Java
-2,Nguyen Van Chung,2,C/C++
-9,Vo Anh,3,Java
-13,Vo Luu Tuong Anh,10,Java
-5,Vo The Dan,3,C/C++
-10,Vo The Dan,10,Java
-10,Vo The Dan,10,Java
-10,Vo The Dan,10,Java
-10,Vo The Dan,10,Java
+1,Nguyen Van A,1,C/C++
+2,Nguyen Van A,2,Java
+6,Nguyen Van C,3,Java
+9,Nguyen Van C,4,Java
+7,Nguyen Van D,7,C/C++
+8,Nguyen Van E,3,C/C++
+3,Tran Van B,3,C/C++
+5,Tran Van B,4,C/C++
+4,haha,3,.Net
