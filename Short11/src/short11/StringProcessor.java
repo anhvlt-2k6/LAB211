@@ -43,10 +43,16 @@ public class StringProcessor {
     private String reverseString(String str) {
         String strRet = "";
         
-        for (String s : str.split(" ")) {
-            strRet = s + " " + strRet;
+        for (String str_no_space : str.split(" ")) {
+            String str_no_space_ret = "";
+            
+            for (String str_no_underscore : str_no_space.split("_")) {
+                str_no_space_ret = str_no_underscore + "_" + str_no_space_ret;
+            }
+            
+            strRet = str_no_space_ret.substring(0, str_no_space_ret.length() - 1) + " " + strRet;
         }
         
-        return (strRet);
-    } 
+        return (strRet.substring(0, strRet.length() - 1));
+    }
 }
