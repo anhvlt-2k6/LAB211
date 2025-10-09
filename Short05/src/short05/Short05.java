@@ -13,5 +13,5 @@ public class Short05 {
     public static void main(String[] args) {
         UserInterface o5 = new UserInterface();
         o5.displayUserInterface();
-    }    
+    }
 }

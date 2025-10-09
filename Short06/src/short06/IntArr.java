@@ -7,9 +7,8 @@ package short06;
  */
 public final class IntArr {
     
-    private final int[] dupArr;
-    private final int[] nondupArr;
-    private int lengthdupArr, lengthnondupArr;
+    private int[] dupArr;
+    private int lengthdupArr;
     
     /**
      * Constructor of IntArr
@@ -18,15 +17,12 @@ public final class IntArr {
      */
     public IntArr(int length) {
         dupArr = new int[length];
-        nondupArr = new int[length];
         
         for (int i = 0; i < length; i++) {
             dupArr[i] = Integer.MIN_VALUE;
-            nondupArr[i] = Integer.MIN_VALUE;
         }
         
         lengthdupArr = 0;
-        lengthnondupArr = 0;
     }
     
     /**
@@ -47,17 +43,20 @@ public final class IntArr {
     }
     
     /**
-     * Get the non-duplicated array
-     * @return an array as non-duplicated (processed)
-     */
-    public int[] getNonDuplicatedArr() {
-        return nondupArr;
-    }
-    
-    /**
      * Remove duplicates
      */
     public void removeDuplicate() {
+        // init local arr
+        int[] nondupArr = new int[lengthdupArr];
+        
+        for (int i = 0; i < lengthdupArr; i++) {
+            nondupArr[i] = Integer.MIN_VALUE;
+        }
+        
+        // set array as 0
+        int lengthnondupArr = 0;
+        
+        // for to check duplication
         for (int i : dupArr) {
             boolean isExisted = false;
             
@@ -73,5 +72,8 @@ public final class IntArr {
                 lengthnondupArr += 1;
             }
         }
+        
+        // set back
+        dupArr = nondupArr;
     }
 }

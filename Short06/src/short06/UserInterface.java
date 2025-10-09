@@ -1,6 +1,5 @@
 package short06;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -19,7 +18,17 @@ public class UserInterface {
      */
     public UserInterface() {
         sc = new Scanner(System.in);
-        
+    }
+    
+    /**
+     * Display the array
+     */
+    public void displayArray() {
+        for (int i : arr.getDuplicatedArr()) {
+            if (i != Integer.MIN_VALUE) {
+                System.out.print(i + "\t");
+            }
+        }
     }
     
     /**
@@ -54,28 +63,17 @@ public class UserInterface {
 
                         arr.addNumber(Integer.parseInt(addNumber));
                     }
-
-                    // Display the orginal array
+                    
+                    // Display the array
                     System.out.println("The original array:");
-
-                    for (int i : arr.getDuplicatedArr()) {
-                        if (i != Integer.MIN_VALUE) {
-                            System.out.print(i + "\t");
-                        }
-                    }
-
+                    displayArray();
+                    
                     // Remove duplicate
                     arr.removeDuplicate();
-
-                    // Display the non-duplicated-element array
-                    System.out.println("\nThe array after removing duplicate elements:");
-                    for (int i : arr.getNonDuplicatedArr()) {
-                        if (i != Integer.MIN_VALUE) {
-                            System.out.print(i + "\t");
-                        }
-                    }
                     
-                    System.out.println();
+                    // Redisplay the array
+                    System.out.println("\nThe array after removing duplicate elements:");
+                    displayArray();
                 } else {
                     System.out.print("Length must be a number and larger than 0");
                 }
