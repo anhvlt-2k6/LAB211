@@ -1,25 +1,32 @@
 package short06;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 /**
  * Short 06 - Array as Integer
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-09-18
  */
 public final class IntArr {
-    private final ArrayList<Integer> duplicatedArr;
-    private final Set<Integer> nonDuplicatedArr;
+    
+    private final int[] dupArr;
+    private final int[] nondupArr;
+    private int lengthdupArr, lengthnondupArr;
     
     /**
      * Constructor of IntArr
      * Initialize both arrays (duplicated and non-duplicated)
+     * @param length as length of array
      */
-    public IntArr() {
-        duplicatedArr = new ArrayList<>();
-        nonDuplicatedArr = new LinkedHashSet<>();
+    public IntArr(int length) {
+        dupArr = new int[length];
+        nondupArr = new int[length];
+        
+        for (int i = 0; i < length; i++) {
+            dupArr[i] = Integer.MIN_VALUE;
+            nondupArr[i] = Integer.MIN_VALUE;
+        }
+        
+        lengthdupArr = 0;
+        lengthnondupArr = 0;
     }
     
     /**
@@ -27,23 +34,44 @@ public final class IntArr {
      * @param number in integer
      */
     public void addNumber(int number) {
-        duplicatedArr.add(number);
-        nonDuplicatedArr.add(number);
+        dupArr[lengthdupArr] = number;
+        lengthdupArr += 1;
     }
 
     /**
      * Get the duplicated array
      * @return an array as duplicated (raw from user)
      */
-    public ArrayList<Integer> getDuplicatedArr() {
-        return duplicatedArr;
+    public int[] getDuplicatedArr() {
+        return dupArr;
     }
     
     /**
      * Get the non-duplicated array
      * @return an array as non-duplicated (processed)
      */
-    public Set<Integer> getNonDuplicatedArr() {
-        return nonDuplicatedArr;
+    public int[] getNonDuplicatedArr() {
+        return nondupArr;
+    }
+    
+    /**
+     * Remove duplicates
+     */
+    public void removeDuplicate() {
+        for (int i : dupArr) {
+            boolean isExisted = false;
+            
+            for (int j : nondupArr) {
+                if (i == j) {
+                    isExisted = true;
+                    break;
+                }
+            }
+            
+            if (!isExisted) {
+                nondupArr[lengthnondupArr] = i;
+                lengthnondupArr += 1;
+            }
+        }
     }
 }
