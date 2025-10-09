@@ -3,8 +3,7 @@ package testapp;
 public class TestApp {
     
     public static void main(String[] args) {
-        String passValidator = ".+";
-        String pass = "1";
-        System.out.println(pass.matches(passValidator));
+        String[] dob = "11/19/2000".split("/");
+        System.out.println(dob[1]);
     }
 }
