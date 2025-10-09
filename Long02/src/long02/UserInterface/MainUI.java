@@ -2,16 +2,18 @@ package long02.UserInterface;
 
 import java.time.Year;
 import java.util.Scanner;
+import long02.BackEnd.DbHandler;
 
 public class MainUI {
     
     private final Scanner sc;
+    
+    private final DbHandler dbHandler;
 
     private final String nameValidator = "[A-Za-z ]{1,}";
     private final String dateValidator = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/([0-9]{4})"; 
     private final String emailValidator = "([A-Za-z0-9._-]{1,})@(([A-Za-z0-9]{1,}).[A-Za-z0-9]{2,})";
     private final String phoneValidator = "[0-9]{10,}";
-    private final String yearValidator = "[0-9]{1,3}";
     private final String rankofGradValidation = "Excellence|Good|Fair|Poor"; // case sensitive
     private final String addressValidation = "[0-9A-Za-z ]{1,}";
     private final String proSkillValidation = "Java|C#|C|Python|Javascript|Ruby|Kotlin";
@@ -19,11 +21,13 @@ public class MainUI {
     private final String semesterValidation = "[0-9]{1,2}";
     private final String yesnoValidation = "Y|y|N|n";
     private final String candidateValidation = "0|1|2";
+    private final String expYearValidation = "[0-9]{1,2}";
     
     private int currentYear = 0;
     
     public MainUI() {
         sc = new Scanner(System.in);
+        dbHandler = new DbHandler();
         currentYear = Year.now().getValue();
     }
     
@@ -64,6 +68,38 @@ public class MainUI {
         return (value);
     }
     
+    private String enterDate(String message) {
+        String date = this.enterAValue(message, "Invalid input. Should be in DD/MM/YYYY format", dateValidator, true);
+        
+        String[] dob = date.split("/");
+        boolean isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
+        boolean isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
+        boolean isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
+        
+        while (isDateInvalidDob || isMonthInvalidDob || isYearInvalidDob) {
+            if (isDateInvalidDob) {
+                System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
+            }
+            
+            if (isMonthInvalidDob) {
+                System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
+            }
+            
+            if (isYearInvalidDob) {
+                System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
+            }
+            
+            date = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
+            
+            dob = date.split("/");
+            isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
+            isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
+            isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
+        }
+        
+        return (date);
+    }
+    
     private boolean isOrder() {
         boolean isOrder = false;
         
@@ -77,7 +113,6 @@ public class MainUI {
     }
     
     private void optionFour() {
-        
         System.out.println("List of candidate: ");
         
         // 
@@ -97,49 +132,24 @@ public class MainUI {
     }
     
     private void optionThree() {
-        
         System.out.println("=== Enter a property for Internship ===");
         
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         
         // ask for date of birth
-        String dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-        
-        String[] dob = dateOfBirth.split("/");
-        boolean isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-        boolean isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-        boolean isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        
-        while (isDateInvalidDob || isMonthInvalidDob || isYearInvalidDob) {
-            if (isDateInvalidDob) {
-                System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
-            }
-            
-            if (isMonthInvalidDob) {
-                System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
-            }
-            
-            if (isYearInvalidDob) {
-                System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
-            }
-            
-            dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-            
-            dob = dateOfBirth.split("/");
-            isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-            isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[0]) > 12);
-            isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        }
+        String dateOfBirth = this.enterDate("Enter Date of Birth");
         
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
+        // Exclusive
         String major = this.enterAValue("Enter major (Only CS, CE, AI, Other are accepted in case sensitive): ", "Only CS, CE, AI, Other are accepted in case sensitive", majorValidation, true);
         String semester = this.enterAValue("Enter semester: ", "Only valid from 0 - 9 (single digit)", semesterValidation, true);
     
         // Call the backend service
+        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {major, semester});
         
         // Ask user if they want to order
         if (this.isOrder()) {
@@ -148,77 +158,25 @@ public class MainUI {
     }
     
     private void optionTwo() {
-        
         System.out.println("=== Enter a property for Fresher ===");
         
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         
         // ask for date of birth
-        String dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-        
-        String[] dob = dateOfBirth.split("/");
-        boolean isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-        boolean isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-        boolean isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        
-        while (isDateInvalidDob || isMonthInvalidDob || isYearInvalidDob) {
-            if (isDateInvalidDob) {
-                System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
-            }
-            
-            if (isMonthInvalidDob) {
-                System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
-            }
-            
-            if (isYearInvalidDob) {
-                System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
-            }
-            
-            dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-            
-            dob = dateOfBirth.split("/");
-            isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-            isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-            isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        }
+        String dateOfBirth = this.enterDate("Enter Date of Birth: ");
         
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
-        String graduationDate = this.enterAValue("Graduation Date: ", "Invalid input. Should be in DD/MM/YYYY format", dateValidator, true);
-        
-        String[] gdArr = graduationDate.split("/");
-        boolean isDateInvalidGrad = (Integer.parseInt(gdArr[0]) < 0 || Integer.parseInt(gdArr[0]) > 31);
-        boolean isMonthInvalidGrad = (Integer.parseInt(gdArr[1]) < 0 || Integer.parseInt(gdArr[1]) > 12);
-        boolean isYearInvalidGrad = (Integer.parseInt(gdArr[2]) < 1900 || Integer.parseInt(gdArr[2]) > currentYear);
-        
-        while (isDateInvalidGrad || isMonthInvalidGrad || isYearInvalidGrad) {
-            if (isDateInvalidDob) {
-                System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
-            }
-            
-            if (isMonthInvalidDob) {
-                System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
-            }
-            
-            if (isYearInvalidDob) {
-                System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
-            }
-            
-            graduationDate = this.enterAValue("Graduation Date: ", "Invalid input. Should be in DD/MM/YYYY format", dateValidator, true);
-            
-            gdArr = graduationDate.split("/");
-            isDateInvalidGrad = (Integer.parseInt(gdArr[0]) < 0 || Integer.parseInt(gdArr[0]) > 31);
-            isMonthInvalidGrad = (Integer.parseInt(gdArr[1]) < 0 || Integer.parseInt(gdArr[1]) > 12);
-            isYearInvalidGrad = (Integer.parseInt(gdArr[2]) < 1900 || Integer.parseInt(gdArr[2]) > currentYear);
-        }
-        
+        // Exclusive
+        String graduationDate = this.enterDate("Enter Graduation Date: ");
         String rank = this.enterAValue("Enter rank: ", "Invalid ranking. Only Excellence, Good, Fair, Poor (case sensitive)", rankofGradValidation, true);
         String schoolName = this.enterAValue("Enter school name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         
         // Call the backend service
+        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {graduationDate, rank, schoolName});
         
         // Ask user if they want to order
         if (this.isOrder()) {
@@ -227,58 +185,24 @@ public class MainUI {
     }
     
     private void optionOne() {
-        
         System.out.println("=== Enter a property for Experience ===");
         
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         
         // ask for date of birth
-        String dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-        
-        String[] dob = dateOfBirth.split("/");
-        boolean isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-        boolean isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-        boolean isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        
-        while (isDateInvalidDob || isMonthInvalidDob || isYearInvalidDob) {
-            if (isDateInvalidDob) {
-                System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
-            }
-            
-            if (isMonthInvalidDob) {
-                System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
-            }
-            
-            if (isYearInvalidDob) {
-                System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
-            }
-            
-            dateOfBirth = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
-            
-            dob = dateOfBirth.split("/");
-            isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-            isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-            isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
-        }
+        String dateOfBirth = this.enterDate("Enter Date of Birth: ");
         
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
         // Exclusive
-        int expInYear = -1;
-        while (expInYear > 100 || expInYear < 0) {
-            expInYear = Integer.parseInt(this.enterAValue("Enter Year of Experience: ", "Wrong format. Year of Experience must be digits only and in range of 0 to 100.", yearValidator, true));
-            
-            if (expInYear > 100 || expInYear < 0) {
-                System.out.println("Wrong format. Year of Experience must be digits only and in range of 0 to 100.");
-            }
-        }
-        
+        String expInYear = this.enterAValue("Enter Year of Experience: ", "Wrong format. Year of Experience must be digits only and in range of 0 to 100.", expYearValidation, true);
         String proSkill = this.enterAValue("Enter Professional Skill: ", "Wrong opion. Only \"Java\", or \"C#\", or \"C\", or \"Python\", or \"Javascript\", or \"Ruby\", or \"Kotlin\"", proSkillValidation, true);
-    
+        
         // Call the backend service
+        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {expInYear, proSkill});
         
         // Ask user if they want to order
         if (this.isOrder()) {

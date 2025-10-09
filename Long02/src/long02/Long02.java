@@ -17,5 +17,4 @@ public class Long02 {
         MainUI mainui = new MainUI();
         mainui.displayUI();
     }
-    
 }

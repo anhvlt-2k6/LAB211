@@ -1,14 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package long02.BackEnd;
 
-/**
- *
- * @author anhvlt
- */
+import java.util.ArrayList;
+import long02.DataType.Candidate;
+
 public class DbHandler {
     
+    private final ArrayList<Candidate> candidates;
+    private final FileHandler fh;
+    
+    public DbHandler() {
+        candidates = new ArrayList<>();
+        fh = new FileHandler();
+    }
+    
+    public void addCandidate(int candidateType, String[] commonParams, String[] exclusiveParams) {
+        
+        
+        
+    }
 }
