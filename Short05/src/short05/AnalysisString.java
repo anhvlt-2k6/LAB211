@@ -24,7 +24,6 @@ public class AnalysisString {
      */
     public HashMap<String, List<Integer>> getNumber(String input) {
         // Return param (always initialize the return param)
-        // See in 19950022400 - Section 5.5 for statement paragraphing
         HashMap<String, List<Integer>> result = new HashMap<>();
         
         // Anaysis values, prefix as shown above
@@ -73,8 +72,7 @@ public class AnalysisString {
         result.put("square", squareNumbers);
         result.put("odd", oddNumbers);
         result.put("even", evenNumbers);
-
-        // See in 19950022400 - Section 5.6 for return statement
+        
         return (result);
     }
     
