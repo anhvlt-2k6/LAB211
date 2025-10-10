@@ -214,7 +214,7 @@ public class MainUserInterface {
             String enterAnother = this.enterAValue("Do you want to enter more student information? (Y/N): ", yesnoValidation, "Either \"Y\" or \"N\"", true);
             
             // If user wants, call this function again to add another student
-            if (enterAnother.equals("Y")) {
+            if (enterAnother.toLowerCase().equals("y")) {
                 this.addNewStudent();
             }  
         } catch (NumberFormatException e) {
