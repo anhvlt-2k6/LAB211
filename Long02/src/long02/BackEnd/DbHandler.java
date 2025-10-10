@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import long02.DataType.Candidate;
 import long02.DataType.Experience;
@@ -295,6 +296,19 @@ public class DbHandler {
             default:
                 throw new Exception("Invalid data type");
         }
+        
+        writeDb();
+    }
+
+    public ArrayList<Candidate> getCandidates() {
+        return candidates;
+    }
+    
+    public void sort() {
+        Collections.sort(
+                candidates, 
+                (c1, c2) -> (c1.getFirstName() + " " + c1.getLastName()).compareToIgnoreCase(c2.getFirstName() + " " + c2.getLastName())
+        );
         
         writeDb();
     }

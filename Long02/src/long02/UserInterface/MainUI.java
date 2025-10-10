@@ -1,8 +1,13 @@
 package long02.UserInterface;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Scanner;
 import long02.BackEnd.DbHandler;
+import long02.DataType.Candidate;
+import long02.DataType.Experience;
+import long02.DataType.Fresher;
+import long02.DataType.Intern;
 
 public class MainUI {
     
@@ -113,22 +118,58 @@ public class MainUI {
     }
     
     private void optionFour() {
-        System.out.println("List of candidate: ");
+        ArrayList<Candidate> candidates = dbHandler.getCandidates();
+        String experienceStr = "", fresherStr = "", internStr = "";
         
-        // 
-        System.out.println("===========EXPERIENCE CANDIDATE============");
+        for (Candidate c : candidates) {            
+            if (c instanceof Experience || c.getCandidateID() == 0) {
+                experienceStr += c.getFirstName() + " " + c.getLastName() + "\n";
+            } else if (c instanceof Fresher || c.getCandidateID() == 1) {
+                fresherStr += c.getFirstName() + " " + c.getLastName() + "\n";
+            } else if (c instanceof Intern || c.getCandidateID() == 2) {
+                internStr += c.getFirstName() + " " + c.getLastName() + "\n";
+            }
+        }
         
-        
-        // 
-        System.out.println("==========FRESHER CANDIDATE============== ");
-        
-        //
-        System.out.println("===========INTERN CANDIDATE============== ");
+        System.out.println(
+                "List of candidate: \n"
+                + "===========EXPERIENCE CANDIDATE============\n"
+                + experienceStr + "\n"
+                + "==========FRESHER CANDIDATE==============\n"
+                + fresherStr + "\n"
+                + "===========INTERN CANDIDATE==============\n" 
+                + internStr
+        );
         
         //
         String name = this.enterAValue("Input Candidate name (First name or Last name): ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
-        String candidateType = this.enterAValue("Input type of candidate: ", "Wrong input. Only 0, or 1, or 2.", candidateValidation, true);
+        int candidateType = Integer.parseInt(this.enterAValue("Input type of candidate: ", "Wrong input. Only 0, or 1, or 2.", candidateValidation, true));
         
+        int count = 0;
+        System.out.println(
+                "+---+----------------+---------+-------------+----------+-----------------+----+\n" +
+                "|No.|Fullname        |Birthdate|Address      |Phone     |Email            |Type|\n" +
+                "+---+----------------+---------+-------------+----------+-----------------+----+"
+        );
+        for (Candidate c : candidates) {            
+            String fullName = c.getFirstName() + " " + c.getLastName();
+            if (c.getCandidateID() == candidateType && fullName.toLowerCase().contains(name.toLowerCase())) {
+                System.out.println(String.format(
+                "%3d|16s|%9s|%13s|%10s|%17s|%4s",
+                count,
+                fullName,
+                c.getDoB(),
+                c.getAddress(),
+                c.getPhone(),
+                c.getEmail(),
+                candidateType
+                ));
+                count += 1;
+            }   
+        }
+        System.out.println(
+                "+---+----------------+---------+-------------+----------+-----------------+----+"
+        );
     }
     
     private void optionThree() {
@@ -158,7 +199,7 @@ public class MainUI {
         
         // Ask user if they want to order
         if (this.isOrder()) {
-            
+            dbHandler.sort();
         }
     }
     
@@ -189,7 +230,7 @@ public class MainUI {
         
         // Ask user if they want to order
         if (this.isOrder()) {
-            
+            dbHandler.sort();
         }
     }
     
@@ -219,7 +260,7 @@ public class MainUI {
         
         // Ask user if they want to order
         if (this.isOrder()) {
-            
+            dbHandler.sort();
         }
     }
     
