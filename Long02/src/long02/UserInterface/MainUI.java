@@ -147,9 +147,14 @@ public class MainUI {
         // Exclusive
         String major = this.enterAValue("Enter major (Only CS, CE, AI, Other are accepted in case sensitive): ", "Only CS, CE, AI, Other are accepted in case sensitive", majorValidation, true);
         String semester = this.enterAValue("Enter semester: ", "Only valid from 0 - 9 (single digit)", semesterValidation, true);
-    
+        String schoolName = this.enterAValue("Enter School Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
+        
         // Call the backend service
-        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {major, semester});
+        try {
+            dbHandler.addCandidate(2, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {major, semester, schoolName});
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
         
         // Ask user if they want to order
         if (this.isOrder()) {
@@ -176,7 +181,11 @@ public class MainUI {
         String schoolName = this.enterAValue("Enter school name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         
         // Call the backend service
-        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {graduationDate, rank, schoolName});
+        try {
+            dbHandler.addCandidate(1, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {graduationDate, rank, schoolName});
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
         
         // Ask user if they want to order
         if (this.isOrder()) {
@@ -202,7 +211,11 @@ public class MainUI {
         String proSkill = this.enterAValue("Enter Professional Skill: ", "Wrong opion. Only \"Java\", or \"C#\", or \"C\", or \"Python\", or \"Javascript\", or \"Ruby\", or \"Kotlin\"", proSkillValidation, true);
         
         // Call the backend service
-        dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {expInYear, proSkill});
+        try {
+            dbHandler.addCandidate(0, new String[] {firstName, lastName, dateOfBirth, address, phone, email}, new String[] {expInYear, proSkill});
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
         
         // Ask user if they want to order
         if (this.isOrder()) {

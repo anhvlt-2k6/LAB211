@@ -2,7 +2,7 @@ package long02.DataType;
 
 public abstract class Candidate {
     
-    private final String CandidateID;
+    private final int CandidateID;
     private final String firstName;
     private final String lastName;
     private final String DoB;
@@ -11,7 +11,7 @@ public abstract class Candidate {
     private final String email;
     private final int cadidateType;
     
-    public Candidate(String CandidateID, String firstName, String lastName, String DoB, String address, String phone, String email, int cadidateType) {
+    public Candidate(int CandidateID, String firstName, String lastName, String DoB, String address, String phone, String email, int cadidateType) {
         this.CandidateID = CandidateID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,7 +22,7 @@ public abstract class Candidate {
         this.cadidateType = cadidateType;
     }
 
-    public String getCandidateID() {
+    public int getCandidateID() {
         return CandidateID;
     }
 
