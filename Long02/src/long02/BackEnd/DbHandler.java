@@ -18,9 +18,6 @@ public class DbHandler {
     
     private final ArrayList<Candidate> candidates;
     
-    private Scanner dbReader;
-    private FileWriter dbWriter;
-
     public DbHandler() {
         candidates = new ArrayList<>();
         try {
@@ -34,7 +31,7 @@ public class DbHandler {
         int dataType = -1;
         
         for (String databaseName : dbs)  {
-            try {
+            try (Scanner dbReader = new Scanner(new File(databaseName))) {
                 if (databaseName.equals("experienceDb.csv")) {
                     dataType = 0;
                 } else if (databaseName.equals("fresherDb.csv")) {
@@ -42,19 +39,6 @@ public class DbHandler {
                 } else if (databaseName.equals("internDb.csv")) {
                     dataType = 2;
                 }
-                
-                // Initialize the database file object
-                File fw = new File(databaseName);
-
-                // If the file does not exist and/or cannot read, skip the operation
-                if (!fw.exists() || !fw.canRead()) {
-                    throw new FileNotFoundException(""); // Stop right here
-                }
-
-                // Initialize the database file reader
-                dbReader = new Scanner(fw);
-                
-                
                 
                 // Loop through the database
                 while (dbReader.hasNext()) {
@@ -206,10 +190,8 @@ public class DbHandler {
             String dbFileName = dbs[i];
             String data = expStr[i];
             
-            try {
-                // Now initialize the studentDbWriter.
-                dbWriter = new FileWriter(dbFileName);
-
+            // Now initialize the db writer.
+            try (FileWriter dbWriter = new FileWriter(dbFileName)) {    
                 // Write to file and close
                 dbWriter.write(data);
                 dbWriter.close();
@@ -253,8 +235,8 @@ public class DbHandler {
                         address,
                         phone,
                         email,
-                        commonParams[0],
-                        commonParams[1]
+                        exclusiveParams[0],
+                        exclusiveParams[1]
                 ));
                 break;
             case 1:
@@ -270,9 +252,9 @@ public class DbHandler {
                         address,
                         phone,
                         email,
-                        commonParams[0],
-                        commonParams[1],
-                        commonParams[2]
+                        exclusiveParams[0],
+                        exclusiveParams[1],
+                        exclusiveParams[2]
                 ));
                 break;
             case 2:
@@ -288,9 +270,9 @@ public class DbHandler {
                         address,
                         phone,
                         email,
-                        commonParams[0],
-                        commonParams[1],
-                        commonParams[2]
+                        exclusiveParams[0],
+                        exclusiveParams[1],
+                        exclusiveParams[2]
                 ));
                 break;
             default:

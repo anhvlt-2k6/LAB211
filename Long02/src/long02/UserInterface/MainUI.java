@@ -155,7 +155,7 @@ public class MainUI {
             String fullName = c.getFirstName() + " " + c.getLastName();
             if (c.getCandidateID() == candidateType && fullName.toLowerCase().contains(name.toLowerCase())) {
                 System.out.println(String.format(
-                "%3d|16s|%9s|%13s|%10s|%17s|%4s",
+                "%3d|%16s|%9s|%13s|%10s|%17s|%4d",
                 count,
                 fullName,
                 c.getDoB(),
