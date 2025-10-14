@@ -9,8 +9,20 @@ import long02.DataType.Experience;
 import long02.DataType.Fresher;
 import long02.DataType.Intern;
 
+/**
+ * Long 02 - Main User Interface
+ * @author CE200360 Vo Luu Tuong Anh
+ * @since 2025-10-06
+ */
 public class MainUI {
     
+    /**
+     * Default params
+     * sc as user input
+     * dbHandler as the database
+     * validator as the validators
+     * currentYear as the current set year
+     */
     private final Scanner sc;
     
     private final DbHandler dbHandler;
@@ -30,7 +42,11 @@ public class MainUI {
     
     private int currentYear = 0;
     
+    /**
+     * Constructor of the user interface
+     */
     public MainUI() {
+        // initialize the user input, database, and get the current year
         sc = new Scanner(System.in);
         dbHandler = new DbHandler();
         currentYear = Year.now().getValue();
@@ -73,54 +89,77 @@ public class MainUI {
         return (value);
     }
     
+    /**
+     * Enter a date
+     * @param message As message for user input
+     * @return a String as valid format of date
+     */
     private String enterDate(String message) {
+        // Call the raw string input with date validation
         String date = this.enterAValue(message, "Invalid input. Should be in DD/MM/YYYY format", dateValidator, true);
         
-        String[] dob = date.split("/");
-        boolean isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-        boolean isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-        boolean isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
+        // Split for date, month, and year
+        String[] dateString = date.split("/");
         
-        while (isDateInvalidDob || isMonthInvalidDob || isYearInvalidDob) {
-            if (isDateInvalidDob) {
+        // Check for invalid date, month, and year
+        boolean isDateInvalid = (Integer.parseInt(dateString[0]) < 0 || Integer.parseInt(dateString[0]) > 31);
+        boolean isMonthInvalid = (Integer.parseInt(dateString[1]) < 0 || Integer.parseInt(dateString[1]) > 12);
+        boolean isYearInvalid = (Integer.parseInt(dateString[2]) < 1900 || Integer.parseInt(dateString[2]) > currentYear);
+        
+        // If any of the param is valid, loop asking
+        while (isDateInvalid || isMonthInvalid || isYearInvalid) {
+            if (isDateInvalid) {
                 System.out.println("Invalid date. It should not smaller than 0 or larger than 31.");
             }
             
-            if (isMonthInvalidDob) {
+            if (isMonthInvalid) {
                 System.out.println("Invalid month. It should not smaller than 0 or larger than 12.");
             }
             
-            if (isYearInvalidDob) {
+            if (isYearInvalid) {
                 System.out.println("Invalid year. It should not smaller than 1900 or larger than current year.");
             }
             
-            date = this.enterAValue("DOB: ", "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
+            // Re-ask user to enter date
+            date = this.enterAValue(message, "Invalid DOB input. Should be in DD/MM/YYYY format", dateValidator, true);
             
-            dob = date.split("/");
-            isDateInvalidDob = (Integer.parseInt(dob[0]) < 0 || Integer.parseInt(dob[0]) > 31);
-            isMonthInvalidDob = (Integer.parseInt(dob[1]) < 0 || Integer.parseInt(dob[1]) > 12);
-            isYearInvalidDob = (Integer.parseInt(dob[2]) < 1900 || Integer.parseInt(dob[2]) > currentYear);
+            // Split for date, month, and year
+            dateString = date.split("/");
+            
+            // Check for invalid date, month, and year
+            isDateInvalid = (Integer.parseInt(dateString[0]) < 0 || Integer.parseInt(dateString[0]) > 31);
+            isMonthInvalid = (Integer.parseInt(dateString[1]) < 0 || Integer.parseInt(dateString[1]) > 12);
+            isYearInvalid = (Integer.parseInt(dateString[2]) < 1900 || Integer.parseInt(dateString[2]) > currentYear);
         }
         
+        // Return value;
         return (date);
     }
     
-    private boolean isOrder() {
-        boolean isOrder = false;
-        
+    /**
+     * Ask if user want to order
+     */
+    private void isOrder() {
+        // Get user input
         String getUserAnswer = this.enterAValue("Do you want to order now (Y/N): ", "Either Y or N (case insensitive)", yesnoValidation, true);
         
+        // Perform action if valid
         if (getUserAnswer.equals("Y") || getUserAnswer.equals("y")) {
-            isOrder = true;
+            dbHandler.sort();
         }
-        
-        return (isOrder);
     }
     
+    /**
+     * Option Four - get and search the candidate list
+     */
     private void optionFour() {
+        // Get the database to front end
         ArrayList<Candidate> candidates = dbHandler.getCandidates();
+        
+        // The str of candidates, by each type
         String experienceStr = "", fresherStr = "", internStr = "";
         
+        // Loop for each candidate, and try add the name into value
         for (Candidate c : candidates) {            
             if (c instanceof Experience || c.getCandidateID() == 0) {
                 experienceStr += c.getFirstName() + " " + c.getLastName() + "\n";
@@ -131,6 +170,7 @@ public class MainUI {
             }
         }
         
+        // Display the name of candidates
         System.out.println(
                 "List of candidate: \n"
                 + "===========EXPERIENCE CANDIDATE============\n"
@@ -141,18 +181,20 @@ public class MainUI {
                 + internStr
         );
         
-        //
+        // Get the user input for name and type
         String name = this.enterAValue("Input Candidate name (First name or Last name): ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         int candidateType = Integer.parseInt(this.enterAValue("Input type of candidate: ", "Wrong input. Only 0, or 1, or 2.", candidateValidation, true));
         
+        // Count and display
         int count = 0;
         System.out.println(
                 "+---+----------------+-----------+-------------+----------+-----------------+----+\n" +
                 "|No.|Fullname        | Birthdate |Address      |Phone     |Email            |Type|\n" +
                 "+---+----------------+-----------+-------------+----------+-----------------+----+"
         );
+        // For each candidate, try display if matching (case insensitive)
         for (Candidate c : candidates) {            
-            String fullName = c.getFirstName() + " " + c.getLastName();
+            String fullName = c.getFirstName() + " " + c.getLastName(); // Get full anem of the candidate
             if (c.getCandidateID() == candidateType && fullName.toLowerCase().contains(name.toLowerCase())) {
                 System.out.println(String.format(
                 "|%3d|%16s|%10s|%13s|%8s|%17s|%4d",
@@ -172,20 +214,21 @@ public class MainUI {
         );
     }
     
+    /**
+     * Option Three - Enter for internship
+     */
     private void optionThree() {
         System.out.println("=== Enter a property for Internship ===");
         
+        // Enter default values
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
-        
-        // ask for date of birth
-        String dateOfBirth = this.enterDate("Enter Date of Birth");
-        
+        String dateOfBirth = this.enterDate("Enter Date of Birth");        
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
-        // Exclusive
+        // Exclusive values
         String major = this.enterAValue("Enter major (Only CS, CE, AI, Other are accepted in case sensitive): ", "Only CS, CE, AI, Other are accepted in case sensitive", majorValidation, true);
         String semester = this.enterAValue("Enter semester: ", "Only valid from 0 - 9 (single digit)", semesterValidation, true);
         String schoolName = this.enterAValue("Enter School Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
@@ -198,25 +241,24 @@ public class MainUI {
         }
         
         // Ask user if they want to order
-        if (this.isOrder()) {
-            dbHandler.sort();
-        }
+        this.isOrder();
     }
     
+    /**
+     * Option Two - Fresher
+     */
     private void optionTwo() {
         System.out.println("=== Enter a property for Fresher ===");
         
+        // Enter default values
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
-        
-        // ask for date of birth
         String dateOfBirth = this.enterDate("Enter Date of Birth: ");
-        
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
-        // Exclusive
+        // Exclusive values
         String graduationDate = this.enterDate("Enter Graduation Date: ");
         String rank = this.enterAValue("Enter rank: ", "Invalid ranking. Only Excellence, Good, Fair, Poor (case sensitive)", rankofGradValidation, true);
         String schoolName = this.enterAValue("Enter school name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
@@ -229,25 +271,24 @@ public class MainUI {
         }
         
         // Ask user if they want to order
-        if (this.isOrder()) {
-            dbHandler.sort();
-        }
+        this.isOrder();
     }
     
+    /**
+     * Option One - Experience Candidate
+     */
     private void optionOne() {
         System.out.println("=== Enter a property for Experience ===");
         
+        // Enter default values
         String firstName = this.enterAValue("Enter First Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
         String lastName = this.enterAValue("Enter Last Name: ", "Wrong name input. Must be letters and spaces.", nameValidator, true);
-        
-        // ask for date of birth
         String dateOfBirth = this.enterDate("Enter Date of Birth: ");
-        
         String address = this.enterAValue("Enter Address: ", "Wrong address format. Address must only contain numbers, letters, and spaces.", addressValidation, true);
         String phone = this.enterAValue("Enter Phone Number: ", "Wrong phone number. Must be digits (min 10).", phoneValidator, true);
         String email = this.enterAValue("Enter Email: ", "Wrong email input. Must be in format \"khanhvh@fe.edu.vn\".", emailValidator, true);
         
-        // Exclusive
+        // Exclusive values
         String expInYear = this.enterAValue("Enter Year of Experience: ", "Wrong format. Year of Experience must be digits only and in range of 0 to 100.", expYearValidation, true);
         String proSkill = this.enterAValue("Enter Professional Skill: ", "Wrong opion. Only \"Java\", or \"C#\", or \"C\", or \"Python\", or \"Javascript\", or \"Ruby\", or \"Kotlin\"", proSkillValidation, true);
         
@@ -259,11 +300,12 @@ public class MainUI {
         }
         
         // Ask user if they want to order
-        if (this.isOrder()) {
-            dbHandler.sort();
-        }
+        this.isOrder();
     }
     
+    /**
+     * Main User interface
+     */
     public void displayUI() {
         while (true) {
            try {
@@ -276,9 +318,11 @@ public class MainUI {
                         "5. Exit \n" +
                         "Please choose:"
                 );
-
+                
+                // Try get the user input choice
                 int choice = Integer.parseInt(sc.nextLine());
 
+                // in each case, try call the option function
                 switch (choice) {
                     case 1:
                         this.optionOne();
@@ -296,10 +340,12 @@ public class MainUI {
                         System.exit(0);
                         break;
                     default:
+                        // Invalid Choice
                         System.out.println("Invalid choice.");
                         break;
                 }
             } catch (NumberFormatException numex) {
+                // In case unable to parse
                 System.out.println(numex.getLocalizedMessage());
             }
         }

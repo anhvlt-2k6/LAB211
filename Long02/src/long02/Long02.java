@@ -8,13 +8,16 @@ import long02.UserInterface.MainUI;
  * @since 2025-10-06
  */
 public class Long02 {
-
+    
     /**
      * Entry of the program
-     * @param Useless
+     * @param args In-line argument
      */
     public static void main(String[] args) {
+        // Initialize the user interface
         MainUI mainui = new MainUI();
+        
+        // Display the user interface
         mainui.displayUI();
     }
 }
