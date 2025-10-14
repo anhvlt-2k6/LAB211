@@ -11,7 +11,7 @@ import short07.BackEnd.Student;
  * @author CE200360 - Vo Luu Tuong Anh
  * @since 2025-10-01
  */
-public class MainUserInterface {
+public final class MainUserInterface {
     
     /**
      * Scanner for user input
@@ -72,6 +72,39 @@ public class MainUserInterface {
         
         // return value
         return (value);
+    }
+    
+    /**
+     * Enter a mark from user
+     * @param subjectName String as the subject name so user know which object it is targetting
+     * @return a valid mark in double
+     */
+    private double enterAMark(String subjectName) {
+        // Set the default value (invalid for loop input)
+        double mark = -1.0;
+        
+        // Try to get the mark. Set the negative double, then loop 
+        // for user enter correct format of double
+        while (mark == -1.0) {
+            // assign for string
+            String markStr = this.enterAValue(subjectName, markValidation, "Must be a number from 0 to 10", true);
+
+            // try parse string, and validate that double later
+            double markPr = Double.parseDouble(markStr);
+
+            // Validate double, and pass if in range 0 - 10
+            if (markPr > 10) {
+                System.out.println("Mark must smaller than 10");
+            } else if (markPr < 0) {
+                System.out.println("Mark must larger than 0");
+            } else {
+                // If true, assign new double for argument
+                mark = markPr;
+            }
+        }
+        
+        // return valid mark
+        return (mark);
     }
     
     /**
@@ -140,68 +173,10 @@ public class MainUserInterface {
             // for user enter correct format of class
             String studentClass = this.enterAValue("Class: ", classValidation, "Invalid class type. Must be in format \"FU\" and 1 to 2 digits", true);
             
-            // Try to get the mark. Set the negative double, then loop 
-            // for user enter correct format of double
-            double chemistry = -1.0;
-            while (chemistry == -1.0) {
-                // assign for string
-                String chemistryStr = this.enterAValue("Chemistry: ", markValidation, "Must be a number from 0 to 10", true);
-                
-                // try parse string, and validate that double later
-                double chemistryPr = Double.parseDouble(chemistryStr);
-                
-                // Validate double, and pass if in range 0 - 10
-                if (chemistryPr > 10) {
-                    System.out.println("Math mark must smaller than 10");
-                } else if (chemistryPr < 0) {
-                    System.out.println("Math mark must larger than 0");
-                } else {
-                    // If true, assign new double for argument
-                    chemistry = chemistryPr;
-                }
-            }
-            
-            // Try to get the mark. Set the negative double, then loop 
-            // for user enter correct format of double
-            double math = -1.0;
-            while (math == -1.0) {
-                // assign for string
-                String mathStr = this.enterAValue("Math: ", markValidation, "Must be a number from 0 to 10", true);
-                
-                // try parse string, and validate that double later
-                double mathPr = Double.parseDouble(mathStr);
-                
-                // Validate double, and pass if in range 0 - 10
-                if (mathPr > 10) {
-                    System.out.println("Math mark must smaller than 10");
-                } else if (mathPr < 0) {
-                    System.out.println("Math mark must larger than 0");
-                } else {
-                    // If true, assign new double for argument
-                    math = mathPr;
-                }
-            }
-            
-            // Try to get the double. Set the empty double, then loop 
-            // for user enter correct format of double
-            double physics = -1.0;
-            while (physics == -1.0) {
-                // assign for string
-                String physicsStr = this.enterAValue("Physics: ", markValidation, "Must be a number from 0 to 10", true);
-                
-                // try parse string, and validate that double later
-                double physicsPr = Double.parseDouble(physicsStr);
-                
-                // Validate double, and pass if in range 0 - 10
-                if (physicsPr > 10) {
-                    System.out.println("Math mark must smaller than 10");
-                } else if (physicsPr < 0) {
-                    System.out.println("Math mark must larger than 0");
-                } else {
-                    // If true, assign new double for argument
-                    physics = physicsPr;
-                }
-            }
+            // Try to get the mark.
+            double chemistry = this.enterAMark("Chemistry: ");
+            double math = this.enterAMark("Math: ");
+            double physics = this.enterAMark("Physics: ");
             
             // Try adding student with arguments
             try {

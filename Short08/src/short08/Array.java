@@ -42,6 +42,14 @@ public final class Array {
     }
     
     /**
+     * Get the current array length pointer of next active location
+     * @return int as Length of array
+     */
+    public int getArrLength() {
+        return arrLength;
+    }
+    
+    /**
      * Find index of value
      * @param value as int
      * @return index of its on string

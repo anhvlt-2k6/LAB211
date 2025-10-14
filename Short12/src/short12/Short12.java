@@ -8,7 +8,7 @@ package short12;
 public class Short12 {
     /**
      * Entry of the program
-     * @param args Useless
+     * @param args In-line argument
      */
     public static void main(String[] args) {
         // Initialize the user interface

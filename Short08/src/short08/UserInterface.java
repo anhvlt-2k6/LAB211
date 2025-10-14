@@ -82,7 +82,7 @@ public class UserInterface {
             
             // if still wrong, print the error line
             if (lower > upper) {
-                System.out.println("Lower value must lower or equal upper value.");
+                System.out.println("Lower value must smaller or equal upper value.");
             }
         }
         
@@ -144,11 +144,15 @@ public class UserInterface {
      * Option 1 - Add value
      */
     private void optionOne() {
-        // Ask user for value
-        String value = this.enterAValue("Enter a value: ");
-        
-        // try add that value into array
-        arr.addValue(Integer.parseInt(value));
+        if (arr.getArrLength() > 99) {
+            System.out.println("Array is over bounded.");
+        } else {
+            // Ask user for value
+            String value = this.enterAValue("Enter a value: ");
+
+            // try add that value into array
+            arr.addValue(Integer.parseInt(value));
+        }
     }
     
     /**
@@ -199,7 +203,7 @@ public class UserInterface {
             } catch (Exception e) {
                 // print out any case of exceptional 
                 System.out.println(e.getLocalizedMessage());
-            } 
+            }
         }
     }
 }

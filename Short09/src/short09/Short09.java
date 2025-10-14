@@ -8,7 +8,7 @@ package short09;
 public class Short09 {
     /**
      * Entry of program
-     * @param args Useless
+     * @param args In-line argument
      */
     public static void main(String[] args) {
         // Initialize the object

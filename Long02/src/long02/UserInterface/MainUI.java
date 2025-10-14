@@ -17,7 +17,7 @@ public class MainUI {
 
     private final String nameValidator = "[A-Za-z ]{1,}";
     private final String dateValidator = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/([0-9]{4})"; 
-    private final String emailValidator = "([A-Za-z0-9._-]{1,})@(([A-Za-z0-9]{1,}).[A-Za-z0-9]{2,})";
+    private final String emailValidator = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
     private final String phoneValidator = "[0-9]{10,}";
     private final String rankofGradValidation = "Excellence|Good|Fair|Poor"; // case sensitive
     private final String addressValidation = "[0-9A-Za-z ]{1,}";
@@ -147,15 +147,15 @@ public class MainUI {
         
         int count = 0;
         System.out.println(
-                "+---+----------------+---------+-------------+----------+-----------------+----+\n" +
-                "|No.|Fullname        |Birthdate|Address      |Phone     |Email            |Type|\n" +
-                "+---+----------------+---------+-------------+----------+-----------------+----+"
+                "+---+----------------+-----------+-------------+----------+-----------------+----+\n" +
+                "|No.|Fullname        | Birthdate |Address      |Phone     |Email            |Type|\n" +
+                "+---+----------------+-----------+-------------+----------+-----------------+----+"
         );
         for (Candidate c : candidates) {            
             String fullName = c.getFirstName() + " " + c.getLastName();
             if (c.getCandidateID() == candidateType && fullName.toLowerCase().contains(name.toLowerCase())) {
                 System.out.println(String.format(
-                "%3d|%16s|%9s|%13s|%10s|%17s|%4d",
+                "|%3d|%16s|%10s|%13s|%8s|%17s|%4d",
                 count,
                 fullName,
                 c.getDoB(),
@@ -168,7 +168,7 @@ public class MainUI {
             }   
         }
         System.out.println(
-                "+---+----------------+---------+-------------+----------+-----------------+----+"
+                "+---+----------------+-----------+-------------+----------+-----------------+----+"
         );
     }
     

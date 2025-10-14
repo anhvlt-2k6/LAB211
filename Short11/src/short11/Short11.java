@@ -8,7 +8,7 @@ package short11;
 public class Short11 {
     /**
      * Entry of program 
-     * @param args Useless
+     * @param args In-line argument
      */
     public static void main(String[] args) {
         UserInterface s11 = new UserInterface();
