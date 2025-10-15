@@ -12,8 +12,10 @@ public class Short13 {
      * @param args In-line argument
      */
     public static void main(String[] args) {
+        // User Interface object initialize
         UserInterface ui = new UserInterface();
         
+        // Display the user interface
         ui.displayUI();
     }
 }
