@@ -11,7 +11,7 @@ public class UserInterface {
     
     // Initialize user input and array object
     private final Scanner sc;
-    private final Array arr;
+    private Array arr;
     
     // String to validate if it is the integer validation
     private final String intValidation = "(-)?([0-9]{1,12})";
@@ -22,7 +22,6 @@ public class UserInterface {
     public UserInterface() {
         // Initialize the scanner and array object
         sc = new Scanner(System.in);
-        arr = new Array();
     }
     
     /**
@@ -62,28 +61,45 @@ public class UserInterface {
      * Display the user interface
      */
     public void displayUserInterface() {
+        
+        
         try {
             // Enter size of array
             String inputStr = this.enterAValue("Please enter size of array: ");    
             int input = Integer.parseInt(inputStr);
             
+            arr = new Array(input);
+            
             // for each index, ask user for input
             for (int i = 0; i < input; i++) {
                 // Enter value for that input
                 String valueStr = this.enterAValue("Enter element [" + i + "]: ");
-                arr.addInorder(Integer.parseInt(valueStr));
+                arr.addValue(i, Integer.parseInt(valueStr));
             }
             
+            arr.sort();
+            int[] getArr = arr.getArr();
+            
             // Display the array after sorting
-            System.out.println("The array after sorting:\n" + arr.getArr());
+            System.out.println("The array after sorting: ");
+            for (int i = 0; i < getArr.length; i++) {
+                if (getArr[i] != Integer.MIN_VALUE) {
+                    System.out.println("Index " + i + ": " + getArr[i] + " ");
+                }
+            }
             
             // Ask user to enter new value
             String newValueStr = this.enterAValue("Please enter new value: ");
             int newValue = Integer.parseInt(newValueStr);
-            arr.addInorder(newValue);
+            arr.addNewInorder(newValue);
             
             // Display the new array
-            System.out.println("New array:\n" + arr.getArr());
+            System.out.println("New array:");
+            for (int i = 0; i < getArr.length; i++) {
+                if (getArr[i] != Integer.MIN_VALUE) {
+                    System.out.println("Index " + i + ": " + getArr[i] + " ");
+                }
+            }
         } catch (NumberFormatException e) {
             // In case user enter invalid number and unable to parse
             System.out.println(e.getLocalizedMessage());

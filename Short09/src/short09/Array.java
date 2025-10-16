@@ -1,7 +1,5 @@
 package short09;
 
-import java.util.ArrayList;
-
 /**
  * Short 09 - Array object
  * @author CE200360 Vo Luu Tuong Anh
@@ -10,47 +8,59 @@ import java.util.ArrayList;
 public final class Array {
     
     // arr as tree set of integer
-    private ArrayList<Integer> arr;
+    private final int[] arr;
     
     /**
      * Constructor of the array
+     * @param n for indexing
      */
-    public Array() {
-        // Initialize the arr
-        arr = new ArrayList<>();
+    public Array(int n) {
+        // Initialize the arr. n + 1 for adding new value
+        arr = new int[n + 1];
+        
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = Integer.MIN_VALUE;
+        }
     }
     
     /**
      * Add value but still keep the array in order
      * @param value as integer in value
+     * @param index as index
      */
-    public void addInorder(int value) {
-        // Do the lower bound and upper bound.
-        //  Note that lower bound is less than or equal, else the upper
-        ArrayList<Integer> lowerBound = new ArrayList<>();
-        ArrayList<Integer> upperBound = new ArrayList<>();
-        
-        // Loop for elements in array. 
-        //  If there is any element match any criteria, add it into the array list above
-        for (int i : arr) {
-            if (i <= value) {
-                lowerBound.add(i);
-            } else {
-                upperBound.add(i);
+    public void addValue(int index, int value) {
+        arr[index] = value;
+    }
+    
+    /**
+     * Sorting array
+     */
+    public void sort() {
+        // Loop with pointer 1
+        for (int c = 0; c < (arr.length - 2); c++) {
+            
+            // Loop with pointer 2 inner pointer 1
+            for (int i = 0; i < (arr.length - 2); i++) {
+                
+                // If comparator is larger than 0, swap
+                if (arr[i] > arr[i + 1]) {
+                    int temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+                }
             }
         }
-        
-        // combine value into main array
-        arr = lowerBound;
-        arr.add(value);
-        arr.addAll(upperBound);
     }
-
+    
+    public void addNewInorder(int n) {
+        
+    }
+    
     /**
-     * Get the array 
-     * @return ArrayList as the primary array for displaying
+     * Get the array
+     * @return int in array
      */
-    public ArrayList<Integer> getArr() {
+    public int[] getArr() {
         return arr;
     }
 }

@@ -1,18 +1,15 @@
 package testapp;
 
-import java.util.ArrayList;
-
 public class TestApp {
     
-    public static int getFibbonaci(int n) {
-        if (n == 1 || n == 2) {
-            return 1;
+    public static void main(String[] args) {
+        Integer[] a = new Integer[] {1,2,3};
+        
+        for (int i : a) {
+            i = 0;
         }
         
-        return getFibbonaci(n - 1) + getFibbonaci(n - 2);
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(getFibbonaci(0));
+        //int[] a = IntStream.concat(a1, a2);
+        System.out.println(a[0] + " " + a[1] + " " + a[2]);
     }
 }

@@ -19,5 +19,4 @@ public class Short14 {
         
         ui.displayUserInterface();
     }
-    
 }
