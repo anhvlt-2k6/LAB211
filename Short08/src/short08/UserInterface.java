@@ -93,12 +93,14 @@ public class UserInterface {
         if (arrinbound.isEmpty()) {
             System.out.println("No value inbound found.");
         } else {
+            String out = "";
             // else print for value. note that if its in default value, ignore
             for (int i : arrinbound) {
                 if (i != Integer.MIN_VALUE) {
-                    System.out.println(i);
+                    out += ("," + i);
                 }
             }
+            System.out.println(out.substring(1));
         }
     }
     
@@ -113,12 +115,14 @@ public class UserInterface {
         if (array == null) {
             System.out.println("The array is currently empty");
         } else {
+            String out = "";
             // else print for value. note that if its in default value, ignore
             for (int i : array) {
                 if (i != Integer.MIN_VALUE) {
-                    System.out.println(i);
+                    out += ("," + i);
                 }
             }
+            System.out.println(out.substring(1));
         }
     }
     
@@ -127,17 +131,12 @@ public class UserInterface {
      */
     private void optionTwo() {
         // ask user to enter value to find
-        String value = this.enterAValue("Enter a value to find: ");
+        String value = this.enterAValue("Enter a value to find: ").trim();
         
         // call the arr to find that value
-        int index = arr.indexofValue(Integer.parseInt(value));
+        ArrayList<Integer> index = arr.indexofValue(Integer.parseInt(value));
         
-        // if it returns default as -1, it does not exist, else print it
-        if (index == -1) {
-            System.out.println("Value does not exist in the array.");
-        } else {
-            System.out.println("The index of found value: " + index);
-        }
+        System.out.println("The index of found value: " + index);
     }
     
     /**

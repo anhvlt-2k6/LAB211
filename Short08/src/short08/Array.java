@@ -51,23 +51,23 @@ public final class Array {
     
     /**
      * Find index of value
-     * @param value as int
+     * @param value as int value
      * @return index of its on string
      */
-    public int indexofValue(int value) {
-        int ret = -1; // default is -1 (not found)
+    public ArrayList<Integer> indexofValue(int value) {
+        ArrayList<Integer> foundIndex = new ArrayList<>();
         
         // loop for value
         for (int i = 0; i < arrLength; i++) {
             // if found, assign set the index and exit the loop
-            if (arr[i] == value) {
-                ret = i;
-                break;
+            
+            if (arr[i] == value && arr[i] != Integer.MIN_VALUE) {
+                foundIndex.add(i);
             }
         }
         
         // return index
-        return (ret);
+        return (foundIndex);
     }
     
     /**
@@ -105,10 +105,10 @@ public final class Array {
      */
     public void sort() {
         // Loop with pointer 1
-        for (int c = 0; c < (arr.length - 1); c++) {
+        for (int c = 0; c < (arrLength - 1); c++) {
             
             // Loop with pointer 2 inner pointer 1
-            for (int i = 0; i < (arr.length - 1); i++) {
+            for (int i = 0; i < (arrLength - 1); i++) {
                 
                 // If comparator is larger than 0, swap
                 if (arr[i] > arr[i + 1]) {
