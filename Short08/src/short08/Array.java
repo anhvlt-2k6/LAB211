@@ -60,8 +60,7 @@ public final class Array {
         // loop for value
         for (int i = 0; i < arrLength; i++) {
             // if found, assign set the index and exit the loop
-            
-            if (arr[i] == value && arr[i] != Integer.MIN_VALUE) {
+            if (arr[i] == value) {
                 foundIndex.add(i);
             }
         }
