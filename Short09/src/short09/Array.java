@@ -57,9 +57,11 @@ public final class Array {
      * @param n as that new value
      */
     public void addNewInorder(int n) {
+        // Insert to the last
         arr[arr.length - 1] = n;
         
-        for (int i = arr.length - 1; i > 1; i--) {
+        // Move element in-order correctly
+        for (int i = arr.length - 1; i > 0; i--) {
             if (arr[i - 1] < arr[i]) {
                 break;
             }
