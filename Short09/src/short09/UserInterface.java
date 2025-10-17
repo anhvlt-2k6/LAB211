@@ -58,11 +58,21 @@ public class UserInterface {
     }
     
     /**
+     * Display all contents in the array
+     */
+    public void displayArr() {
+        int[] getArr = arr.getArr();
+        for (int i = 0; i < getArr.length; i++) {
+            if (getArr[i] != Integer.MIN_VALUE) {
+                System.out.println("Index " + i + ": " + getArr[i] + " ");
+            }
+        }
+    }
+    
+    /**
      * Display the user interface
      */
     public void displayUserInterface() {
-        
-        
         try {
             // Enter size of array
             String inputStr = this.enterAValue("Please enter size of array: ");    
@@ -78,15 +88,10 @@ public class UserInterface {
             }
             
             arr.sort();
-            int[] getArr = arr.getArr();
             
             // Display the array after sorting
             System.out.println("The array after sorting: ");
-            for (int i = 0; i < getArr.length; i++) {
-                if (getArr[i] != Integer.MIN_VALUE) {
-                    System.out.println("Index " + i + ": " + getArr[i] + " ");
-                }
-            }
+            this.displayArr();
             
             // Ask user to enter new value
             String newValueStr = this.enterAValue("Please enter new value: ");
@@ -95,11 +100,7 @@ public class UserInterface {
             
             // Display the new array
             System.out.println("New array:");
-            for (int i = 0; i < getArr.length; i++) {
-                if (getArr[i] != Integer.MIN_VALUE) {
-                    System.out.println("Index " + i + ": " + getArr[i] + " ");
-                }
-            }
+            this.displayArr();
         } catch (NumberFormatException e) {
             // In case user enter invalid number and unable to parse
             System.out.println(e.getLocalizedMessage());

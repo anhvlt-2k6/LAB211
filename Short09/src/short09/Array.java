@@ -52,8 +52,21 @@ public final class Array {
         }
     }
     
+    /**
+     * Add new value in-order
+     * @param n as that new value
+     */
     public void addNewInorder(int n) {
+        arr[arr.length - 1] = n;
         
+        for (int i = arr.length - 1; i > 1; i--) {
+            if (arr[i - 1] < arr[i]) {
+                break;
+            }
+            int tmp = arr[i - 1];
+            arr[i - 1] = arr[i];
+            arr[i] = tmp;
+        }
     }
     
     /**
