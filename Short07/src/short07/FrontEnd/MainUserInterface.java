@@ -31,14 +31,9 @@ public final class MainUserInterface {
      * Constructor of User Interface
      */
     public MainUserInterface() {
-        
         // Initialize the user input and database
         sc = new Scanner(System.in);
         studentDb = new StudentDb();
-        
-        // add student into student database as sample
-        studentDb.createStudent("Nghia", "FU1", 7.5, 8.3, 6.5);
-        studentDb.createStudent("Hieu", "FU2", 7.2, 9.6, 7.5);
     }
     
     /**
@@ -87,7 +82,7 @@ public final class MainUserInterface {
         // for user enter correct format of double
         while (mark == -1.0) {
             // assign for string
-            String markStr = this.enterAValue(subjectName, markValidation, "Must be a number from 0 to 10", true);
+            String markStr = this.enterAValue(subjectName, markValidation, "Must be a number from 1 to 10", true);
 
             // try parse string, and validate that double later
             double markPr = Double.parseDouble(markStr);
@@ -95,8 +90,8 @@ public final class MainUserInterface {
             // Validate double, and pass if in range 0 - 10
             if (markPr > 10) {
                 System.out.println("Mark must smaller than 10");
-            } else if (markPr < 0) {
-                System.out.println("Mark must larger than 0");
+            } else if (markPr < 1) {
+                System.out.println("Mark must larger than 1");
             } else {
                 // If true, assign new double for argument
                 mark = markPr;

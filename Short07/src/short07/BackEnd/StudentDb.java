@@ -34,7 +34,7 @@ public final class StudentDb {
         // Loop for students in database
         for (Student st : studentDb) {
             // If found, set the isDuplicatedNameFound to true and exit the loop
-            if (st.getStudentName().equals(studentName)) {
+            if (st.getStudentName().trim().equalsIgnoreCase(studentName)) {
                 isDuplicatedNameFound = true;
                 break;
             }
@@ -111,11 +111,18 @@ public final class StudentDb {
         // Calculate for total
         double total = CountA + CountB + CountC + CountD;
         
-        // put with key and value of percentage
-        typeofStudent.put("A", (CountA / total * 100)); 
-        typeofStudent.put("B", (CountB / total * 100));
-        typeofStudent.put("C", (CountC / total * 100));
-        typeofStudent.put("D", (CountD / total * 100));
+        if (total == 0.0) {
+            typeofStudent.put("A", 0.0); 
+            typeofStudent.put("B", 0.0);
+            typeofStudent.put("C", 0.0);
+            typeofStudent.put("D", 0.0);
+        } else {
+            // put with key and value of percentage
+            typeofStudent.put("A", (CountA / total * 100)); 
+            typeofStudent.put("B", (CountB / total * 100));
+            typeofStudent.put("C", (CountC / total * 100));
+            typeofStudent.put("D", (CountD / total * 100));
+        }
         
         // return value
         return (typeofStudent);
