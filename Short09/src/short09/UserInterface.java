@@ -63,7 +63,7 @@ public class UserInterface {
     public void displayArr() {
         System.out.println();
         for (int i : arr.getArr()) {
-            if (i != Integer.MIN_VALUE) {
+            if (i != Integer.MAX_VALUE) {
                 System.out.print(i + "\t");
             }
         }

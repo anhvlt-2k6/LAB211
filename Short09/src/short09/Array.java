@@ -23,7 +23,7 @@ public final class Array {
         arr = new int[arrSize];
         
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = Integer.MIN_VALUE;
+            arr[i] = Integer.MAX_VALUE;
         }
     }
     
@@ -48,10 +48,10 @@ public final class Array {
      */
     public void sort() {
         // Loop with pointer 1
-        for (int c = 0; c < (this.arrSize - 2); c++) {
+        for (int c = 0; c < (this.arrSize - 1); c++) {
             
             // Loop with pointer 2 inner pointer 1
-            for (int i = 0; i < (this.arrSize - 2); i++) {
+            for (int i = 0; i < (this.arrSize - 1); i++) {
                 
                 // If comparator is larger than 0, swap
                 if (arr[i] > arr[i + 1]) {
