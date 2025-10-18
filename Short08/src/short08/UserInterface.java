@@ -18,7 +18,7 @@ public class UserInterface {
     private final Scanner sc;
     private final Array arr;
     
-    private final String intValidation = "(-)?([0-9]{1,12})";
+    private final String intValidation = "(-)?([0-9]{1,9})";
     
     /**
      * Constructor of the program
@@ -122,7 +122,12 @@ public class UserInterface {
                     out += ("," + i);
                 }
             }
-            System.out.println(out.substring(1));
+            
+            if (out.length() == 0) {
+                System.out.println("No values to display.");
+            } else {
+                System.out.println(out.substring(1));
+            }
         }
     }
     
@@ -150,7 +155,11 @@ public class UserInterface {
             String value = this.enterAValue("Enter a value: ");
 
             // try add that value into array
-            arr.addValue(Integer.parseInt(value));
+            if (arr.addValue(Integer.parseInt(value))) {
+                System.out.println("New value is added");
+            } else {
+                System.out.println("Cannot add new value (Array out of bound)");
+            }
         }
     }
     
@@ -197,8 +206,7 @@ public class UserInterface {
                         break;
                 }
             } catch (NumberFormatException e) {
-                // Exit on default
-                System.exit(0);
+                System.out.println("Invalid choice. Please enter a number 1-5 (or other to quit).");
             } catch (Exception e) {
                 // print out any case of exceptional 
                 System.out.println(e.getLocalizedMessage());

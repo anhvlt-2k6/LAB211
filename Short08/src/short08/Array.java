@@ -1,6 +1,7 @@
 package short08;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Short 08 - Array
@@ -35,10 +36,16 @@ public final class Array {
     /**
      * Add value into array
      * @param value as int
+     * @return whether adding new value is success or not
      */
-    public void addValue(int value) {
-        arr[arrLength] = value; // assign vaule
-        arrLength += 1; // increase length
+    public boolean addValue(int value) {
+        
+        if (arrLength >= arr.length) {
+            return false;
+        }
+        
+        arr[arrLength++] = value; // assign vaule
+        return true;
     }
     
     /**
@@ -79,11 +86,11 @@ public final class Array {
         // Initialize the inbound
         ArrayList<Integer> arrinbound = new ArrayList<>();
         
-        // loop for array 
-        for (int i : arr) {
-            // if i inbound, add that value
-            if (i >= lower && i <= upper) {
-                arrinbound.add(i);
+        // loop for array
+        for (int i = 0; i < this.arrLength; i++) {
+            int v = arr[i];
+            if (v >= lower && v <= upper) {
+                arrinbound.add(v);
             }
         }
         
@@ -96,7 +103,7 @@ public final class Array {
      * @return array in int, but if empty, it should be null for more practical
      */
     public int[] getArr() {
-        return (arrLength == 0) ? null : arr;
+        return (arrLength == 0) ? new int[0] : Arrays.copyOf(arr, arrLength);
     }
     
     /**
@@ -107,7 +114,7 @@ public final class Array {
         for (int c = 0; c < (arrLength - 1); c++) {
             
             // Loop with pointer 2 inner pointer 1
-            for (int i = 0; i < (arrLength - 1); i++) {
+            for (int i = 0; i < (arrLength - c - 1); i++) {
                 
                 // If comparator is larger than 0, swap
                 if (arr[i] > arr[i + 1]) {
