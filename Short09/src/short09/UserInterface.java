@@ -61,10 +61,10 @@ public class UserInterface {
      * Display all contents in the array
      */
     public void displayArr() {
-        int[] getArr = arr.getArr();
-        for (int i = 0; i < getArr.length; i++) {
-            if (getArr[i] != Integer.MIN_VALUE) {
-                System.out.println("Index " + i + ": " + getArr[i] + " ");
+        System.out.println();
+        for (int i : arr.getArr()) {
+            if (i != Integer.MIN_VALUE) {
+                System.out.print(i + "\t");
             }
         }
     }
@@ -94,7 +94,7 @@ public class UserInterface {
             this.displayArr();
             
             // Ask user to enter new value
-            String newValueStr = this.enterAValue("Please enter new value: ");
+            String newValueStr = this.enterAValue("\nPlease enter new value: ");
             int newValue = Integer.parseInt(newValueStr);
             arr.addNewInorder(newValue);
             

@@ -1,5 +1,7 @@
 package short09;
 
+import java.util.Arrays;
+
 /**
  * Short 09 - Array object
  * @author CE200360 Vo Luu Tuong Anh
@@ -9,14 +11,16 @@ public final class Array {
     
     // arr as tree set of integer
     private final int[] arr;
+    private int arrSize;
     
     /**
      * Constructor of the array
      * @param n for indexing
      */
     public Array(int n) {
+        arrSize = n + 1;
         // Initialize the arr. n + 1 for adding new value
-        arr = new int[n + 1];
+        arr = new int[arrSize];
         
         for (int i = 0; i < arr.length; i++) {
             arr[i] = Integer.MIN_VALUE;
@@ -29,7 +33,14 @@ public final class Array {
      * @param index as index
      */
     public void addValue(int index, int value) {
+        if (index >= arr.length) {
+            return;
+        }
+        
         arr[index] = value;
+        if (index - 1 >= this.arrSize) {
+            this.arrSize = index + 1;
+        }
     }
     
     /**
@@ -37,10 +48,10 @@ public final class Array {
      */
     public void sort() {
         // Loop with pointer 1
-        for (int c = 0; c < (arr.length - 2); c++) {
+        for (int c = 0; c < (this.arrSize - 2); c++) {
             
             // Loop with pointer 2 inner pointer 1
-            for (int i = 0; i < (arr.length - 2); i++) {
+            for (int i = 0; i < (this.arrSize - 2); i++) {
                 
                 // If comparator is larger than 0, swap
                 if (arr[i] > arr[i + 1]) {
@@ -76,6 +87,6 @@ public final class Array {
      * @return int in array
      */
     public int[] getArr() {
-        return arr;
+        return Arrays.copyOf(arr, arrSize);
     }
 }
