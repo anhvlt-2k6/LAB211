@@ -30,19 +30,16 @@ public class UserInterface {
         // Ask user to enter string (no verification needed)
         System.out.print("Enter a string: ");
         strPro.setUserInput(sc.nextLine());
-        
-        // Call to processing the string
-        strPro.processString();
-        
+
         // get character map (for counting)
         int[] charMap = strPro.getCharMap();
-        
+
         // Loop through the character map
         for (int i = 0; i < charMap.length; i++) {
             // Skip for any value of char map is 0
             if (charMap[i] != 0) {
                 // for display real char
-                int realChar = i + 97;
+                char realChar = (char)(i + 'a');
                 System.out.println(
                         String.format("\t%c: %d", realChar, charMap[i])
                 );

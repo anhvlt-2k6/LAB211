@@ -8,14 +8,14 @@ package short10;
 public class StringProcessor {
     
     // Char Map and User Input char array
-    private final int[] charMap;
+    private int[] charMap;
     private char[] userInput;
     
     /**
      * Constructor of String Processor
      */
     public StringProcessor() {
-        charMap = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        this.resetCharMap();
     }
 
     /**
@@ -23,7 +23,9 @@ public class StringProcessor {
      * @param userInput as String. Will be converted into array of char
      */
     public void setUserInput(String userInput) {
+        this.resetCharMap();
         this.userInput = userInput.toCharArray();
+        this.processString();
     }
     
     /**
@@ -33,11 +35,18 @@ public class StringProcessor {
     public int[] getCharMap() {
         return charMap;
     }
-    
+
+    /**
+     * Reset charMap
+     */
+    private void resetCharMap() {
+        charMap = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    }
+
     /**
      * Processing the String, set value into char map
      */
-    public void processString() {
+    private void processString() {
         // Loop through the character array
         for (char c : userInput) {
             // If the target is char, proceeding next
