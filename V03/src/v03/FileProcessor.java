@@ -60,7 +60,7 @@ public class FileProcessor {
             //  it matches for ".java", add it into the return value
             for (File f : files) {
                 String fn = f.getName();
-                if (fn.endsWith(".java")) {
+                if (fn.toLowerCase().endsWith(".java")) {
                     fileNames.add(fn);
                 }
             }
@@ -150,26 +150,27 @@ public class FileProcessor {
      */
     public int countCharacter(String path) throws Exception {
         // Initialize the return value
-        int characters = 0;
+        int words = 0;
         
         // Initialize the file pointer
         File fw = new File(path);
         
         // Check if the file can be read
-        if (!fw.canRead()) {
+        if (!fw.canRead() || !fw.isFile() || !fw.exists()) {
             throw new Exception("Path cannot be read");
         }
         
-        // Initialize the for scanner
-        Scanner file = new Scanner(fw);
-        
         // Loop for lines in file
-        while (file.hasNext()) {
-            // For each lines, count characters
-            characters += file.nextLine().length();
+        try (Scanner sc = new Scanner(fw)) {
+            // Loop for lines in file
+            while (sc.hasNext()) {
+                sc.next();
+                // For each lines, count characters
+                words += 1;
+            }
         }
         
         // Return number of characters
-        return (characters);
+        return (words);
     }
 }

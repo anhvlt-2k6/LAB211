@@ -18,9 +18,14 @@ public class UserInterface {
     private final Scanner sc;
     private final StringProcessing strPro;
     
-    private final String binaryValidator = "[0-1]{1,64}";
-    private final String octalValidator = "[0-7]{1,64}";
-    private final String hexValidator = "[A-Fa-f0-9]{1,64}";
+    /*
+    Max of value can hold is 2^64 in binary
+                             2^21 in hexadecimal
+                             2^16 in octal
+    */  
+    private final String binaryValidator = "[0-1]{1,53}";
+    private final String octalValidator = "[0-7]{1,18}";
+    private final String hexValidator = "[A-Fa-f0-9]{1,14}";
     
     /**
      * Constructor of the User Interface
@@ -45,7 +50,7 @@ public class UserInterface {
         }
         
         if (error.length() == 0) {
-            error = "Invalid input. Please make sure the input is valid.";
+            error = "Invalid input. Please make sure the input is valid and small enough.";
         }
         
         // Assume the value is empty string
@@ -74,21 +79,21 @@ public class UserInterface {
      * Display option 3 - hex to decimal
      */
     private void displayOptionThree() {
-        System.out.println("Decimal number is:" + strPro.hexToDec(enterAValue("Enter a hexadecimal number: ", hexValidator, "Only allow A-Z and 0-9 (case insensitive, max 64 characters).")));
+        System.out.println("Decimal number is:" + strPro.hexToDec(enterAValue("Enter a hexadecimal number: ", hexValidator, "Only allow A-F and 0-9 (case insensitive, max 14 characters).")));
     }
     
     /**
      * Display option 2 - octal to decimal
      */
     private void displayOptionTwo() {
-        System.out.println("Decimal number is:" + strPro.octToDec(enterAValue("Enter a octal number: ", octalValidator, "Only allow 0-7. (Max 64 characters)")));
+        System.out.println("Decimal number is:" + strPro.octToDec(enterAValue("Enter a octal number: ", octalValidator, "Only allow 0-7. (Max 18 characters)")));
     }
     
     /**
      * Display option 1 - binary to decimal
      */
     private void displayOptionOne() {
-        System.out.println("Decimal number is:" + strPro.binToDec(enterAValue("Enter a binary number: ", binaryValidator, "Only allow 0 and 1. (Max 64 characters)")));
+        System.out.println("Decimal number is:" + strPro.binToDec(enterAValue("Enter a binary number: ", binaryValidator, "Only allow 0 and 1. (Max 53 characters)")));
     }
     
     /**
@@ -132,5 +137,5 @@ public class UserInterface {
                 System.out.println(e.getLocalizedMessage());
             }
         }
-    } 
+    }
 }

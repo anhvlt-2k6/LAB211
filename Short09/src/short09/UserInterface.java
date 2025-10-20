@@ -14,7 +14,7 @@ public class UserInterface {
     private Array arr;
     
     // String to validate if it is the integer validation
-    private final String intValidation = "(-)?([0-9]{1,12})";
+    private final String intValidation = "(-)?([0-9]{1,9})";
     
     /**
      * Constructor of program
@@ -46,7 +46,7 @@ public class UserInterface {
             // return value, if not, asking user again
             if (!valueUI.matches(intValidation)) {
                 // Notify user
-                System.out.println("Invalid input. Please make sure the input is a number.");
+                System.out.println("Invalid input. Please make sure the input is a number and small enough.");
             } else {
                 // assign value
                 value = valueUI;
@@ -87,6 +87,7 @@ public class UserInterface {
                 arr.addValue(i, Integer.parseInt(valueStr));
             }
             
+            // Perform sorting
             arr.sort();
             
             // Display the array after sorting

@@ -17,5 +17,4 @@ public class Short12 {
         // Display user interface
         s12.displayUserInterface();
     }
-    
 }
