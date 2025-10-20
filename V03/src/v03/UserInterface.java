@@ -251,7 +251,7 @@ public class UserInterface {
                         + "2. Get file name with type java\n"
                         + "3. Get file with greater than input\n"
                         + "4. Write more content to file\n"
-                        + "5. Read file and count characters\n"
+                        + "5. Read file and count words\n"
                         + "6. Exit\n"
                         + "Please choice one option:"
                 );
