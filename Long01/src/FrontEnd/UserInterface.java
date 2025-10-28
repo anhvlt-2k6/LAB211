@@ -28,9 +28,11 @@ public class UserInterface {
     private final String nameValidation = "[a-zA-Z ]{1,254}";
     private final String semesterValidation = "[0-9]{1,2}";
     private final String courseValidation = "(Java|\\.Net|C/C\\+\\+)";
+    private final String countValidation = "[0-9]{1,}";
+    private final String updateOrDeleteValidation = "U|D|u|d";
     
     // The minimum number of students user must enter in a row
-    private final int minUserInput = 10;
+    private final int minUserInput = 1;
     
     // User input. See in constructor
     private final Scanner sc;
@@ -92,7 +94,7 @@ public class UserInterface {
         while (numberofStudents < minUserInput) {
             try {
                 // Let user input. Parse to integer and store in the 'numberofStudents'
-                numberofStudents = Integer.parseInt(this.enterAValue("Please enter number of student you want to add: ", "[0-9]{1,}", "Must be a number (>= 10)", true));
+                numberofStudents = Integer.parseInt(this.enterAValue("Please enter number of student you want to add: ", countValidation, "Must be a number (>= 10)", true));
                 
                 // If user enters a number of student lower than the required number
                 if (numberofStudents < minUserInput) {
@@ -197,7 +199,7 @@ public class UserInterface {
         }
         
         // Ask user to choose if they want to delete, or update the existing data
-        String dataSelection = this.enterAValue("Do you want to update (U) or delete (D) student: ", "U|D|u|d", "Must be U or D only (case insensitive).", true);
+        String dataSelection = this.enterAValue("Do you want to update (U) or delete (D) student: ", updateOrDeleteValidation, "Must be U or D only (case insensitive).", true);
         
         if (dataSelection.matches("u|U")) {
             // Update user, call the student database backend
@@ -251,7 +253,7 @@ public class UserInterface {
     }
     
     /**
-     *
+     * Display user interface
      */
     public void displayUI() {
         // The main user interface

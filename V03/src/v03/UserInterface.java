@@ -78,23 +78,11 @@ public class UserInterface {
             String content = sc.nextLine(); // no trim, respect the user input
             
             // Ask user to enter the right path of file. If don't ask until enter the right path
-            String path = "";
-            while (!fp.checkInputPath(path).equals("file")) {
-                System.out.print("Input a path: ");
-                String pathUI = sc.nextLine().trim(); // trim for remove spaces
-                
-                // Check for new user input. 
-                if (!fp.checkInputPath(pathUI).equals("file")) {
-                    // Notify user
-                    System.out.println("Path is not a file");
-                } else {
-                    // If valid, assign the new value into the path
-                    path = pathUI;
-                }
-            }
+            System.out.print("Input a path: ");
+            String pathUI = sc.nextLine().trim(); // trim for remove spaces
             
             // Call the file processor backend for the file of appending and its content
-            boolean isAppendSuccess = fp.appendContentToFile(path, content);
+            boolean isAppendSuccess = fp.appendContentToFile(pathUI, content);
             
             // if the append is success, notify user
             if (isAppendSuccess) {

@@ -124,11 +124,24 @@ public class FileProcessor {
         File pt = new File(path);
         
         // If the file can be write, proceed next
-        if (pt.canWrite()) {
+        if (pt.exists()) {
             // try-catch with inner value
             try (FileWriter fw = new FileWriter(path, true)) {
                 // append with the user input string
                 fw.append(contentInput);
+                // set return value to true
+                isAppendSuccess = true;  
+            }
+            catch (IOException ioex) {
+                // throw exception in case unable to write file
+                throw new Exception("Unable to write file.");
+            }
+        } else {
+            // try-catch with inner value
+            try (FileWriter fw = new FileWriter(path)) {
+                // append with the user input string
+                fw.write(contentInput);
+                fw.close();
                 // set return value to true
                 isAppendSuccess = true;  
             }
@@ -165,7 +178,7 @@ public class FileProcessor {
             // Loop for lines in file
             while (sc.hasNext()) {
                 sc.next();
-                // For each lines, count characters
+                // For each lines, count words
                 words += 1;
             }
         }

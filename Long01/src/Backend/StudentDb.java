@@ -39,7 +39,7 @@ public final class StudentDb extends ArrayList<Student> {
     ///////////////////////////////////////////////////
     
     /**
-     *
+     * Sort student by name
      */
     public void sortStudent() {
         Collections.sort(this, (o1, o2) -> (o1.getStudentName().compareTo(o2.getStudentName())));
@@ -208,7 +208,7 @@ public final class StudentDb extends ArrayList<Student> {
         
         // Iterate for the current database, and find which one match the condition
         for (Student st : this) {
-            if (st.getStudentName().contains(studentName)) {
+            if (st.getStudentName().toLowerCase().contains(studentName.toLowerCase())) {
                 foundStudents.add(st);
             }
         }
