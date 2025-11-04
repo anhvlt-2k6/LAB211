@@ -11,7 +11,7 @@ public class Long01 {
     
     /**
      * Entry of the program
-     * @param args Inline command line argument
+     * @param args In-line command line argument
      */
     public static void main(String[] args) {
         // Initialize the user interface
