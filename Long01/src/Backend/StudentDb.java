@@ -42,7 +42,7 @@ public final class StudentDb extends ArrayList<Student> {
      * Sort student by name
      */
     public void sortStudent() {
-        Collections.sort(this, (o1, o2) -> (o1.getStudentName().compareTo(o2.getStudentName())));
+        Collections.sort(this, (o1, o2) -> (o1.getStudentName().compareToIgnoreCase(o2.getStudentName())));
         this.writeToFile();
     }
     
