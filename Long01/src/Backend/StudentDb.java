@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 /**
@@ -22,10 +23,6 @@ public final class StudentDb extends ArrayList<Student> {
 
     // Database name
     private final String databaseName = "studentDb.csv";
-
-    // Database reader and writer
-    private Scanner studentDbReader;
-    private FileWriter studentDbWriter;
 
     /**
      * Constructor of the database. It will read the database
@@ -49,18 +46,15 @@ public final class StudentDb extends ArrayList<Student> {
      * Read from the database
      */
     private void readFromFile() {
-        try {
-            // Initialize the database file object
-            File fw = new File(databaseName);
+        // Initialize the database file object
+        File fw = new File(databaseName);
 
-            // If the file does not exist and/or cannot read, skip the operation
-            if (!fw.exists() || !fw.canRead()) {
-                throw new FileNotFoundException(""); // Stop right here
-            }
-
-            // Initialize the database file reader
-            studentDbReader = new Scanner(fw);
-
+        // If the file does not exist and/or cannot read, skip the operation
+        if (!fw.exists() || !fw.canRead()) {
+            return;
+        }
+        
+        try (Scanner studentDbReader = new Scanner(fw)) {
             // Loop through the database
             while (studentDbReader.hasNext()) {
                 String student = studentDbReader.nextLine();
@@ -95,10 +89,7 @@ public final class StudentDb extends ArrayList<Student> {
         // First line is the header (also the pseudo line)
         String outStr = "#Id,Name,Semester,CourseName";
 
-        try {
-            // Now initialize the studentDbWriter.
-            studentDbWriter = new FileWriter(databaseName);
-
+        try (FileWriter studentDbWriter = new FileWriter(databaseName)) {
             // Just a loop through the ArrayList
             for (Student st : this) {
                 outStr += String.format(
@@ -141,7 +132,7 @@ public final class StudentDb extends ArrayList<Student> {
                     break;
                 }
             } catch (NumberFormatException ex) {
-                System.out.print("Invalid ID. See in the helper for regular id format.");
+                // 
             }
         }
 
@@ -275,7 +266,7 @@ public final class StudentDb extends ArrayList<Student> {
      */
     public HashMap<String, Integer> reportData() {
         // Return value
-        HashMap<String, Integer> reportResult = new HashMap<>();
+        LinkedHashMap<String, Integer> reportResult = new LinkedHashMap<>();
 
         // Sort the array
         this.sortStudent();
