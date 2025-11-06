@@ -104,7 +104,6 @@ public class UserInterface {
         }
 
         for (int i = 0; i < numberofStudents; i++) {
-
             // Assume if the student data is broken and unable to add
             boolean isAddingSuccess = false;
 
