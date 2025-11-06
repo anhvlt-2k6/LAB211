@@ -2,7 +2,6 @@ package FrontEnd;
 
 import Backend.Student;
 import Backend.StudentDb;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,6 +15,7 @@ import java.util.Scanner;
 public class UserInterface {
 
     // Validators. prefix as their value it validates
+    
     /**
      * What does it really validate? studentIdValidation - it validates the
      * student id, and only true when it is an integer nameValidation - it
@@ -52,14 +52,12 @@ public class UserInterface {
      * Enter a value that correspond the value that it called from
      *
      * @param message as customized input message
+     * @param validation as string validation
+     * @param error In case of having error, show that error
+     * @param isTrim If you want to trim the string (no respect to user input)
      * @return String as validated user input
      */
     private String enterAValue(String message, String validation, String error, boolean isTrim) {
-        // If message is empty, assign with default message
-        if (message.length() == 0) {
-            message = "Enter a value: ";
-        }
-
         // Assume the value is empty string
         String value = "";
         // Loop for correct format
@@ -83,7 +81,7 @@ public class UserInterface {
     }
 
     /**
-     * Selection One
+     * Selection One - add student to the database
      */
     private void selectionOne() {
         // Initialize the default value of number of students
@@ -150,7 +148,7 @@ public class UserInterface {
     }
 
     /**
-     * Selection Two
+     * Selection Two - from student part-name find its semester and course enrolled
      */
     private void selectionTwo() {
         // Sort the student first
@@ -187,7 +185,10 @@ public class UserInterface {
             );
         }
     }
-
+    
+    /**
+     * Selection Three - Update or Delete student based on ID
+     */
     private void selectionThree() {
 
         // Ask user to enter id.
@@ -212,6 +213,9 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Selection Four - View report
+     */
     private void selectionFour() {
         // Generate the report result, from the student database backend
         HashMap<String, Integer> reportResult = studentDb.reportData();

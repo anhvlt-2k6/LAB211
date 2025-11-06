@@ -2,18 +2,20 @@ package Backend;
 
 /**
  * Long 01 - Student class
+ *
  * @author CE200360 Vo Luu Tuong Anh
  * @since 2025-09-21
  */
 public class Student {
-    
+
     private final int id;
     private String studentName;
     private final int semester;
     private final String courseName;
-    
+
     /**
      * Constructor
+     *
      * @param id as student id
      * @param studentName as student name
      * @param semester as semester
@@ -28,6 +30,7 @@ public class Student {
 
     /**
      * Get student name
+     *
      * @return String in student name
      */
     public String getStudentName() {
@@ -36,6 +39,7 @@ public class Student {
 
     /**
      * Get student id
+     *
      * @return int as id
      */
     public int getId() {
@@ -44,6 +48,7 @@ public class Student {
 
     /**
      * Get Semester
+     *
      * @return int as semester
      */
     public int getSemester() {
@@ -52,6 +57,7 @@ public class Student {
 
     /**
      * Get course Name
+     *
      * @return String as course name
      */
     public String getCourseName() {
@@ -60,6 +66,7 @@ public class Student {
 
     /**
      * Set student name
+     *
      * @param studentName as student name
      */
     public void setStudentName(String studentName) {
